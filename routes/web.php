@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\Werehouse\ProductCategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route Werehouse/Gudang
-Route::prefix('werehouse')->group(function() {
+// Route Admin
+Route::prefix('admin')->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Product Category
     Route::prefix('product-category')->group(function() {
-        Route::get('/', [ProductCategoryController::class, 'index'])->name('product-category.index');
+        Route::get('/', [ProductCategoryController::class, 'index'])->name('admin.product-category.index');
     });
 });
 
