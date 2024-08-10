@@ -67,7 +67,7 @@
 
               <form class="mb-3" action="{{ route('login') }}" method="POST">
                 @csrf
-                {{-- <input type="hidden" name="remember" value="true"> --}}
+                <input type="hidden" name="remember" value="true">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan email" />

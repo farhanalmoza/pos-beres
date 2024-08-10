@@ -19,7 +19,10 @@
         </a>
       </li>
 
-      <li class="menu-item {{ Request::routeIs('admin.product-category.index') ? 'active open' : '' }}">
+      <li class="menu-item {{ Request::routeIs('admin.product-category.index') ||
+                              Request::routeIs('admin.product.index') ||
+                              Request::routeIs('admin.product.create') ||
+                              Request::routeIs('admin.product.edit') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -30,8 +33,10 @@
               <div data-i18n="Basic">Kategori Barang</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="auth-register-basic.html" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('admin.product.index') ||
+                                  Request::routeIs('admin.product.create') ||
+                                  Request::routeIs('admin.product.edit') ? 'active' : '' }}">
+            <a href="{{ route('admin.product.index') }}" class="menu-link">
               <div data-i18n="Basic">Daftar Barang</div>
             </a>
           </li>
