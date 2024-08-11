@@ -58,8 +58,10 @@
         </ul>
       </li>
 
-      <li class="menu-item">
-        <a href="" class="menu-link">
+      <li class="menu-item {{ Request::routeIs('admin.store.index') ||
+                              Request::routeIs('admin.store.create') ||
+                              Request::routeIs('admin.store.edit') ? 'active' : '' }}">
+        <a href="{{ route('admin.store.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-store-alt"></i>
           <div>Toko</div>
         </a>

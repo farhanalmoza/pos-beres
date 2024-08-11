@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
+use App\Http\Controllers\Admin\StoreController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,13 @@ Route::prefix('admin')->group(function() {
         Route::get('/', [ProductInController::class, 'index'])->name('admin.product-in.index');
         Route::get('/create', [ProductInController::class, 'create'])->name('admin.product-in.create');
         Route::get('/edit/{id}', [ProductInController::class, 'edit'])->name('admin.product-in.edit');
+    });
+
+    // Store
+    Route::prefix('store')->group(function() {
+        Route::get('/', [StoreController::class, 'index'])->name('admin.store.index');
+        Route::get('/create', [StoreController::class, 'create'])->name('admin.store.create');
+        Route::get('/edit/{id}', [StoreController::class, 'edit'])->name('admin.store.edit');
     });
 });
 
