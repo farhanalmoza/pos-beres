@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
 use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +41,10 @@ Route::prefix('admin')->group(function() {
 });
 
 Auth::routes();
+
+// Profile Route
+Route::prefix('profile')->group(function() {
+    Route::get('/edit-password', [ProfileController::class, 'editPassword'])->name('profile.edit-password');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

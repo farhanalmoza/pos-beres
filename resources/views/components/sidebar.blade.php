@@ -95,5 +95,25 @@
           </li>
         </ul>
       </li>
+      
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Profile</span></li>
+      <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>Pengaturan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="auth-login-basic.html" class="menu-link">
+              <div data-i18n="Basic">Edit Profile</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active' : '' }}">
+            <a href="{{ route('profile.edit-password') }}" class="menu-link">
+              <div data-i18n="Basic">Ganti Password</div>
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </aside>
