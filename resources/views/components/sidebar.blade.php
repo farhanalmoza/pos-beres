@@ -22,7 +22,10 @@
       <li class="menu-item {{ Request::routeIs('admin.product-category.index') ||
                               Request::routeIs('admin.product.index') ||
                               Request::routeIs('admin.product.create') ||
-                              Request::routeIs('admin.product.edit') ? 'active open' : '' }}">
+                              Request::routeIs('admin.product.edit') ||
+                              Request::routeIs('admin.product-in.index') ||
+                              Request::routeIs('admin.product-in.create') ||
+                              Request::routeIs('admin.product-in.edit') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -40,8 +43,10 @@
               <div data-i18n="Basic">Daftar Barang</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="auth-forgot-password-basic.html" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('admin.product-in.index') ||
+                                  Request::routeIs('admin.product-in.create') ||
+                                  Request::routeIs('admin.product-in.edit') ? 'active' : '' }}">
+            <a href="{{ route('admin.product-in.index') }}" class="menu-link">
               <div data-i18n="Basic">Barang Masuk</div>
             </a>
           </li>
