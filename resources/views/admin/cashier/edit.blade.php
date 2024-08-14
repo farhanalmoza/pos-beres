@@ -29,12 +29,18 @@
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="basic-default-name">Nomer Telp</label>
+              <label class="col-sm-2 col-form-label" for="basic-default-name">Nomor Telp</label>
               <div class="col-sm-10">
                 <div class="input-group">
                   <span class="input-group-text" id="basic-addon11">+62</span>
                   <input class="form-control" type="tel" value="81234567890" id="html5-tel-input" placeholder="Masukan Nomor Telepon">
                 </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="basic-default-name">Email</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="basic-default-name" value="jhondoe@mail.com">
               </div>
             </div>
             <div class="row mb-3">

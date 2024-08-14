@@ -19,6 +19,8 @@
                 <th>No.</th>
                 <th>Nama</th>
                 <th>Toko</th>
+                <th>Email</th>
+                <th>No Telp</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -27,6 +29,8 @@
                 <th scope="row">1</th>
                 <td>John Doe</td>
                 <td>Toko ABC</td>
+                <td>jhondoe@mail.com</td>
+                <td>081234567890</td>
                 <td>
                   <a href="{{ route('admin.cashier.edit', 1) }}" class="btn btn-primary btn-sm">Ubah</a>
                   <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
