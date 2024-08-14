@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -38,6 +39,13 @@ Route::prefix('admin')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('admin.store.index');
         Route::get('/create', [StoreController::class, 'create'])->name('admin.store.create');
         Route::get('/edit/{id}', [StoreController::class, 'edit'])->name('admin.store.edit');
+    });
+
+    // Cashier
+    Route::prefix('cashier')->group(function() {
+        Route::get('/', [CashierController::class, 'index'])->name('admin.cashier.index');
+        Route::get('/create', [CashierController::class, 'create'])->name('admin.cashier.create');
+        Route::get('/edit/{id}', [CashierController::class, 'edit'])->name('admin.cashier.edit');
     });
 
     // Member

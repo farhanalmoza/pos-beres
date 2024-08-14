@@ -69,7 +69,10 @@
 
       <li class="menu-item {{ Request::routeIs('admin.member.index')||
                               Request::routeIs('admin.member.create') ||
-                              Request::routeIs('admin.member.edit') ? 'active open' : '' }}">
+                              Request::routeIs('admin.member.edit') ||
+                              Request::routeIs('admin.cashier.index')||
+                              Request::routeIs('admin.cashier.create') ||
+                              Request::routeIs('admin.cashier.edit') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-group"></i>
           <div>Pengguna</div>
@@ -85,8 +88,10 @@
               <div data-i18n="Basic">Gudang</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="auth-forgot-password-basic.html" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('admin.cashier.index') ||
+                                  Request::routeIs('admin.cashier.create') ||
+                                  Request::routeIs('admin.cashier.edit')  ? 'active' : '' }}">
+            <a href="{{ route('admin.cashier.index') }}" class="menu-link">
               <div data-i18n="Basic">Kasir</div>
             </a>
           </li>
