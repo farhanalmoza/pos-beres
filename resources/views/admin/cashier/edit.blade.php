@@ -55,6 +55,26 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Reset Password</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            @csrf
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="basic-default-name">Password Baru</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="basic-default-name" placeholder="Masukkan password baru">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-danger">Reset Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 @endsection

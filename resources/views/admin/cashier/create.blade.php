@@ -49,8 +49,22 @@
                 <textarea id="basic-default-message" class="form-control" placeholder="Masukan Alamat"></textarea>
               </div>
             </div>
+            <div class="row">
+              <div class="row mb-3 col-md-6">
+                <label class="col-md-4 col-form-label" for="basic-default-name">Password</label>
+                <div class="col-md-8">
+                  <input type="password" class="form-control" id="basic-default-name">
+                </div>
+              </div>
+              <div class="row mb-3 col-md-6">
+                <label class="col-md-4 col-form-label" for="basic-default-name">Konfirmasi Password</label>
+                <div class="col-md-8">
+                  <input type="password" class="form-control" id="basic-default-name">
+                </div>
+              </div>
+            </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary">Buat</button>
           </form>
         </div>
       </div>
