@@ -81,11 +81,11 @@
           <div>Pengguna</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
+          {{-- <li class="menu-item">
             <a href="auth-login-basic.html" class="menu-link">
               <div data-i18n="Basic">Admin</div>
             </a>
-          </li>
+          </li> --}}
           <li class="menu-item {{ Request::routeIs('admin.werehouse.index') ||
                                   Request::routeIs('admin.werehouse.create') ||
                                   Request::routeIs('admin.werehouse.edit')  ? 'active' : '' }}">
