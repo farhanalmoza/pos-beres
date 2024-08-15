@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
 use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\WerehouseController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,13 @@ Route::prefix('admin')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('admin.store.index');
         Route::get('/create', [StoreController::class, 'create'])->name('admin.store.create');
         Route::get('/edit/{id}', [StoreController::class, 'edit'])->name('admin.store.edit');
+    });
+
+    // Werehouse
+    Route::prefix('werehouse')->group(function() {
+        Route::get('/', [WerehouseController::class, 'index'])->name('admin.werehouse.index');
+        Route::get('/create', [WerehouseController::class, 'create'])->name('admin.werehouse.create');
+        Route::get('/edit/{id}', [WerehouseController::class, 'edit'])->name('admin.werehouse.edit');
     });
 
     // Cashier
