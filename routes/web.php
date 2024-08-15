@@ -7,13 +7,15 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\WerehouseController;
+use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
+use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route Admin
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->middleware('auth')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Product Category
@@ -61,6 +63,16 @@ Route::prefix('admin')->group(function() {
         Route::get('/', [MemberController::class, 'index'])->name('admin.member.index');
         Route::get('/create', [MemberController::class, 'create'])->name('admin.member.create');
         Route::get('/edit/{id}', [MemberController::class, 'edit'])->name('admin.member.edit');
+    });
+});
+
+Route::prefix('cashier')->middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [CashierDashboardController::class, 'index'])->name('cashier.dashboard');
+
+    // Product
+    Route::prefix('product')->group(function() {
+        Route::get('/', [CashierProductController::class, 'index'])->name('cashier.product.index');
+        Route::get('/request-stock', [CashierProductController::class, 'requestStock'])->name('cashier.product.request-stock');
     });
 });
 

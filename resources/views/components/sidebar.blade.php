@@ -11,6 +11,7 @@
 
     <div class="menu-inner-shadow"></div>
 
+    @if (Auth()->user()->role == 'admin')
     <ul class="menu-inner py-1">
       <li class="menu-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
         <a href="{{ route('admin.dashboard') }}" class="menu-link">
@@ -130,4 +131,57 @@
         </ul>
       </li>
     </ul>
+    @endif
+
+    @if (Auth()->user()->role == 'cashier')
+    <ul class="menu-inner py-1">
+      <li class="menu-item {{ Request::routeIs('cashier.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('cashier.dashboard') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home"></i>
+          <div>Dashboard</div>
+        </a>
+      </li>
+
+      <li class="menu-item {{ Request::routeIs('cashier.product.index') ||
+                              Request::routeIs('cashier.product.request-stock') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cabinet"></i>
+          <div>Barang</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item {{ Request::routeIs('cashier.product.index') ? 'active' : '' }}">
+            <a href="{{ route('cashier.product.index') }}" class="menu-link">
+              <div data-i18n="Basic">Stok Barang</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('cashier.product.request-stock') ? 'active' : '' }}">
+            <a href="{{ route('cashier.product.request-stock') }}" class="menu-link">
+              <div data-i18n="Basic">Permintaan Barang</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Profile</span></li>
+      <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>Pengaturan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="auth-login-basic.html" class="menu-link">
+              <div data-i18n="Basic">Edit Profile</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active' : '' }}">
+            <a href="{{ route('profile.edit-password') }}" class="menu-link">
+              <div data-i18n="Basic">Ganti Password</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>  
+    @endif
+    
   </aside>
