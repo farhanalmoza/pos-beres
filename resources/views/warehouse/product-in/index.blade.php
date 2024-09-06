@@ -1,37 +1,34 @@
 @extends('components.layout')
-@section('title', 'Kasir | Daftar Stok Barang')
+@section('title', 'Gudang | Daftar Barang Masuk')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="row">
-
-    <div class="col-12 mb-3">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestStockModal">Buat Permintaan Barang</button>
-    </div>
-
     <div class="col-md-12">
+      <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductInModal">
+        <i class="tf-icon tf-plus-circle"></i> Tambah Barang Masuk
+      </button>
+
       <div class="card">
-        <h5 class="card-header">Daftar Barang</h5>
+        <h5 class="card-header">Daftar Barang Masuk</h5>
         <div class="table-responsive text-nowrap">
           <table class="table">
             <thead>
               <tr class="text-nowrap">
-                <th>No.</th>
+                <th>Tanggal</th>
                 <th>Kode Barang</th>
-                <th>Kategori</th>
                 <th>Nama Barang</th>
-                <th>Stok</th>
-                <th>Harga Jual</th>
+                <th>Harga Beli</th>
+                <th>Jumlah</th>
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
               <tr>
-                <th scope="row">1</th>
+                <th>2022-01-01</th>
                 <td>P01</td>
-                <td>Makanan & Minuman</td>
                 <td>Roti Tawar</td>
-                <td>500</td>
                 <td>15.000</td>
+                <td>500</td>
               </tr>
             </tbody>
           </table>
@@ -78,11 +75,11 @@
 </div>
 
 {{-- Request Stock Modal --}}
-<div class="modal fade" id="requestStockModal" tabindex="-1" aria-labelledby="requestStockModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProductInModal" tabindex="-1" aria-labelledby="addProductInModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="requestStockModalLabel">Buat Permintaan Barang</h5>
+        <h5 class="modal-title" id="addProductInModalLabel">Tambah Barang Masuk</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -90,21 +87,27 @@
           @csrf
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Barang</label>
-            <select name="product_id" id="exampleFormControlInput1" class="form-select">
-              <option value="1">Roti Tawar</option>
-              <option value="2">Roti Tawar</option>
-              <option value="3">Roti Tawar</option>
+            <select id="defaultSelect" class="form-select">
+              <option>Pilih barang</option>
+              <option value="1">Kode 01 - Barang 01</option>
+              <option value="2">Kode 02 - Barang 02</option>
+              <option value="3">Kode 03 - Barang 03</option>
+              <option value="4">Kode 04 - Barang 04</option>
             </select>
           </div>
           <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Harga Barang</label>
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Masukan harga">
+          </div>
+          <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Jumlah</label>
-            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Masukan Jumlah">
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Masukan jumlah">
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-primary">Ajukan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
       </div>
     </div>
   </div>

@@ -11,6 +11,8 @@ use App\Http\Controllers\Cashier\DashboardController as CashierDashboardControll
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
+use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +68,22 @@ Route::prefix('admin')->middleware('auth')->group(function() {
     });
 });
 
+// Route Warehouse
+Route::prefix('warehouse')->middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [WarehouseDashboardController::class, 'index'])->name('warehouse.dashboard');
+
+    // Product
+    Route::prefix('product')->group(function() {
+        Route::get('/', [WarehouseProductController::class, 'index'])->name('warehouse.product.index');
+    });
+
+    // Product In
+    Route::prefix('product-in')->group(function() {
+        Route::get('/', [WarehouseProductController::class, 'productIn'])->name('warehouse.product-in.index');
+    });
+});
+
+// Route Cashier
 Route::prefix('cashier')->middleware(['auth'])->group(function() {
     Route::get('/dashboard', [CashierDashboardController::class, 'index'])->name('cashier.dashboard');
 

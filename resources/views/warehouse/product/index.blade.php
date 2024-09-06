@@ -1,13 +1,9 @@
 @extends('components.layout')
-@section('title', 'Kasir | Daftar Stok Barang')
+@section('title', 'Gudang | Daftar Stok Barang')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="row">
-
-    <div class="col-12 mb-3">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestStockModal">Buat Permintaan Barang</button>
-    </div>
 
     <div class="col-md-12">
       <div class="card">
@@ -22,6 +18,7 @@
                 <th>Nama Barang</th>
                 <th>Stok</th>
                 <th>Harga Jual</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -32,6 +29,9 @@
                 <td>Roti Tawar</td>
                 <td>500</td>
                 <td>15.000</td>
+                <td>
+                  <button class="btn btn-primary btn-sm">Print Barcode</button>
+                </td>
               </tr>
             </tbody>
           </table>

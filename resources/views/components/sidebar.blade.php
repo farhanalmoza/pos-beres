@@ -133,6 +133,69 @@
     </ul>
     @endif
 
+    @if (Auth()->user()->role == 'warehouse')
+    <ul class="menu-inner py-1">
+      <li class="menu-item {{ Request::routeIs('warehouse.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('warehouse.dashboard') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home"></i>
+          <div>Dashboard</div>
+        </a>
+      </li>
+
+      <li class="menu-item {{ Request::routeIs('warehouse.product.index') ||
+                              Request::routeIs('warehouse.product-in.index') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cabinet"></i>
+          <div>Barang</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item {{ Request::routeIs('warehouse.product.index') ? 'active' : '' }}">
+            <a href="{{ Route('warehouse.product.index') }}" class="menu-link">
+              <div data-i18n="Basic">Stok Barang</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('warehouse.product-in.index') ? 'active' : '' }}">
+            <a href="{{ Route('warehouse.product-in.index') }}" class="menu-link">
+              <div data-i18n="Basic">Barang Masuk</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="" class="menu-link">
+              <div data-i18n="Basic">Barang Keluar</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="" class="menu-link">
+              <div data-i18n="Basic">Permintaan Barang</div>
+              <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">99+</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Profile</span></li>
+      <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>Pengaturan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="auth-login-basic.html" class="menu-link">
+              <div data-i18n="Basic">Edit Profile</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active' : '' }}">
+            <a href="{{ route('profile.edit-password') }}" class="menu-link">
+              <div data-i18n="Basic">Ganti Password</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+        
+    @endif
+
     @if (Auth()->user()->role == 'cashier')
     <ul class="menu-inner py-1">
       <li class="menu-item {{ Request::routeIs('cashier.dashboard') ? 'active' : '' }}">

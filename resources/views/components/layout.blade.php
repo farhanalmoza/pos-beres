@@ -90,7 +90,7 @@
                             <small class="text-muted">
                               @if (Auth::user()->role == 'admin')
                                 Administrator
-                              @elseif(Auth::user()->role == 'werehouse')
+                              @elseif(Auth::user()->role == 'warehouse')
 																Gudang
                               @elseif(Auth::user()->role == 'member')
                                 Member
