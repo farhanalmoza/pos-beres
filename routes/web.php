@@ -81,6 +81,11 @@ Route::prefix('warehouse')->middleware(['auth'])->group(function() {
     Route::prefix('product-in')->group(function() {
         Route::get('/', [WarehouseProductController::class, 'productIn'])->name('warehouse.product-in.index');
     });
+
+    // Product Out
+    Route::prefix('product-out')->group(function() {
+        Route::get('/', [WarehouseProductController::class, 'productOut'])->name('warehouse.product-out.index');
+    });
 });
 
 // Route Cashier

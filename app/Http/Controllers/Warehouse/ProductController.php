@@ -14,4 +14,8 @@ class ProductController extends Controller
     public function productIn() {
         return view('warehouse.product-in.index');
     }
+
+    public function productOut() {
+        return view('warehouse.product-out.index');
+    }
 }

@@ -143,7 +143,8 @@
       </li>
 
       <li class="menu-item {{ Request::routeIs('warehouse.product.index') ||
-                              Request::routeIs('warehouse.product-in.index') ? 'active open' : '' }}">
+                              Request::routeIs('warehouse.product-in.index') ||
+                              Request::routeIs('warehouse.product-out.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -159,8 +160,8 @@
               <div data-i18n="Basic">Barang Masuk</div>
             </a>
           </li>
-          <li class="menu-item">
-            <a href="" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('warehouse.product-out.index') ? 'active' : '' }}">
+            <a href="{{ Route('warehouse.product-out.index') }}" class="menu-link">
               <div data-i18n="Basic">Barang Keluar</div>
             </a>
           </li>
