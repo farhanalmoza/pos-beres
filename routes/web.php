@@ -13,11 +13,12 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
+use App\Http\Middleware\RolePermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route Admin
-Route::prefix('admin')->middleware('auth')->group(function() {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Product Category
@@ -69,7 +70,7 @@ Route::prefix('admin')->middleware('auth')->group(function() {
 });
 
 // Route Warehouse
-Route::prefix('warehouse')->middleware(['auth'])->group(function() {
+Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(function() {
     Route::get('/dashboard', [WarehouseDashboardController::class, 'index'])->name('warehouse.dashboard');
 
     // Product
