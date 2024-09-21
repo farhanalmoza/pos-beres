@@ -95,8 +95,13 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
 });
 
 // Route Cashier
-Route::prefix('cashier')->middleware(['auth'])->group(function() {
+Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function() {
     Route::get('/dashboard', [CashierDashboardController::class, 'index'])->name('cashier.dashboard');
+
+    // Cashier
+    Route::prefix('cashier')->group(function() {
+        Route::get('/', [CashierController::class, 'index'])->name('cashier.index');
+    });
 
     // Product
     Route::prefix('product')->group(function() {

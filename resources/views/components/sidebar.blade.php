@@ -207,6 +207,13 @@
         </a>
       </li>
 
+      <li class="menu-item {{ Request::routeIs('cashier.index') ? 'active' : '' }}">
+        <a href="{{ route('cashier.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cart-add"></i>
+          <div>Kasir</div>
+        </a>
+      </li>
+
       <li class="menu-item {{ Request::routeIs('cashier.product.index') ||
                               Request::routeIs('cashier.product.request-stock') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
