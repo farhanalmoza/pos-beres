@@ -20,6 +20,7 @@
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
       <li class="menu-item {{ Request::routeIs('admin.product-category.index') ||
                               Request::routeIs('admin.product.index') ||
                               Request::routeIs('admin.product.create') ||
@@ -111,7 +112,7 @@
         </ul>
       </li>
       
-      <li class="menu-header small text-uppercase"><span class="menu-header-text">Profile</span></li>
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
       <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>

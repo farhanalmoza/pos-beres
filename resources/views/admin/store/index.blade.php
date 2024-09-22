@@ -28,8 +28,9 @@
                 <td>Toko 1</td>
                 <td>Jl. Rara Santang No. 15 RT.10 RW.05 Kec. Jamblang</td>
                 <td>
-                  <a href="{{ route('admin.store.edit', 1) }}" class="btn btn-primary btn-sm">Ubah</a>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
+                  <a href="{{ route('admin.store.edit', 1) }}" class="btn btn-success btn-sm">detail</a>
+                  <a href="{{ route('admin.store.edit', 1) }}" class="btn btn-primary btn-sm">ubah</a>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">hapus</button>
                 </td>
               </tr>
             </tbody>
