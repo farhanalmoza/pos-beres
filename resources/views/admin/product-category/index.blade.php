@@ -1,101 +1,48 @@
 @extends('components.layout')
 @section('title', 'Admin | Daftar Kategori Barang')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-  <div class="row">
+  <!-- Toast -->
+  <div class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0 @if (session()->has('success')) bg-success show @endif"
+    role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+    <div class="toast-header">
+      <div class="me-auto fw-medium toast-status">
+        @if (session()->has('success')) Berhasil @endif
+        @if (session()->has('error')) Gagal @endif
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      @if (session()->has('success'))
+        {{ session('success') }}
+      @endif
+      @if (session()->has('error'))
+        {{ session('error') }}
+      @endif
+    </div>
+  </div>
 
-    <div class="col-md-7">
+  <div class="row">
+    <div class="col-md-7 mb-3">
       <div class="card">
         <h5 class="card-header">Daftar Kategori Barang</h5>
-        <div class="table-responsive text-nowrap">
-          <table class="table">
-            <thead>
-              <tr class="text-nowrap">
-                <th>No.</th>
-                <th>Kategori Barang</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-              <tr>
-                <th scope="row">1</th>
-                <td>Kategori 1</td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Ubah</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Kategori 2</td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Ubah</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Kategori 3</td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Ubah</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Kategori 4</td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Ubah</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>Kategori 5</td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Ubah</button>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="demo-inline-spacing px-4">
-          <!-- Basic Pagination -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-              </li>
-            </ul>
-          </nav>
-          <!--/ Basic Pagination -->
+        <div class="card-body">
+          <div class="table-responsive text-nowrap">
+            <table class="table" id="categoryTable">
+              <thead>
+                <tr class="text-nowrap">
+                  <th>No.</th>
+                  <th>Kategori Barang</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -104,11 +51,15 @@
       <div class="card">
         <h5 class="card-header">Tambah Kategori Barang</h5>
         <div class="card-body">
-          <form method="POST">
+          <form method="POST" action="{{ route('admin.product-category.store') }}">
             @csrf
             <div class="mb-3">
               <label class="form-label" for="basic-default-fullname">Kategori Barang</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+              {{-- error message --}}
+              @if ($errors->has('name'))
+                <span class="text-danger">{{ $errors->first('name') }}</span>
+              @endif
             </div>
             <button type="submit" class="btn btn-primary">Tambah</button>
           </form>
@@ -127,20 +78,23 @@
           <h5 class="modal-title">Ubah Kategori Modal</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col mb-3">
-              <label for="nameBasic" class="form-label">Kategori Barang</label>
-              <input type="text" id="nameBasic" class="form-control">
+        <form id="updateCategoryForm" autocomplete="off">
+          <input type="hidden" name="id" id="id_category">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col mb-3">
+                <label for="update_name" class="form-label">Kategori Barang</label>
+                <input type="text" id="update_name" name="update_name" class="form-control" value="{{ old('update_name') }}">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Batal
-          </button>
-          <button type="button" class="btn btn-primary">Simpan</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Batal
+            </button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -160,10 +114,23 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             Batal
           </button>
-          <button type="button" class="btn btn-danger">Hapus</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Hapus</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+  const URL = "{{ url('') }}"
+</script>
+{{-- Form Validate --}}
+<script src="{{ asset('js/jquery-validate.js') }}" ></script>
+<script src="{{ asset('js/message_id.js') }}" integrity="sha512-Pb0klMWnom+fUBpq+8ncvrvozi/TDwdAbzbICN8EBoaVXZo00q6tgWk+6k6Pd+cezWRwyu2cB+XvVamRsbbtBA==" crossorigin="anonymous"></script>
+{{-- Data Table --}}
+<script src="{{ asset('js/jquery-datatables.js') }}"></script>
+<script src="{{ asset('js/datatable-bs4.js') }}"></script>
+<script src="{{ asset('/js/product-category/index.js') }}"></script>
 @endsection

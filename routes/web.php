@@ -24,6 +24,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     // Product Category
     Route::prefix('product-category')->group(function() {
         Route::get('/', [ProductCategoryController::class, 'index'])->name('admin.product-category.index');
+        Route::get('/get-all', [ProductCategoryController::class, 'getAll'])->name('admin.product-category.get-all');
+        Route::post('/', [ProductCategoryController::class, 'store'])->name('admin.product-category.store');
+        Route::get('/show/{id}', [ProductCategoryController::class, 'show'])->name('admin.product-category.show');
+        Route::put('/update/{id}', [ProductCategoryController::class, 'update'])->name('admin.product-category.update');
+        Route::delete('/delete/{id}', [ProductCategoryController::class, 'destroy'])->name('admin.product-category.destroy');
     });
 
     // Product
