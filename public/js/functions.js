@@ -81,6 +81,7 @@ class Functions {
             },
             success: function (response) {
                 $('.load-wrapper').addClass('hide-loader')
+                $('.bs-toast').removeClass('bg-danger')
                 $('.bs-toast').addClass('bg-success show')
                 $('.toast-status').text('Berhasil')
                 $('.toast-body').text(response.message)
@@ -90,6 +91,7 @@ class Functions {
             },
             error: function(err) {
                 $('.load-wrapper').addClass('hide-loader')
+                $('.bs-toast').removeClass('bg-success')
                 $('.bs-toast').addClass('bg-danger show')
                 $('.toast-status').text('Gagal')
                 $('.toast-body').text(err.responseJSON.message)
@@ -130,6 +132,7 @@ class Functions {
             },
             success: function(response) {
                 $('.load-wrapper').addClass('hide-loader')
+                $('.bs-toast').removeClass('bg-danger')
                 $('.bs-toast').addClass('bg-success show')
                 $('.toast-status').text('Berhasil')
                 $('.toast-body').text(response.message)
@@ -139,6 +142,7 @@ class Functions {
             },
             error: function(err) {
                 $('.load-wrapper').addClass('hide-loader')
+                $('.bs-toast').removeClass('bg-success')
                 $('.bs-toast').addClass('bg-danger show')
                 $('.toast-status').text('Gagal')
                 console.log(err);
