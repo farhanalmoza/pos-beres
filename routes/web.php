@@ -48,8 +48,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     // Store
     Route::prefix('store')->group(function() {
         Route::get('/', [StoreController::class, 'index'])->name('admin.store.index');
-        Route::get('/create', [StoreController::class, 'create'])->name('admin.store.create');
-        Route::get('/edit/{id}', [StoreController::class, 'edit'])->name('admin.store.edit');
+        Route::get('/get-all', [StoreController::class, 'getAll'])->name('admin.store.get-all');
+        Route::post('/', [StoreController::class, 'store'])->name('admin.store.store');
+        Route::get('/show/{id}', [StoreController::class, 'show'])->name('admin.store.show');
+        Route::get('/detail/{id}', [StoreController::class, 'detail'])->name('admin.store.detail');
+        Route::put('/update/{id}', [StoreController::class, 'update'])->name('admin.store.update');
+        Route::delete('/delete/{id}', [StoreController::class, 'destroy'])->name('admin.store.destroy');
     });
 
     // Werehouse
