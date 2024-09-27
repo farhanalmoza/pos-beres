@@ -11,8 +11,8 @@ function getProducts() {
     const columns = [
         {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'code', name: 'code'},
+        {data : 'category.name', name: 'category.name'},
         {data : 'name', name: 'name'},
-        {data : 'category_id', name: 'category_id'},
         {data : 'quantity', name: 'quantity'},
         {data : 'price', name: 'price'},
         {data : 'actions', name: 'actions', orderable: false, searchable: false},

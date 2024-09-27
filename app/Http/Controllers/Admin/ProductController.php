@@ -16,7 +16,7 @@ class ProductController extends Controller
     }
 
     public function getAll() {
-        $results = Product::select("id", "code", "name", "category_id", "quantity", "price")->orderBy('name', 'ASC')->get();
+        $results = Product::select("id", "code", "name", "category_id", "quantity", "price")->with('category')->get();
         return datatables()
         ->of($results)
         ->addIndexColumn()
