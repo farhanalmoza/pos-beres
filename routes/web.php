@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\WerehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
@@ -46,6 +47,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/', [ProductInController::class, 'index'])->name('admin.product-in.index');
         Route::get('/get-all', [ProductInController::class, 'getAll'])->name('admin.product-in.get-all');
         Route::post('/', [ProductInController::class, 'store'])->name('admin.product-in.store');
+    });
+
+    // Product Out
+    Route::prefix('product-out')->group(function() {
+        Route::get('/', [ProductOutController::class, 'index'])->name('admin.product-out.index');
+        Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('admin.product-out.get-all');
+        Route::post('/', [ProductOutController::class, 'store'])->name('admin.product-out.store');
     });
 
     // Store
