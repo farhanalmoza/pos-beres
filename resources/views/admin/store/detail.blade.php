@@ -1,10 +1,22 @@
 @extends('components.layout')
 @section('title', 'Admin | Detail Toko')
 
+@section('css')
+  <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-  <div class="row">
+  <div class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0"
+    role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+    <div class="toast-header">
+      <div class="me-auto fw-medium toast-status"></div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body"></div>
+  </div>
 
+  <div class="row">
     <div class="col-md-12">
       <div class="nav-align-top mb-4">
         <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
@@ -26,15 +38,26 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane fade active show" id="navs-pills-justified-home" role="tabpanel">
-            <p>
-              Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps
-              powder. Bear claw candy topping.
-            </p>
-            <p class="mb-0">
-              Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon
-              jelly-o jelly-o ice cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow
-              jujubes sweet.
-            </p>
+            <table class="table table-hover" id="store-product-table">
+              <thead>
+                <tr>
+                  <th>Kode Barang</th>
+                  <th>Nama Barang</th>
+                  <th>Jumlah</th>
+                  <th>Harga</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Kode Barang</th>
+                  <th>Nama Barang</th>
+                  <th>Jumlah</th>
+                  <th>Harga</th>
+                </tr>
+              </tfoot>
+            </table>
           </div>
           <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
             <p>
@@ -66,5 +89,12 @@
 @endsection
 
 @section('js')
-
+  <script>
+    const URL = "{{ url('') }}"
+    const store_id = window.location.href.split('/').pop()
+  </script>
+  {{-- Data Table --}}
+  <script src="{{ asset('js/jquery-datatables.js') }}"></script>
+  <script src="{{ asset('js/datatable-bs4.js') }}"></script>
+  <script src="{{ asset('/js/store/detail.js') }}"></script>
 @endsection

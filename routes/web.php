@@ -63,6 +63,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/', [StoreController::class, 'store'])->name('admin.store.store');
         Route::get('/show/{id}', [StoreController::class, 'show'])->name('admin.store.show');
         Route::get('/detail/{id}', [StoreController::class, 'detail'])->name('admin.store.detail');
+        Route::get('/store-products/{id}', [StoreController::class, 'getStoreProducts'])->name('admin.store.store-products');
         Route::put('/update/{id}', [StoreController::class, 'update'])->name('admin.store.update');
         Route::delete('/delete/{id}', [StoreController::class, 'destroy'])->name('admin.store.destroy');
     });

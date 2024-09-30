@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Store;
+use App\Models\StoreProduct;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -97,5 +98,14 @@ class StoreController extends Controller
         if(!$result) return response(['message' => 'terjadi kesalahan'], 500);
         $result->delete();
         return response(['message' => 'Hapus toko berhasil'], 200);
+    }
+
+    public function getStoreProducts($id) {
+        $results = StoreProduct::select("product_id", "quantity")->where("store_id", $id)->with('product')->get();
+        return datatables()
+        ->of($results)
+        ->addIndexColumn()
+        ->rawColumns(['actions'])
+        ->make(true);
     }
 }
