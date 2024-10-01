@@ -3,6 +3,12 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
+  @if (session('status'))
+    <div class="alert alert-success" role="alert">
+      {{ session('status') }}
+    </div>
+  @endif
+
   <div class="row">
     <div class="col-md-12">
       <div class="card mb-4">
@@ -10,24 +16,34 @@
           <h5 class="mb-0">Form Ubah Password</h5>
         </div>
         <div class="card-body">
-          <form method="POST">
+          <form method="POST" action="{{ route('profile.update-password') }}">
             @csrf
             <div class="row mb-3">
-              <label class="col-sm-3 col-form-label" for="basic-default-name">Password Lama</label>
+              <label class="col-sm-3 col-form-label" for="old_password">Password Lama</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control" id="basic-default-name">
+                <input type="password" class="form-control" id="old_password" name="old_password">
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-3 col-form-label" for="basic-default-name">Password Baru</label>
+              <label class="col-sm-3 col-form-label" for="password">Password Baru</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control" id="basic-default-name">
+                <input type="password" class="form-control" id="password" name="password">
+                @error('password')
+                  <div class="form-text text-danger">
+                    {{ $message }}
+                  </div>
+                @enderror
               </div>
             </div>
             <div class="row mb-3">
-              <label class="col-sm-3 col-form-label" for="basic-default-name">Konfirmasi Password Baru</label>
+              <label class="col-sm-3 col-form-label" for="password_confirmation">Konfirmasi Password Baru</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control" id="basic-default-name">
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                @error('password_confirmation')
+                  <div class="form-text text-danger">
+                    {{ $message }}
+                  </div>
+                @enderror
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
