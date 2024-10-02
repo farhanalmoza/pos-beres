@@ -6,12 +6,13 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
 use App\Http\Controllers\Admin\StoreController;
-use App\Http\Controllers\Admin\WerehouseController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
 use App\Http\Middleware\RolePermission;
@@ -69,17 +70,15 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     });
 
     // Werehouse
-    Route::prefix('werehouse')->group(function() {
-        Route::get('/', [WerehouseController::class, 'index'])->name('admin.werehouse.index');
-        Route::get('/create', [WerehouseController::class, 'create'])->name('admin.werehouse.create');
-        Route::get('/edit/{id}', [WerehouseController::class, 'edit'])->name('admin.werehouse.edit');
+    Route::prefix('warehouse')->group(function() {
+        Route::get('/', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
+        Route::get('/get-warehouse', [UserController::class, 'getWarehouse'])->name('admin.warehouse.get-warehouse');
     });
 
     // Cashier
     Route::prefix('cashier')->group(function() {
         Route::get('/', [CashierController::class, 'index'])->name('admin.cashier.index');
-        Route::get('/create', [CashierController::class, 'create'])->name('admin.cashier.create');
-        Route::get('/edit/{id}', [CashierController::class, 'edit'])->name('admin.cashier.edit');
+        Route::get('/get-cashier', [UserController::class, 'getCashier'])->name('admin.cashier.get-cashier');
     });
 
     // Member
@@ -87,6 +86,14 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/', [MemberController::class, 'index'])->name('admin.member.index');
         Route::get('/create', [MemberController::class, 'create'])->name('admin.member.create');
         Route::get('/edit/{id}', [MemberController::class, 'edit'])->name('admin.member.edit');
+    });
+
+    // User
+    Route::prefix('user')->group(function() {
+        Route::post('/', [UserController::class, 'store'])->name('admin.user.store');
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('admin.user.show');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
     });
 });
 

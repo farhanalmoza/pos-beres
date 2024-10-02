@@ -72,9 +72,7 @@
                               Request::routeIs('admin.cashier.index')||
                               Request::routeIs('admin.cashier.create') ||
                               Request::routeIs('admin.cashier.edit') ||
-                              Request::routeIs('admin.werehouse.index') ||
-                              Request::routeIs('admin.werehouse.create') ||
-                              Request::routeIs('admin.werehouse.edit') ? 'active open' : '' }}">
+                              Request::routeIs('admin.warehouse.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-group"></i>
           <div>Pengguna</div>
@@ -85,10 +83,8 @@
               <div data-i18n="Basic">Admin</div>
             </a>
           </li> --}}
-          <li class="menu-item {{ Request::routeIs('admin.werehouse.index') ||
-                                  Request::routeIs('admin.werehouse.create') ||
-                                  Request::routeIs('admin.werehouse.edit')  ? 'active' : '' }}">
-            <a href="{{ route('admin.werehouse.index') }}" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('admin.warehouse.index')  ? 'active' : '' }}">
+            <a href="{{ route('admin.warehouse.index') }}" class="menu-link">
               <div data-i18n="Basic">Gudang</div>
             </a>
           </li>

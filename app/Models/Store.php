@@ -13,4 +13,8 @@ class Store extends Model
         'name',
         'address',
     ];
+
+    public function user() {
+        return $this->hasMany(User::class);
+    }
 }

@@ -1,5 +1,5 @@
 @extends('components.layout')
-@section('title', 'Admin | Daftar Kasir')
+@section('title', 'Admin | Daftar Akun Gudang')
 
 @section('css')
   <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
@@ -25,22 +25,21 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between">
-          <h5 class="card-title">Daftar Kasir</h5>
+          <h5 class="card-title">Daftar Akun Gudang</h5>
           <div class="d-flex align-items-center">
-            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCashierModal">
+            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addWarehouseModal">
               <i class="tf-icon bx bx-plus"></i>
-              Tambah Kasir
+              Tambah Akun Gudang
             </div>
           </div>
         </div>
         <div class="card-body">
           <div class="table-responsive text-nowrap">
-            <table class="table" id="cashier-table">
+            <table class="table" id="warehouse-table">
               <thead>
                 <tr class="text-nowrap">
                   <th>No.</th>
                   <th>Nama</th>
-                  <th>Toko</th>
                   <th>Email</th>
                   <th>No Telp</th>
                   <th>Aksi</th>
@@ -56,28 +55,20 @@
     </div>
   </div>
 
-  {{-- Add Cashier Modal --}}
-  <div class="modal fade" id="addCashierModal" tabindex="-1" style="display: none;" aria-hidden="true">
+  {{-- Add Modal --}}
+  <div class="modal fade" id="addWarehouseModal" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah Akun Kasir</h5>
+          <h5 class="modal-title">Tambah Akun Gudang</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="addCashierForm" autocomplete="off">
-          <input type="hidden" name="role" id="role" value="cashier">
+        <form id="addWarehouseForm" autocomplete="off">
+          <input type="hidden" name="role" id="role" value="warehouse">
           <div class="modal-body">
             <div class="mb-3">
               <label for="name" class="form-label">Nama</label>
               <input type="text" id="name" name="name" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label for="store_id" class="form-label">Toko</label>
-              <select id="store_id" name="store_id" class="form-control">
-                @foreach ($stores as $store)
-                  <option value="{{ $store->id }}">{{ $store->name }}</option>
-                @endforeach
-              </select>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
@@ -108,10 +99,10 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Kasir</h5>
+          <h5 class="modal-title">Edit Akun Gudang</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="updateCashierForm" autocomplete="off">
+        <form id="updateWarehouseForm" autocomplete="off">
           <div class="modal-body">
             <input type="hidden" id="userId" name="userId">
             <div class="mb-3">
@@ -125,11 +116,11 @@
             <div class="mb-3">
               <label for="update_role" class="form-label">Role</label>
               <select class="form-select" id="update_role" name="update_role">
-                <option value="cashier">Kasir</option>
                 <option value="warehouse">Gudang</option>
+                <option value="cashier">Kasir</option>
               </select>
             </div>
-            <div class="mb-3" id="select-store">
+            <div class="mb-3 hide" id="select-store">
               <label for="store_id" class="form-label">Store</label>
               <select class="form-select" id="store_id" name="store_id">
                 @foreach ($stores as $store)
@@ -154,11 +145,11 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Hapus Kasir</h5>
+          <h5 class="modal-title">Hapus Akun Gudang</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Apakah Anda yaking ingin menghapus kasri ini?</p>
+          <p>Apakah Anda yaking ingin menghapus akun gudang ini?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -182,5 +173,5 @@
 {{-- Data Table --}}
 <script src="{{ asset('js/jquery-datatables.js') }}"></script>
 <script src="{{ asset('js/datatable-bs4.js') }}"></script>
-<script src="{{ asset('/js/admin/cashier/index.js') }}"></script>
+<script src="{{ asset('/js/admin/warehouse/index.js') }}"></script> 
 @endsection

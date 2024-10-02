@@ -18,9 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'no_telp',
         'email',
         'password',
         'role',
+        'store_id',
     ];
 
     /**
@@ -44,5 +46,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function store() {
+        return $this->belongsTo(Store::class);
     }
 }
