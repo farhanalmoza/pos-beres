@@ -113,7 +113,7 @@
           <div>Pengaturan</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item {{ Request::routeIs('profile.edit-profile') ? 'active' : '' }}">
             <a href="{{ route('profile.edit-profile') }}" class="menu-link">
               <div data-i18n="Basic">Edit Profile</div>
             </a>
@@ -137,48 +137,58 @@
         </a>
       </li>
 
-      <li class="menu-item {{ Request::routeIs('warehouse.product.index') ||
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
+      <li class="menu-item {{ Request::routeIs('warehouse.product-category.index') ||
+                              Request::routeIs('warehouse.product.index') ||
                               Request::routeIs('warehouse.product-in.index') ||
-                              Request::routeIs('warehouse.product-out.index') ||
-                              Request::routeIs('warehouse.product-request.index') ? 'active open' : '' }}">
+                              Request::routeIs('warehouse.product-out.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{ Request::routeIs('warehouse.product.index') ? 'active' : '' }}">
-            <a href="{{ Route('warehouse.product.index') }}" class="menu-link">
-              <div data-i18n="Basic">Stok Barang</div>
+          <li class="menu-item {{ Request::routeIs('warehouse.product-category.index') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product-category.index') }}" class="menu-link">
+              <div data-i18n="Basic">Kategori Barang</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('warehouse.product.index') ||
+                                  Request::routeIs('warehouse.product.create') ||
+                                  Request::routeIs('warehouse.product.edit') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product.index') }}" class="menu-link">
+              <div data-i18n="Basic">Daftar Barang</div>
             </a>
           </li>
           <li class="menu-item {{ Request::routeIs('warehouse.product-in.index') ? 'active' : '' }}">
-            <a href="{{ Route('warehouse.product-in.index') }}" class="menu-link">
+            <a href="{{ route('warehouse.product-in.index') }}" class="menu-link">
               <div data-i18n="Basic">Barang Masuk</div>
             </a>
           </li>
           <li class="menu-item {{ Request::routeIs('warehouse.product-out.index') ? 'active' : '' }}">
-            <a href="{{ Route('warehouse.product-out.index') }}" class="menu-link">
+            <a href="{{ route('warehouse.product-out.index') }}" class="menu-link">
               <div data-i18n="Basic">Barang Keluar</div>
-            </a>
-          </li>
-          <li class="menu-item {{ Request::routeIs('warehouse.product-request.index') ? 'active' : '' }}">
-            <a href="{{ Route('warehouse.product-request.index') }}" class="menu-link">
-              <div data-i18n="Basic">Permintaan Barang</div>
-              <div class="badge bg-label-danger fs-tiny rounded-pill ms-auto">99+</div>
             </a>
           </li>
         </ul>
       </li>
 
-      <li class="menu-header small text-uppercase"><span class="menu-header-text">Profile</span></li>
-      <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
+      <li class="menu-item {{ Request::routeIs('warehouse.store.index') ? 'active' : '' }}">
+        <a href="{{ route('warehouse.store.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Toko</div>
+        </a>
+      </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
+      <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
+                              Request::routeIs('profile.edit-profile') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
           <div>Pengaturan</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="auth-login-basic.html" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('profile.edit-profile') ? 'active' : '' }}">
+            <a href="{{ route('profile.edit-profile') }}" class="menu-link">
               <div data-i18n="Basic">Edit Profile</div>
             </a>
           </li>

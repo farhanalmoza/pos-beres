@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     public function index() {
         $categories = ProductCategory::get();
-        return view('admin.product.index', compact('categories'));
+        if (Auth::user()->role == 'warehouse') {
+            return view('warehouse.product.index', compact('categories'));
+        } else {
+            return view('admin.product.index', compact('categories'));
+        }
     }
 
     public function getAll() {

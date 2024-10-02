@@ -101,19 +101,48 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(function() {
     Route::get('/dashboard', [WarehouseDashboardController::class, 'index'])->name('warehouse.dashboard');
 
-    // Product
-    Route::prefix('product')->group(function() {
-        Route::get('/', [WarehouseProductController::class, 'index'])->name('warehouse.product.index');
+    // Product Category
+    Route::prefix('product-category')->group(function() {
+        Route::get('/', [ProductCategoryController::class, 'index'])->name('warehouse.product-category.index');
+        Route::get('/get-all', [ProductCategoryController::class, 'getAll'])->name('warehouse.product-category.get-all');
+        Route::post('/', [ProductCategoryController::class, 'store'])->name('warehouse.product-category.store');
+        Route::get('/show/{id}', [ProductCategoryController::class, 'show'])->name('warehouse.product-category.show');
+        Route::put('/update/{id}', [ProductCategoryController::class, 'update'])->name('warehouse.product-category.update');
+        Route::delete('/delete/{id}', [ProductCategoryController::class, 'destroy'])->name('warehouse.product-category.destroy');
     });
 
+    // Product
+    Route::prefix('product')->group(function() {
+        Route::get('/', [ProductController::class, 'index'])->name('warehouse.product.index');
+        Route::get('/get-all', [ProductController::class, 'getAll'])->name('warehouse.product.get-all');
+        Route::post('/', [ProductController::class, 'store'])->name('warehouse.product.store');
+        Route::get('/show/{id}', [ProductController::class, 'show'])->name('warehouse.product.show');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('warehouse.product.update');
+        Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('warehouse.product.destroy');
+    });
+    
     // Product In
     Route::prefix('product-in')->group(function() {
-        Route::get('/', [WarehouseProductController::class, 'productIn'])->name('warehouse.product-in.index');
+        Route::get('/', [ProductInController::class, 'index'])->name('warehouse.product-in.index');
+        Route::get('/get-all', [ProductInController::class, 'getAll'])->name('warehouse.product-in.get-all');
+        Route::post('/', [ProductInController::class, 'store'])->name('warehouse.product-in.store');
     });
 
     // Product Out
     Route::prefix('product-out')->group(function() {
-        Route::get('/', [WarehouseProductController::class, 'productOut'])->name('warehouse.product-out.index');
+        Route::get('/', [ProductOutController::class, 'index'])->name('warehouse.product-out.index');
+        Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('warehouse.product-out.get-all');
+        Route::post('/', [ProductOutController::class, 'store'])->name('warehouse.product-out.store');
+    });
+
+    // Store
+    Route::prefix('store')->group(function() {
+        Route::get('/', [StoreController::class, 'index'])->name('warehouse.store.index');
+        Route::get('/get-all', [StoreController::class, 'getAll'])->name('warehouse.store.get-all');
+        Route::post('/', [StoreController::class, 'store'])->name('warehouse.store.store');
+        Route::get('/show/{id}', [StoreController::class, 'show'])->name('warehouse.store.show');
+        Route::get('/detail/{id}', [StoreController::class, 'detail'])->name('warehouse.store.detail');
+        Route::get('/store-products/{id}', [StoreController::class, 'getStoreProducts'])->name('warehouse.store.store-products');
     });
 
     // Product Request

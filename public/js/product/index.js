@@ -7,7 +7,7 @@ $(document).ready(function() {
 });
 
 function getProducts() {  
-    const urlListProducts = URL + "/admin/product/get-all"    
+    const urlListProducts = URL_Role + "/product/get-all"    
     const columns = [
         {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'code', name: 'code'},
@@ -69,7 +69,7 @@ function addProduct() {
                 quantity : $('#product_quantity').val(),
                 price : $('#product_price').val()
             }
-            Functions.prototype.httpRequest(URL + '/admin/product', data, 'post')
+            Functions.prototype.httpRequest(URL_Role + '/product', data, 'post')
             // hide modal
             $('#addProductModal').modal('hide')
             if ($.fn.DataTable.isDataTable('#productTable')) {
@@ -88,7 +88,7 @@ function showDetail() {
     })
     const getDetail = {
         set loadData(data) {
-            const urlDetail = URL + "/admin/product/show/" + data
+            const urlDetail = URL_Role + "/product/show/" + data
             Functions.prototype.requestDetail(getDetail, urlDetail)
         },
         set successData(response) {
@@ -143,7 +143,7 @@ function updateProduct() {
         submitHandler: function(form, e) {
             e.preventDefault()
             const id = $('#id_product').val()
-            const urlUpdate = URL + "/admin/product/update/" + id
+            const urlUpdate = URL_Role + "/product/update/" + id
             const data = {
                 code : $('#update_code').val(),
                 name : $('#update_name').val(),
@@ -167,7 +167,7 @@ function deleteProduct() {
     $('#productTable').on('click', '.delete', function(e) {
         e.preventDefault()
         const id = $(this).data('id');
-        const urlDelete = URL + '/admin/product/delete/' + id;
+        const urlDelete = URL_Role + '/product/delete/' + id;
         
         // Tangani klik tombol konfirmasi hapus di modal
         $('#confirmDeleteBtn').on('click', function(e) {
