@@ -1,5 +1,5 @@
 @extends('components.layout')
-@section('title', 'Admin | Daftar Toko')
+@section('title', 'Gudang | Daftar Toko')
 
 @section('css')
   <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
@@ -128,7 +128,7 @@
 @section('js')
 <script>
   const URL = "{{ url('') }}"
-  const URL_Role = "{{ url('/admin') }}"
+  const URL_Role = "{{ url('/warehouse') }}"
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>

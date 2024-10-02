@@ -7,7 +7,7 @@ $(document).ready(function() {
 });
 
 function getStores() {  
-    const urlListStores = URL + "/admin/store/get-all"    
+    const urlListStores = URL_Role + "/store/get-all"    
     const columns = [
         {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'name', name: 'name'},
@@ -45,7 +45,7 @@ function addStore() {
                 name : $('#store_name').val(),
                 address : $('#store_address').val()
             }
-            Functions.prototype.httpRequest(URL + '/admin/store', data, 'post')
+            Functions.prototype.httpRequest(URL_Role + '/store', data, 'post')
             // hide modal
             $('#addStoreModal').modal('hide')
             if ($.fn.DataTable.isDataTable('#storeTable')) {
@@ -64,7 +64,7 @@ function showDetail() {
     })
     const getDetail = {
         set loadData(data) {
-            const urlDetail = URL + "/admin/store/show/" + data
+            const urlDetail = URL_Role + "/store/show/" + data
             Functions.prototype.requestDetail(getDetail, urlDetail)
         },
         set successData(response) {
@@ -105,7 +105,7 @@ function updateData() {
         submitHandler: function(form, e) {
             e.preventDefault()
             const id = $('#id_store').val()
-            const urlUpdate = URL + "/admin/store/update/" + id
+            const urlUpdate = URL_Role + "/store/update/" + id
             const data = {
                 name : $('#update_store_name').val(),
                 address : $('#update_store_address').val()
@@ -127,7 +127,7 @@ function deleteStore() {
     $('#storeTable').on('click', '.delete', function(e) {
         e.preventDefault()
         const id = $(this).data('id');
-        const urlDelete = URL + '/admin/store/delete/' + id;
+        const urlDelete = URL_Role + '/store/delete/' + id;
         
         // Tangani klik tombol konfirmasi hapus di modal
         $('#confirmDeleteBtn').on('click', function(e) {

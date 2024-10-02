@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
     public function index() {
-        return view('admin.store.index');
+        if (Auth::user()->role == 'admin') {
+            return view('admin.store.index');
+        } else {
+            return view('warehouse.store.index');
+        }
     }
 
     public function getAll() {
@@ -20,9 +25,14 @@ class StoreController extends Controller
         ->addIndexColumn()
         ->addColumn('actions', function($rows) {
             // button ke halaman detail
-            $btn = '<a href="' . route('admin.store.detail', $rows->id) . '" class="btn btn-success btn-sm">Detail</a>';
-            $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">Ubah</button>';
-            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">Hapus</button>';
+            if (Auth::user()->role == 'admin') {
+                $btn = '<a href="' . route('admin.store.detail', $rows->id) . '" class="btn btn-success btn-sm">Detail</a>';
+                $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">Ubah</button>';
+                $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">Hapus</button>';
+                return $btn;
+            } else {
+                $btn = '<a href="' . route('warehouse.store.detail', $rows->id) . '" class="btn btn-success btn-sm">Detail</a>';
+            }
             return $btn;
         })
         ->rawColumns(['actions'])
@@ -70,7 +80,11 @@ class StoreController extends Controller
         $store = Store::find($id);
         
         if ($store) {
-            return view('admin.store.detail', compact('store'));
+            if (Auth::user()->role == 'admin') {
+                return view('admin.store.detail', compact('store'));
+            } else {
+                return view('warehouse.store.detail', compact('store'));
+            }
         }
     }
 

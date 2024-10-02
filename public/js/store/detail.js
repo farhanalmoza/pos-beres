@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 function getStoreProducts() {
-    const urlListStoreProducts = URL + "/admin/store/store-products/" + store_id
+    const urlListStoreProducts = URL_Role + "/store/store-products/" + store_id
     const columns = [
         {data : 'product.code', name: 'product.code'},
         {data : 'product.name', name: 'product.name'},

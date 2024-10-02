@@ -1,5 +1,5 @@
 @extends('components.layout')
-@section('title', 'Admin | Detail Toko')
+@section('title', 'Gudang | Detail Toko')
 
 @section('css')
   <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
@@ -91,7 +91,7 @@
 @section('js')
   <script>
     const URL = "{{ url('') }}"
-    const URL_Role = "{{ url('/admin') }}"
+    const URL_Role = "{{ url('/warehouse') }}"
     const store_id = window.location.href.split('/').pop()
   </script>
   {{-- Data Table --}}
