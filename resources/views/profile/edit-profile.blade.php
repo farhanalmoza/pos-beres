@@ -16,12 +16,12 @@
           <h5 class="mb-0">Form Ubah No Telepon</h5>
         </div>
         <div class="card-body">
-          <form method="POST" action="#">
+          <form method="POST" action="{{ route('profile.update-no-telepon') }}" autocomplete="off">
             @csrf
             <div class="row mb-3">
               <label class="col-sm-3 col-form-label" for="no_telp">No Telepon</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control" id="no_telp" name="no_telp" value="{{ $user->no_telp }}">
+                <input type="text" class="form-control" id="no_telp" name="no_telp" value="{{ $user->no_telp }}">
                 @error('no_telp')
                   <div class="form-text text-danger">
                     {{ $message }}

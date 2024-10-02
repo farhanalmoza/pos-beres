@@ -38,4 +38,25 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile.edit-profile', compact('user'));
     }
+
+    public function updateNoTelp(Request $request) {
+        $request->validate([
+            'no_telp' => 'required|string|max:255',
+            'password' => 'required|string',
+        ]);
+
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+
+        // cek password
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->route('profile.edit-profile')->with('status', 'Password salah');
+        }
+
+        // update no telepon
+        $user->no_telp = $request->no_telp;
+        $user->save();
+
+        return redirect()->route('profile.edit-profile')->with('status', 'No telepon berhasil diubah');
+    }
 }
