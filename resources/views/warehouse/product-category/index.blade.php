@@ -1,5 +1,5 @@
 @extends('components.layout')
-@section('title', 'Admin | Daftar Kategori Barang')
+@section('title', 'Gudang | Daftar Kategori Barang')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
@@ -51,7 +51,7 @@
       <div class="card">
         <h5 class="card-header">Tambah Kategori Barang</h5>
         <div class="card-body">
-          <form method="POST" action="{{ route('admin.product-category.store') }}">
+          <form method="POST" action="{{ route('warehouse.product-category.store') }}">
             @csrf
             <div class="mb-3">
               <label class="form-label" for="basic-default-fullname">Kategori Barang</label>
@@ -125,7 +125,7 @@
 @section('js')
 <script>
   const URL = "{{ url('') }}"
-  const URL_Role = "{{ url('/admin') }}"
+  const URL_Role = "{{ url('/warehouse') }}"
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>

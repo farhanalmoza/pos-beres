@@ -5,13 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
 {
     public function index() {
         $categories = ProductCategory::paginate(10);
-        return view('admin.product-category.index', compact('categories'));
+        if (Auth::user()->role == 'admin') {
+            return view('admin.product-category.index', compact('categories'));
+        }
+
+        if (Auth::user()->role == 'warehouse') {
+            return view('warehouse.product-category.index', compact('categories'));
+        }
     }
 
     public function getAll() {
@@ -44,7 +51,7 @@ class ProductCategoryController extends Controller
         ]);
         
         if ($create) {
-            return redirect()->route('admin.product-category.index')->with('success', 'Kategori barang berhasil dibuat');
+            return redirect()->back()->with('success', 'Kategori barang berhasil dibuat');
         }
 
         return redirect()->back()->with('error', 'Gagal membuat kategori barang');

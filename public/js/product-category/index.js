@@ -6,7 +6,7 @@ $(document).ready(function() {
 });
 
 function getCategories() {  
-    const urlListCategories = URL + "/admin/product-category/get-all"    
+    const urlListCategories = URL_Role + "/product-category/get-all"    
     const columns = [
         {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'name', name: 'name'},
@@ -23,7 +23,7 @@ function showDetail() {
     })
     const getDetail = {
         set loadData(data) {
-            const urlDetail = URL + "/admin/product-category/show/" + data
+            const urlDetail = URL_Role + "/product-category/show/" + data
             Functions.prototype.requestDetail(getDetail, urlDetail)
         },
         set successData(response) {
@@ -57,7 +57,7 @@ function updateData() {
         submitHandler: function(form, e) {
             e.preventDefault()
             const id = $('#id_category').val()
-            const urlUpdate = URL + "/admin/product-category/update/" + id
+            const urlUpdate = URL_Role + "/product-category/update/" + id
             const data = {
                 name : $('#update_name').val()
             }
@@ -78,7 +78,7 @@ function deleteCategory() {
     $('#categoryTable').on('click', '.delete', function(e) {
         e.preventDefault()
         const id = $(this).data('id');
-        const urlDelete = URL + '/admin/product-category/delete/' + id;
+        const urlDelete = URL_Role + '/product-category/delete/' + id;
         
         // Tangani klik tombol konfirmasi hapus di modal
         $('#confirmDeleteBtn').on('click', function(e) {
