@@ -144,6 +144,7 @@ Auth::routes();
 Route::prefix('profile')->group(function() {
     Route::get('/edit-password', [ProfileController::class, 'editPassword'])->name('profile.edit-password');
     Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::get('/edit-profile', [ProfileController::class, 'editProfile'])->name('profile.edit-profile');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

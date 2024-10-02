@@ -106,14 +106,15 @@
       </li>
       
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
-      <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active open' : '' }}">
+      <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
+                              Request::routeIs('profile.edit-profile') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
           <div>Pengaturan</div>
         </a>
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="auth-login-basic.html" class="menu-link">
+            <a href="{{ route('profile.edit-profile') }}" class="menu-link">
               <div data-i18n="Basic">Edit Profile</div>
             </a>
           </li>

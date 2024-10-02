@@ -33,4 +33,9 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit-password')->with('status', 'Password berhasil diubah');
     }
+
+    public function editProfile() {
+        $user = Auth::user();
+        return view('profile.edit-profile', compact('user'));
+    }
 }
