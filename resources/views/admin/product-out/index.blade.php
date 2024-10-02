@@ -96,6 +96,7 @@
 @section('js')
 <script>
   const URL = "{{ url('') }}"
+  const URL_Role = "{{ url('/admin') }}"
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>

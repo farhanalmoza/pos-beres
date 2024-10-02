@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 function getProductOut() {
-    const urlListProductOut = URL + "/admin/product-out/get-all"
+    const urlListProductOut = URL_Role + "/product-out/get-all"
     const columns = [
         {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'product.name', name: 'product.name'},
@@ -50,7 +50,7 @@ function addProductOut() {
         product_id : $('#product_id').val(),
         quantity : $('#quantity').val()
       }
-      Functions.prototype.httpRequest(URL + '/admin/product-out', data, 'post')
+      Functions.prototype.httpRequest(URL_Role + '/product-out', data, 'post')
       // hide modal
       $('#addProductOutModal').modal('hide')
       // reset form

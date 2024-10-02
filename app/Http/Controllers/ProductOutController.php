@@ -8,6 +8,7 @@ use App\Models\ProductOut;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductOutController extends Controller
@@ -15,7 +16,11 @@ class ProductOutController extends Controller
     public function index() {
         $stores = Store::all();
         $products = Product::where('quantity', '>', 0)->get();
-        return view('admin.product-out.index', compact('stores', 'products'));
+        if (Auth::user()->role == 'admin') {
+            return view('admin.product-out.index', compact('stores', 'products'));
+        } else {
+            return view('warehouse.product-out.index', compact('stores', 'products'));
+        }
     }
 
     public function getAll() {

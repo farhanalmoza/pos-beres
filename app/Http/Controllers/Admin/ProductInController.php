@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductIn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductInController extends Controller
 {
     public function index() {
         $products = Product::all();
-        return view('admin.product-in.index', compact('products'));
+        if (Auth::user()->role == 'admin') {
+            return view('admin.product-in.index', compact('products'));
+        } else {
+            return view('warehouse.product-in.index', compact('products'));
+        }
     }
 
     public function getAll() {
