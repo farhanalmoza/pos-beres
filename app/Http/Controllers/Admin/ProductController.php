@@ -24,10 +24,10 @@ class ProductController extends Controller
         $results = Product::select("id", "code", "name", "category_id", "quantity", "price")->with('category')->get();
         return datatables()
         ->of($results)
-        ->addIndexColumn()
         ->addColumn('actions', function($rows) {
-            $btn = '<button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">Ubah</button>';
-            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">Hapus</button>';
+            $btn = '<button type="button" class="btn btn-success btn-sm detail" data-id="'.$rows->id.'">detail</button>'; 
+            $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">ubah</button>';
+            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">hapus</button>';
             return $btn;
         })
         ->rawColumns(['actions'])

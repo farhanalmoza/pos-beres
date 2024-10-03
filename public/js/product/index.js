@@ -1,7 +1,8 @@
 $(document).ready(function() {
     getProducts();
     addProduct();
-    showDetail();
+    showDetailForPrint();
+    showDetailForEdit();
     updateProduct();
     deleteProduct();
 });
@@ -9,12 +10,14 @@ $(document).ready(function() {
 function getProducts() {  
     const urlListProducts = URL_Role + "/product/get-all"    
     const columns = [
-        {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
         {data : 'code', name: 'code'},
-        {data : 'category.name', name: 'category.name'},
         {data : 'name', name: 'name'},
         {data : 'quantity', name: 'quantity'},
-        {data : 'price', name: 'price'},
+        {data : 'price', name: 'price',
+            render: function (data, type, row) {
+                return Functions.prototype.formatRupiah(data);
+            }
+        },
         {data : 'actions', name: 'actions', orderable: false, searchable: false},
     ]
     Functions.prototype.tableResult("#productTable", urlListProducts, columns)
@@ -80,7 +83,33 @@ function addProduct() {
     })
 }
 
-function showDetail() {  
+function showDetailForPrint() {  
+    $('#productTable').on('click', '.detail', function(e) {
+        e.preventDefault()
+        const id = $(this).data('id')
+        getDetail.loadData = id
+    })
+    const getDetail = {
+        set loadData(data) {
+            const urlDetail = URL_Role + "/product/show/" + data
+            Functions.prototype.requestDetail(getDetail, urlDetail)
+        },
+        set successData(response) {
+            $('#product_code').val(response.data.code);
+            $('#product_name').val(response.data.name);
+            $('#product_category').val(response.data.category_id);
+            $('#product_price').val(response.data.price);
+            $('#product_stock').val(response.data.quantity);
+        },
+        set errorData(err) {
+            $('.bs-toast').addClass('bg-danger show')
+            $('.toast-status').text('Gagal')
+            $('.toast-body').text(err.responseJSON.message)
+        }
+    }
+}
+
+function showDetailForEdit() {  
     $('#productTable').on('click', '.update', function(e) {
         e.preventDefault()
         const id = $(this).data('id')

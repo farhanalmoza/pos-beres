@@ -17,7 +17,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8 mb-3">
       <div class="card">
         <div class="card-header d-flex justify-content-between">
           <h5 class="card-title">Daftar Barang</h5>
@@ -33,10 +33,8 @@
             <table class="table" id="productTable">
               <thead>
                 <tr class="text-nowrap">
-                  <th>No.</th>
-                  <th>Kode Barang</th>
-                  <th>Kategori</th>
-                  <th>Nama Barang</th>
+                  <th>Kode</th>
+                  <th>Barang</th>
                   <th>Stok</th>
                   <th>Harga Jual</th>
                   <th>Aksi</th>
@@ -46,6 +44,37 @@
 
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h5>Detail Barang</h5>
+          <button type="button" class="btn btn-primary">Print barcode</button>
+        </div>
+        <div class="card-body">
+          <div class="mb-2">
+            <label for="product_code" class="form-label">Kode Barang</label>
+            <input type="text" id="product_code" class="form-control" disabled>
+          </div>
+          <div class="mb-2">
+            <label for="product_name" class="form-label">Nama Barang</label>
+            <input type="text" id="product_name" class="form-control" disabled>
+          </div>
+          <div class="mb-2">
+            <label for="product_category" class="form-label">Kategori Barang</label>
+            <input type="text" id="product_category" class="form-control" disabled>
+          </div>
+          <div class="mb-2">
+            <label for="product_price" class="form-label">Harga Barang</label>
+            <input type="text" id="product_price" class="form-control" disabled>
+          </div>
+          <div class="mb-2">
+            <label for="product_stock" class="form-label">Stok</label>
+            <input type="text" id="product_stock" class="form-control" disabled>
           </div>
         </div>
       </div>
@@ -166,7 +195,7 @@
 @section('js')
 <script>
   const URL = "{{ url('') }}"
-  const URL = "{{ url('/admin') }}"
+  const URL_Role = "{{ url('/admin') }}"
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>
