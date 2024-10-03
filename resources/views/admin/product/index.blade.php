@@ -3,6 +3,8 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+{{-- Print barcode --}}
+<link rel="stylesheet" href="{{ asset('css/print-barcode.css') }}">
 @endsection
 
 @section('content')
@@ -53,7 +55,7 @@
       <div class="card">
         <div class="card-header d-flex justify-content-between">
           <h5>Detail Barang</h5>
-          <button type="button" class="btn btn-primary">Print barcode</button>
+          <button type="button" class="btn btn-primary" id="printBarcodeBtn">Print barcode</button>
         </div>
         <div class="card-body">
           <div class="mb-2">
@@ -192,6 +194,12 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- Div yang hanya muncul saat cetak -->
+<div id="print-barcodes">
+  <label for="product_stock" class="form-label">Stok</label>
 </div>
 @endsection
 

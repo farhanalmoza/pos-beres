@@ -1,0 +1,24 @@
+@media print {
+    body * {
+        min-height: 0px;
+    }
+    /* Sembunyikan semua elemen kecuali print-barcodes saat print */
+    .container-xxl {
+        visibility: hidden;
+    }
+
+    #print-barcodes {
+        visibility: visible;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* Cetak 5 barcode per baris */
+        gap: 10px; /* Jarak antar barcode */
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    #print-barcodes svg {
+        width: 100%; /* Pastikan barcode menyesuaikan ukuran */
+        border: 1px solid #000; /* Tambahkan garis */
+    }
+}

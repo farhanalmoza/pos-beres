@@ -7,6 +7,36 @@ $(document).ready(function() {
     deleteProduct();
 });
 
+// Print barcode
+$('#printBarcodeBtn').on('click', function() {
+    // ambil code product
+    let code = $('#product_code').val();
+    // kosongkan konten lama jika ada
+    $('#print-barcodes').empty();
+    // tampilkan banyak barcode ke div khusu cetak
+    for (let i = 0; i < 35; i++) {
+        // buat elemen svg barcode
+        let svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        JsBarcode(svgElement, code, {
+            format: "CODE39", // Format barcode (sesuaikan dengan kebutuhan)
+            lineColor: "#000", // Warna garis
+            width: 1.5,          // Lebar setiap garis
+            height: 50,       // Tinggi barcode
+            displayValue: true // Menampilkan nilai kode di bawah barcode
+        });
+        $('#print-barcodes').append(svgElement);
+    }
+
+    // tampilkan div khusu cetak
+    $('#print-barcodes').show();
+
+    // cetak halaman
+    window.print();
+
+    // sembunyikan div khusu cetak
+    $('#print-barcodes').hide();
+});
+
 function getProducts() {  
     const urlListProducts = URL_Role + "/product/get-all"    
     const columns = [
