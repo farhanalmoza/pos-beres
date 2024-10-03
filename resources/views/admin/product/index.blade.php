@@ -76,6 +76,9 @@
             <label for="product_stock" class="form-label">Stok</label>
             <input type="text" id="product_stock" class="form-control" disabled>
           </div>
+          <div class="mb-2" id="barcode">
+            <svg id="barcodeSvg"></svg>
+          </div>
         </div>
       </div>
     </div>
@@ -203,5 +206,7 @@
 {{-- Data Table --}}
 <script src="{{ asset('js/jquery-datatables.js') }}"></script>
 <script src="{{ asset('js/datatable-bs4.js') }}"></script>
+{{-- JS Barcode --}}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 <script src="{{ asset('/js/product/index.js') }}"></script>
 @endsection

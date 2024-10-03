@@ -100,6 +100,13 @@ function showDetailForPrint() {
             $('#product_category').val(response.data.category_id);
             $('#product_price').val(response.data.price);
             $('#product_stock').val(response.data.quantity);
+            JsBarcode("#barcodeSvg", response.data.code, {
+                format: "CODE39", // Format barcode (sesuaikan dengan kebutuhan)
+                lineColor: "#000", // Warna garis
+                width: 2,          // Lebar setiap garis
+                height: 100,       // Tinggi barcode
+                displayValue: true // Menampilkan nilai kode di bawah barcode
+            });
         },
         set errorData(err) {
             $('.bs-toast').addClass('bg-danger show')
