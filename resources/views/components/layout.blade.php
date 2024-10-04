@@ -104,6 +104,7 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <h3 class="hide mb-0" id="store-name"></h3>
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -216,6 +217,33 @@
       }, 5000)
     </script>
     @yield('js')
+    <script>
+      const URL = "{{ url('') }}"
+      // check role user
+      const role = "{{ Auth::user()->role }}"
+      if (role == 'cashier') {
+        // get store
+        const store_id = "{{ Auth::user()->store_id }}"
+        const urlGetStore = URL + "/cashier/store/" + store_id
+
+        // get store using ajax
+        $.ajax({
+          type: "get",
+          url: urlGetStore,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Authorization' : "Bearer " + sessionStorage.getItem('token')
+          },
+          success: function (response) {
+            $('#store-name').removeClass('hide')
+            $('#store-name').text(response.data.name)
+          },
+          error: function(err) {
+            console.log(err)
+          }
+        })
+      }
+    </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
