@@ -1,76 +1,35 @@
 @extends('components.layout')
 @section('title', 'Kasir | Daftar Stok Barang')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="row">
 
-    <div class="col-12 mb-3">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestStockModal">Buat Permintaan Barang</button>
-    </div>
-
     <div class="col-md-12">
       <div class="card">
         <h5 class="card-header">Daftar Barang</h5>
-        <div class="table-responsive text-nowrap">
-          <table class="table">
-            <thead>
-              <tr class="text-nowrap">
-                <th>No.</th>
-                <th>Kode Barang</th>
-                <th>Kategori</th>
-                <th>Nama Barang</th>
-                <th>Stok</th>
-                <th>Harga Jual</th>
-              </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-              <tr>
-                <th scope="row">1</th>
-                <td>P01</td>
-                <td>Makanan & Minuman</td>
-                <td>Roti Tawar</td>
-                <td>500</td>
-                <td>15.000</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card-body">
+          <div class="table-responsive text-nowrap">
+            <table class="table" id="productTable">
+              <thead>
+                <tr class="text-nowrap">
+                  <th>Kode Barang</th>
+                  <th>Nama Barang</th>
+                  <th>Stok</th>
+                  <th>Harga Jual</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div class="demo-inline-spacing px-4 overflow-auto">
-          <!-- Basic Pagination -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-              </li>
-            </ul>
-          </nav>
-          <!--/ Basic Pagination -->
         </div>
       </div>
     </div>
@@ -109,4 +68,15 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+  const URL_Role = "{{ url('cashier') }}"
+</script>
+{{-- Data Table --}}
+<script src="{{ asset('js/jquery-datatables.js') }}"></script>
+<script src="{{ asset('js/datatable-bs4.js') }}"></script>
+
+<script src="{{ asset('js/cashier/product/index.js') }}"></script>
 @endsection
