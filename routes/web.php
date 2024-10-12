@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
+use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProfileController;
@@ -155,9 +156,20 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
 Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function() {
     Route::get('/dashboard', [CashierDashboardController::class, 'index'])->name('cashier.dashboard');
 
+    // Store
+    Route::get('/store/{id}', [StoreController::class, 'show'])->name('cashier.store.detail');
+
     // Cashier
     Route::prefix('cashier')->group(function() {
         Route::get('/', [CashierController::class, 'index'])->name('cashier.index');
+    });
+
+    // Transaction
+    Route::prefix('transaction')->group(function() {
+        Route::get('/', [TransactionController::class, 'addTransactionForm'])->name('cashier.transaction.add');
+        Route::get('/get/carts/{no_invoice}', [TransactionController::class, 'getCarts'])->name('cashier.transaction.get-carts');
+        Route::post('/add/cart', [TransactionController::class, 'addToCart'])->name('cashier.transaction.add-to-cart');
+        Route::delete('/delete/cart/{id}', [TransactionController::class, 'destroyCart'])->name('cashier.transaction.delete-cart');
     });
 
     // Product

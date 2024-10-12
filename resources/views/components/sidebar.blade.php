@@ -212,13 +212,21 @@
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Transaksi</span></li>
+      <li class="menu-item {{ Request::routeIs('cashier.index') ? 'active' : '' }}">
+        <a href="{{ route('cashier.transaction.add') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cart-add"></i>
+          <div>Tambah Transaksi</div>
+        </a>
+      </li>
       <li class="menu-item {{ Request::routeIs('cashier.index') ? 'active' : '' }}">
         <a href="{{ route('cashier.index') }}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-cart-add"></i>
-          <div>Kasir</div>
+          <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+          <div>Daftar Transaksi</div>
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
       <li class="menu-item {{ Request::routeIs('cashier.product.index') ||
                               Request::routeIs('cashier.product.request-stock') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">

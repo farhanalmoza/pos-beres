@@ -21,6 +21,29 @@ class Functions {
         });
     }
 
+    postRequest(process, url, data) {
+        $.ajax({
+            type: "post",
+            url: url,
+            data: data,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Authorization' : "Bearer " + sessionStorage.getItem('token')
+            },
+            beforeSend: function() {
+                $('.load-wrapper').removeClass('hide-loader')
+            },
+            success: function (response) {
+                $('.load-wrapper').addClass('hide-loader')
+                process.successData = response;
+            },
+            error: function(err) {
+                $('.load-wrapper').addClass('hide-loader')
+                process.errorData = err
+            }
+        });
+    }
+
     requestDetail(process, url, data = null) {
         $.ajax({
             type: "get",
