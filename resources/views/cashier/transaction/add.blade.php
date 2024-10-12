@@ -42,7 +42,6 @@
         <div class="card-body">
           <input type="hidden" id="grandTotal">
           <input type="hidden" id="subTotal">
-          <input type="hidden" id="pajak">
           <input type="hidden" id="diskonValue">
           <div class="d-flex flex-column justify-content-end align-items-end">
             <span class="text-muted font-weight-bold">{{ $no_invoice }}</span>
@@ -64,7 +63,7 @@
           </div>
           <div class="row gap-2 mt-2">
             <button class="btn btn-secondary" id="cancelOrder">Batal</button>
-            <button class="btn btn-primary btn-lg grand_total" id="processPaymentBtn" type="submit">Rp.90.000 ,-</button>
+            <button class="btn btn-primary btn-lg grand_total" id="processPaymentBtn" type="submit">Rp. 0</button>
           </div>
         </div>
       </div>
@@ -87,6 +86,27 @@
             Batal
           </button>
           <button type="button" class="btn btn-danger" id="confirmDeleteCartBtn">Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- Cancel Transaction Modal --}}
+  <div class="modal fade" id="cancelTransactionModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Batalkan Transaksi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Apakah Anda yakin ingin membatalkan transaksi ini?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Batal
+          </button>
+          <button type="button" class="btn btn-danger" id="confirmCancelTransactionBtn">Batalkan</button>
         </div>
       </div>
     </div>

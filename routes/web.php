@@ -170,6 +170,7 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::get('/get/carts/{no_invoice}', [TransactionController::class, 'getCarts'])->name('cashier.transaction.get-carts');
         Route::post('/add/cart', [TransactionController::class, 'addToCart'])->name('cashier.transaction.add-to-cart');
         Route::delete('/delete/cart/{id}', [TransactionController::class, 'destroyCart'])->name('cashier.transaction.delete-cart');
+        Route::delete('/cancel/transaction/{no_invoice}', [TransactionController::class, 'cancelTransaction'])->name('cashier.transaction.cancel-transaction');
     });
 
     // Product

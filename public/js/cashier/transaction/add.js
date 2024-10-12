@@ -16,6 +16,7 @@ $('#product_code').on('keydown', function(e) {
 $(function () {
   getCarts.loadData = noInvoice
   $('#processPaymentBtn').on('click', processPayment)
+  $('#cancelOrder').on('click', cancelOrder)
   deleteCart();
 })
 
@@ -83,7 +84,9 @@ const getCarts = {
     }
 
     $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
+    $('#subTotal').val(subTotal)
     $('.grand_total').text(Functions.prototype.formatRupiah(subTotal.toString()))
+    $('#grandTotal').val(subTotal)
   },
   set errorData(err) {
     $('.bs-toast').removeClass('bg-success')
@@ -121,5 +124,30 @@ function processPayment(e) {
     setTimeout(function() {
       $('.bs-toast').removeClass('show')
     }, 5000)
+  }
+}
+
+function cancelOrder(e) {
+  e.preventDefault();
+  const grandTotal = $('#grandTotal').val()
+  
+  if (grandTotal < 1) {
+    $('.bs-toast').removeClass('bg-success')
+		$('.bs-toast').addClass('bg-danger show')
+		$('.toast-status').text('Gagal')
+		$('.toast-body').text('Isi barang terlebih dulu')
+    setTimeout(function() {
+      $('.bs-toast').removeClass('show')
+    }, 5000)
+  } else {
+    $('#cancelTransactionModal').modal('show')
+
+    $('#confirmCancelTransactionBtn').on('click', function(e) {
+      e.preventDefault()
+      const url = URL_Role + "/transaction/cancel/transaction/" + noInvoice
+      Functions.prototype.deleteData(url)
+      $('#cancelTransactionModal').modal('hide')
+      getCarts.loadData = noInvoice
+    })
   }
 }

@@ -86,4 +86,15 @@ class TransactionController extends Controller
         if (!$deleteCart) return response()->json(['message' => 'Gagal menghapus data keranjang'], 404);
         return response()->json(['message' => 'Berhasil menghapus data keranjang']);
     }
+
+    public function cancelTransaction($no_invoice) {
+        $checkCart = Cart::where('no_invoice', $no_invoice)->count();
+        if ($checkCart > 0) {
+            $delete = Cart::where('no_invoice', $no_invoice)->delete();
+            if (!$delete) return response()->json(['message' => 'Gagal membatalkan transaksi'], 500);
+            return response()->json(['message' => 'Transaksi berhasil dibatalkan']);
+        } else {
+            return response()->json(['message' => 'Keranjang masih kosong'], 422);
+        }
+    }
 }
