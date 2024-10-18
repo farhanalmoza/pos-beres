@@ -111,6 +111,56 @@
       </div>
     </div>
   </div>
+
+  {{-- Cash Modal --}}
+  <div class="modal fade" id="cashModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cashModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="cashForm" autocomplete="off">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="cashAmount">Jumlah Uang</label>
+              <input type="text" class="form-control" id="cashAmount" name="cashAmount" placeholder="Masukkan jumlah uang">
+              <div class="form-text">
+                Pastikan jumlah uang sudah benar
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="confirmCashBtn">Bayar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{-- Print Receipt Modal --}}
+  <div class="modal fade" id="printReceiptModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="printReceiptLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Ingin cetak struk?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="noPrintReceiptBtn">
+            Tidak
+          </button>
+          <button type="button" class="btn btn-primary" id="printReceiptBtn">Cetak</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 
@@ -118,6 +168,7 @@
 <script>
   const URL_Role = "{{ url('/cashier') }}"
   const noInvoice = '{{ $no_invoice }}'
+  const storeId = "{{ auth()->user()->store_id }}"
   const idUserInput = "{{ auth()->user()->id }}"
 </script>
 <script src="{{ asset('js/cashier/transaction/add.js') }}"></script>

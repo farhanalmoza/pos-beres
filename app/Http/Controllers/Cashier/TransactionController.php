@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\StoreProduct;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,11 @@ class TransactionController extends Controller
     }
 
     public function getCarts($no_invoice) {
-        $results = Cart::where('no_invoice', $no_invoice)->with('product')->get();
+        $results = Cart::with('product')
+            ->where('no_invoice', $no_invoice)
+            ->where('user_id', Auth::user()->id)
+            ->where('store_id', Auth::user()->store_id)
+            ->get();
         return response($results);
     }
 
@@ -68,8 +73,11 @@ class TransactionController extends Controller
             Cart::create([
                 'no_invoice' => $request->no_invoice,
                 'product_id' => $product->id,
+                'store_id' => $store_id,
+                'user_id' => Auth::user()->id,
                 'quantity' => 1,
                 'price' => $product->price,
+                'product_discount' => $product->discount,
             ]);
         }
 
@@ -95,6 +103,56 @@ class TransactionController extends Controller
             return response()->json(['message' => 'Transaksi berhasil dibatalkan']);
         } else {
             return response()->json(['message' => 'Keranjang masih kosong'], 422);
+        }
+    }
+
+    public function processPayment(Request $request) {
+        $returnQtyProduct = false;
+        $carts = Cart::where('no_invoice', $request['no_invoice'])->with('product')->get();
+        if (!$carts) return response()->json(['message' => 'Keranjang masih kosong'], 422);
+
+        DB::beginTransaction();
+        try {
+            foreach ($carts as $cart) {
+                // check if product is in store
+                $product = StoreProduct::where('store_id', $cart->store_id)
+                    ->where('product_id', $cart->product_id)->first();
+                    
+                if ($product->quantity < $cart->quantity) {
+                    $returnQtyProduct = true;
+                } else {
+                    // update product stock in store product
+                    $product->quantity = $product->quantity - $cart->quantity;
+                    $product->save();
+                }
+            }
+
+            if ($returnQtyProduct == false) {
+                $createTransaction = Transaction::create([
+                    'no_invoice' => $request['no_invoice'],
+                    'store_id' => $request['store_id'],
+                    'created_by' => $request['created_by'],
+                    'transaction_discount' => $request['transaction_discount'],
+                    'total' => $request['total'],
+                    'cash' => $request['cash'],
+                    'change' => $request['change'],
+                    'notes' => $request['notes'],
+                ]);
+
+                if (!$createTransaction) return response()->json(['message' => 'Gagal membuat transaksi'], 500);
+
+                DB::commit();
+                return response([
+                    'message' => 'Transaksi berhasil ditambahkan',
+                    'idTrx' => $createTransaction->id,
+                    'change' => $createTransaction->change
+                ], 200);
+            } else {
+                return response(['message' => 'Transakasi gagal ditambahkan'], 500);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 }

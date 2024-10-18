@@ -52,13 +52,15 @@ const getCarts = {
     Functions.prototype.requestDetail(getCarts, url)
   },
   set successData(response) {
-    var subTotal = 0
+    var subTotal = 0,
+        totalDiscount = 0
     $('#listCarts').empty()
     if (response.length > 0) {
       var x = 1;
       response.map((result, i) => {
+        totalDiscount = result.product_discount * result.quantity
         var price = result.price,
-            totalPrice = result.price * result.quantity
+            totalPrice = (result.price * result.quantity) - totalDiscount
         subTotal += totalPrice
         const total = subTotal
         const title = result.product.name.length > 20 ? result.product.name.substring(0, 20) + '...' : result.product.name
@@ -85,6 +87,8 @@ const getCarts = {
 
     $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
     $('#subTotal').val(subTotal)
+    $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(totalDiscount.toString()))
+    $('#diskonValue').val(totalDiscount)
     $('.grand_total').text(Functions.prototype.formatRupiah(subTotal.toString()))
     $('#grandTotal').val(subTotal)
   },
@@ -115,6 +119,7 @@ function processPayment(e) {
   e.preventDefault()
   const idUser = idUserInput
   // const customer = $('#customer').val() === '' ? '0' : $('#customer').val()
+  const discount = $('#diskonValue').val()
   const grandTotal = $('#grandTotal').val()
   if (grandTotal < 1) {
     $('.bs-toast').removeClass('bg-success')
@@ -124,6 +129,45 @@ function processPayment(e) {
     setTimeout(function() {
       $('.bs-toast').removeClass('show')
     }, 5000)
+  } else {
+    $('#cashModalLabel').text(`Total belanja ${Functions.prototype.formatRupiah(grandTotal.toString())}`)
+    $('#cashModal').modal('show')
+    $('#confirmCashBtn').on('click', function(e) {
+      e.preventDefault()
+      const url = URL_Role + "/transaction/cash"
+      const change = $("#cashAmount").val() - grandTotal
+      const data = {
+        no_invoice: noInvoice,
+        store_id: storeId,
+        created_by: idUser,
+        transaction_discount: discount != "" ? discount : 0,
+        total: grandTotal,
+        cash: $("#cashAmount").val(),
+        change: $("#cashAmount").val() - grandTotal,
+        notes: ""
+      }
+      Functions.prototype.postRequest(addDataCart, url, data)
+      $('#cashModal').modal('hide')
+      
+      // print receipt
+      $('#printReceiptModal').modal('show')
+      $('#printReceiptLabel').text(`Kembalian. ${Functions.prototype.formatRupiah(change.toString())}`)
+      $('#printReceiptBtn').on('click', function(e) {
+        e.preventDefault()
+        const url = URL_Role + "/transaction/print/receipt/" + noInvoice
+        // Functions.prototype.postRequest(addDataCart, url)
+        $('#printReceiptModal').modal('hide')
+        setTimeout(() => {
+          window.location.reload()
+        }, 500);
+      })
+      $('#noPrintReceiptBtn').on('click', function(e) {
+        e.preventDefault()
+        setTimeout(() => {
+          window.location.reload()
+        }, 500);
+      })
+    })
   }
 }
 

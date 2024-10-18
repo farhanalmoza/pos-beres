@@ -11,6 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'no_invoice',
+        'store_id',
         'created_by',
         'transaction_discount',
         'total',
@@ -18,6 +19,11 @@ class Transaction extends Model
         'change',
         'notes',
     ];
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 
     public function createdBy()
     {
