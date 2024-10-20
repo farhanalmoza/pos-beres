@@ -6,6 +6,7 @@ use App\Helpers\GenerateCode;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -154,5 +155,37 @@ class TransactionController extends Controller
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()], 500);
         }
+    }
+
+    // LIST TRANSACTIONS
+    public function listTransactionsView() {
+        return view('cashier.transaction.list');
+    }
+
+    public function listTransactions() {
+        $results = Transaction::with('store', 'createdBy')
+            ->where('store_id', Auth::user()->store_id)
+            ->get();
+        return datatables()
+        ->of($results)
+        ->addColumn('date', function($rows) {
+            return $rows->created_at->format('d-m-Y');
+        })
+        ->addColumn('actions', function($rows) {
+            $btn = '<a href="'.route('cashier.transaction.invoice', $rows->id).'" class="btn btn-primary btn-sm">Detail</a>';
+            return $btn;
+        })
+        ->rawColumns(['actions'])
+        ->make(true);
+    }
+
+    public function invoice($id) {
+        $store = Store::find(Auth::user()->store_id);
+        $invoice = Transaction::find($id);
+        $items = Cart::with('product')
+            ->where('no_invoice', $invoice->no_invoice)
+            ->where('store_id', Auth::user()->store_id)
+            ->get();
+        return view('cashier.transaction.invoice', compact('invoice', 'store', 'items'));
     }
 }
