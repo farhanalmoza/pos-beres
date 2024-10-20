@@ -228,7 +228,7 @@
 
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
       <li class="menu-item {{ Request::routeIs('cashier.product.index') ||
-                              Request::routeIs('cashier.product.request-stock') ? 'active open' : '' }}">
+                              Request::routeIs('cashier.product.request.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -239,8 +239,8 @@
               <div data-i18n="Basic">Stok Barang</div>
             </a>
           </li>
-          <li class="menu-item {{ Request::routeIs('cashier.product.request-stock') ? 'active' : '' }}">
-            <a href="{{ route('cashier.product.request-stock') }}" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('cashier.product.request.index') ? 'active' : '' }}">
+            <a href="{{ route('cashier.product.request.index') }}" class="menu-link">
               <div data-i18n="Basic">Permintaan Barang</div>
             </a>
           </li>

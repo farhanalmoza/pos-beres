@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    getProduct()
+    getProduct();
+    addRequestProduct();
 })
 
 function getProduct() {

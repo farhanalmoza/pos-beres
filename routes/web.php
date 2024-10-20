@@ -12,6 +12,7 @@ use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductOutController;
+use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
@@ -186,6 +187,12 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::get('/', [CashierProductController::class, 'index'])->name('cashier.product.index');
         Route::get('/get-all', [CashierProductController::class, 'getAll'])->name('cashier.product.getAll');
         Route::get('/request-stock', [CashierProductController::class, 'requestStock'])->name('cashier.product.request-stock');
+
+        Route::prefix('request')->group(function() {
+            Route::get('/', [ProductRequestController::class, 'productRequestView'])->name('cashier.product.request.index');
+            Route::get('/get-all', [ProductRequestController::class, 'getAll'])->name('cashier.product.request.get-all');
+            Route::post('/', [ProductRequestController::class, 'store'])->name('cashier.product.request.store');
+        });
     });
 });
 
