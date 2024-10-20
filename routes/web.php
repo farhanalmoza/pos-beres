@@ -178,6 +178,7 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::get('/list', [TransactionController::class, 'listTransactionsView'])->name('cashier.transaction.list');
         Route::get('/get-all', [TransactionController::class, 'listTransactions'])->name('cashier.transaction.get-all');
         Route::get('/invoice/{id}', [TransactionController::class, 'invoice'])->name('cashier.transaction.invoice');
+        Route::get('/download/invoice/{id}', [TransactionController::class, 'downloadInvoice'])->name('cashier.transaction.download-invoice');
     });
 
     // Product

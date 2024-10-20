@@ -95,7 +95,7 @@
 					</div>
 					<div class="d-flex justify-content-end">
 						{{-- <a href="{{ route('printPdfInvoice') }}?id={{ $id }}" class="btn btn-primary btn-sm">Cetak pdf</a> --}}
-						<a href="{{ $invoice->id }}" class="btn btn-primary btn-sm">Cetak pdf</a>
+						<a href="{{ route('cashier.transaction.download-invoice', $invoice->id) }}" class="btn btn-primary btn-sm">Cetak pdf</a>
 					</div>
 				</div>
 			</div>

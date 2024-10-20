@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -187,5 +188,14 @@ class TransactionController extends Controller
             ->where('store_id', Auth::user()->store_id)
             ->get();
         return view('cashier.transaction.invoice', compact('invoice', 'store', 'items'));
+    }
+
+    public function downloadInvoice($id) {
+        $store = Store::find(Auth::user()->store_id);
+        $transactions = Transaction::with('carts')->find($id);
+        // return view('exports.invoice', compact('store', 'transactions'));
+
+        $pdf = PDF::loadView('exports.invoice', compact('store', 'transactions'));
+        return $pdf->download($transactions->no_invoice.'.pdf');
     }
 }
