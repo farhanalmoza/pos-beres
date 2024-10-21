@@ -121,6 +121,14 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('warehouse.product.show');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('warehouse.product.update');
         Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('warehouse.product.destroy');
+
+        Route::prefix('request')->group(function() {
+            Route::get('/', [ProductRequestController::class, 'productRequestWarehouseView'])->name('warehouse.product.request.index');
+            Route::get('/get-all', [ProductRequestController::class, 'getAllWarehouse'])->name('warehouse.product.request.get-all');
+            Route::get('/get-request-product/{id}', [ProductRequestController::class, 'getRequestProduct'])->name('warehouse.product.request.get-request-product');
+            Route::post('/', [ProductRequestController::class, 'store'])->name('warehouse.product.request.store');
+            Route::post('/process', [ProductRequestController::class, 'processRequestProduct'])->name('warehouse.product.request.process');
+        });
     });
     
     // Product In

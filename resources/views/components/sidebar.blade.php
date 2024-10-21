@@ -141,7 +141,8 @@
       <li class="menu-item {{ Request::routeIs('warehouse.product-category.index') ||
                               Request::routeIs('warehouse.product.index') ||
                               Request::routeIs('warehouse.product-in.index') ||
-                              Request::routeIs('warehouse.product-out.index') ? 'active open' : '' }}">
+                              Request::routeIs('warehouse.product-out.index') ||
+                              Request::routeIs('warehouse.product.request.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -167,6 +168,11 @@
           <li class="menu-item {{ Request::routeIs('warehouse.product-out.index') ? 'active' : '' }}">
             <a href="{{ route('warehouse.product-out.index') }}" class="menu-link">
               <div data-i18n="Basic">Barang Keluar</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('warehouse.product.request.index') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product.request.index') }}" class="menu-link">
+              <div data-i18n="Basic">Permintaan Barang</div>
             </a>
           </li>
         </ul>
