@@ -253,6 +253,14 @@
         </ul>
       </li>
 
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Laporan</span></li>
+      <li class="menu-item {{ Request::routeIs('cashier.report.sale.index') ? 'active' : '' }}">
+        <a href="{{ route('cashier.report.sale.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-bar-chart-alt-2"></i>
+          <div>Penjualan</div>
+        </a>
+      </li>
+
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
       <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
                               Request::routeIs('profile.edit-profile') ? 'active open' : '' }}">
