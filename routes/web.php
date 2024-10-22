@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\SalesReportExport;
 use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Warehouse\ProductController as WarehouseProductControll
 use App\Http\Middleware\RolePermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 // Route Admin
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
@@ -209,6 +211,9 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::prefix('sale')->group(function() {
             Route::get('/', [SalesReportController::class, 'index'])->name('cashier.report.sale.index');
             Route::get('/get-all', [SalesReportController::class, 'getAll'])->name('cashier.report.sale.get-all');
+            Route::get('/export', function() {
+                return Excel::download(new SalesReportExport, 'Laporan-Penjualan.xlsx');
+            })->name('cashier.report.sale.export');
         });
     });
 });

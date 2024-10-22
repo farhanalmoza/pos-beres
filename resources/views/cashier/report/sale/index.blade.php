@@ -20,9 +20,9 @@
 		<div class="card-header d-flex justify-content-between">
 			<h5 class="card-title">Laporan Penjualan</h5>
 			<div class="d-flex align-items-center">
-				<div class="btn btn-sm btn-success">
+				<a href="{{ route('cashier.report.sale.export') }}" class="btn btn-sm btn-success">
 					Eksport Excel
-				</div>
+				</a>
 			</div>
 		</div>
 		<div class="card-body">
