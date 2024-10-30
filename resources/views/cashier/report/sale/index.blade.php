@@ -16,6 +16,21 @@
     <div class="toast-body"></div>
   </div>
 
+	<div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <label for="">Hari</label>
+          <input class="form-control" type="date" value="2024-10-30">
+        </div>
+        <div class="col-md-3">
+          <label for="">Bulan</label>
+          <input class="form-control" type="month" value="2024-06">
+        </div>
+      </div>
+    </div>
+  </div>
+
 	<div class="card">
 		<div class="card-header d-flex justify-content-between">
 			<h5 class="card-title">Laporan Penjualan</h5>

@@ -6,10 +6,13 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
+use App\Http\Controllers\Admin\Report\DeliveryController;
+use App\Http\Controllers\Admin\Report\PurchaseController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
+use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseReportController;
 use App\Http\Controllers\Cashier\SalesReportController;
 use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\MemberController;
@@ -18,7 +21,9 @@ use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
+use App\Http\Controllers\Warehouse\DeliveryReportController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
+use App\Http\Controllers\Warehouse\PurchaseReportController;
 use App\Http\Middleware\RolePermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +83,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('warehouse')->group(function() {
         Route::get('/', [WarehouseController::class, 'index'])->name('admin.warehouse.index');
         Route::get('/get-warehouse', [UserController::class, 'getWarehouse'])->name('admin.warehouse.get-warehouse');
+
+        Route::prefix('report')->group(function() {
+            Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.warehouse.report.purchase.index');
+            Route::get('/delivery', [DeliveryController::class, 'index'])->name('admin.warehouse.report.delivery.index');
+        });
     });
 
     // Cashier
@@ -162,6 +172,21 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
     Route::prefix('product-request')->group(function() {
         Route::get('/', [WarehouseProductController::class, 'productRequest'])->name('warehouse.product-request.index');
     });
+
+    // Report
+    Route::prefix('report')->group(function() {
+        Route::prefix('purchase')->group(function() {
+            Route::get('/', [PurchaseReportController::class, 'index'])->name('warehouse.report.purchase.index');
+            // Route::get('/get-all', [PurchaseReportController::class, 'getAll'])->name('warehouse.report.purchase.get-all');
+            // Route::get('/export', function() {
+            //     return Excel::download(new PurchaseReportExport, 'Laporan-Pembelian.xlsx');
+            // })->name('warehouse.report.purchase.export');
+        });
+
+        Route::prefix('delivery')->group(function() {
+            Route::get('/', [DeliveryReportController::class, 'index'])->name('warehouse.report.delivery.index');
+        });
+    });
 });
 
 // Route Cashier
@@ -214,6 +239,10 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
             Route::get('/export', function() {
                 return Excel::download(new SalesReportExport, 'Laporan-Penjualan.xlsx');
             })->name('cashier.report.sale.export');
+        });
+
+        Route::prefix('purchase')->group(function() {
+            Route::get('/', [CashierPurchaseReportController::class, 'index'])->name('cashier.report.purchase.index');
         });
     });
 });

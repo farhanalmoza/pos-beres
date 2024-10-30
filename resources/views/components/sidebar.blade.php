@@ -104,6 +104,20 @@
           </li>
         </ul>
       </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Laporan</span></li>
+      <li class="menu-item {{ Request::routeIs('admin.warehouse.report.purchase.index') ? 'active' : '' }}">
+        <a href="{{ route('admin.warehouse.report.purchase.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Pembelian</div>
+        </a>
+      </li>
+      <li class="menu-item {{ Request::routeIs('admin.warehouse.report.delivery.index') ? 'active' : '' }}">
+        <a href="{{ route('admin.warehouse.report.delivery.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Pengiriman</div>
+        </a>
+      </li>
       
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
       <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
@@ -185,6 +199,20 @@
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Laporan</span></li>
+      <li class="menu-item {{ Request::routeIs('warehouse.report.purchase.index') ? 'active' : '' }}">
+        <a href="{{ route('warehouse.report.purchase.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Pembelian</div>
+        </a>
+      </li>
+      <li class="menu-item {{ Request::routeIs('warehouse.report.delivery.index') ? 'active' : '' }}">
+        <a href="{{ route('warehouse.report.delivery.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Pengiriman</div>
+        </a>
+      </li>
+
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
       <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
                               Request::routeIs('profile.edit-profile') ? 'active open' : '' }}">
@@ -258,6 +286,12 @@
         <a href="{{ route('cashier.report.sale.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-bar-chart-alt-2"></i>
           <div>Penjualan</div>
+        </a>
+      </li>
+      <li class="menu-item {{ Request::routeIs('cashier.report.purchase.index') ? 'active' : '' }}">
+        <a href="{{ route('cashier.report.purchase.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-bar-chart-alt-2"></i>
+          <div>Pembelian</div>
         </a>
       </li>
 
