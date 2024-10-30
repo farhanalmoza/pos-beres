@@ -19,6 +19,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\DeliveryReportController;
@@ -32,6 +33,16 @@ use Maatwebsite\Excel\Facades\Excel;
 // Route Admin
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Supplier
+    Route::prefix('supplier')->group(function() {
+        Route::get('/', [SupplierController::class, 'index'])->name('admin.supplier.index');
+        Route::get('/get-all', [SupplierController::class, 'getAll'])->name('admin.supplier.get-all');
+        Route::post('/', [SupplierController::class, 'store'])->name('admin.supplier.store');
+        Route::get('/show/{id}', [SupplierController::class, 'show'])->name('admin.supplier.show');
+        Route::put('/update/{id}', [SupplierController::class, 'update'])->name('admin.supplier.update');
+        Route::delete('/delete/{id}', [SupplierController::class, 'destroy'])->name('admin.supplier.destroy');
+    });
 
     // Product Category
     Route::prefix('product-category')->group(function() {
