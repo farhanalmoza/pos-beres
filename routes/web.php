@@ -127,6 +127,16 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(function() {
     Route::get('/dashboard', [WarehouseDashboardController::class, 'index'])->name('warehouse.dashboard');
 
+    // Supplier
+    Route::prefix('supplier')->group(function() {
+        Route::get('/', [SupplierController::class, 'index'])->name('warehouse.supplier.index');
+        Route::get('/get-all', [SupplierController::class, 'getAll'])->name('warehouse.supplier.get-all');
+        Route::post('/', [SupplierController::class, 'store'])->name('warehouse.supplier.store');
+        Route::get('/show/{id}', [SupplierController::class, 'show'])->name('warehouse.supplier.show');
+        Route::put('/update/{id}', [SupplierController::class, 'update'])->name('warehouse.supplier.update');
+        Route::delete('/delete/{id}', [SupplierController::class, 'destroy'])->name('warehouse.supplier.destroy');
+    });
+
     // Product Category
     Route::prefix('product-category')->group(function() {
         Route::get('/', [ProductCategoryController::class, 'index'])->name('warehouse.product-category.index');

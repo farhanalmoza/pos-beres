@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
     public function index() {
-        return view('admin.supplier.index');
+        if (Auth::user()->role == 'warehouse') {
+            return view('warehouse.supplier.index');
+        } else if (Auth::user()->role == 'admin') {
+            return view('admin.supplier.index');
+        }
     }
 
     public function getAll() {

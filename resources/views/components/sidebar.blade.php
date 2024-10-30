@@ -27,7 +27,7 @@
           <div>Supplier</div>
         </a>
       </li>
-      
+
       <li class="menu-item {{ Request::routeIs('admin.product-category.index') ||
                               Request::routeIs('admin.product.index') ||
                               Request::routeIs('admin.product.create') ||
@@ -159,6 +159,13 @@
       </li>
 
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
+      <li class="menu-item {{ Request::routeIs('warehouse.supplier.index') ? 'active' : '' }}">
+        <a href="{{ route('warehouse.supplier.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-store-alt"></i>
+          <div>Supplier</div>
+        </a>
+      </li>
+
       <li class="menu-item {{ Request::routeIs('warehouse.product-category.index') ||
                               Request::routeIs('warehouse.product.index') ||
                               Request::routeIs('warehouse.product-in.index') ||
