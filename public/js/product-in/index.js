@@ -6,8 +6,8 @@ $(document).ready(function() {
 function getProductIn() {
     const urlListProductIn = URL_Role + "/product-in/get-all"
     const columns = [
-        {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
-        {data : 'product.name', name: 'product.name'},
+        {data : 'supplier', name: 'supplier', orderable: false},
+        {data : 'product.name', name: 'product.name', orderable: false},
         {data : 'purchase_price', name: 'purchase_price',
           render: function (data, type, row) {
             return Functions.prototype.formatRupiah(data);
@@ -55,7 +55,10 @@ function getProduct() {
 function addProductIn() {  
     $('#addProductInForm').validate({
         rules: {
-            product: {
+            supplier_id: {
+                required: true
+            },
+            product_id: {
                 required: true
             },
             purchase_price: {
@@ -67,7 +70,10 @@ function addProductIn() {
         },
         // custom message
         messages: {
-            product: {
+            supplier_id: {
+                required: 'Pilih supplier'
+            },
+            product_id: {
                 required: 'Pilih Barang'
             },
             purchase_price: {
@@ -83,6 +89,7 @@ function addProductIn() {
         submitHandler: function(form, e) {
             e.preventDefault()
             const data = {
+                supplier_id : $('#supplier_id').val(),
                 product_id : $('#product_id').val(),
                 purchase_price : $('#purchase_price').val(),
                 quantity : $('#quantity').val()

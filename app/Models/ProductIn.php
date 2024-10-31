@@ -12,10 +12,15 @@ class ProductIn extends Model
     protected $table = 'product_in';
     
     protected $fillable = [
+        'supplier_id',
         'product_id',
         'purchase_price',
         'quantity',
     ];
+
+    public function supplier() {
+        return $this->belongsTo(Supplier::class);
+    }
 
     public function product() {
         return $this->belongsTo(Product::class);

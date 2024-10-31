@@ -61,6 +61,14 @@
         <form id="addProductInForm" autocomplete="off">
           <div class="modal-body">
             <div class="mb-3">
+              <label for="supplier_id" class="form-label">Supplier</label>
+              <select name="supplier_id" id="supplier_id" class="form-control">
+                @foreach ($suppliers as $supplier)
+                  <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="product_id" class="form-label">Barang</label>
               <select name="product_id" id="product_id" class="form-control">
                 @foreach ($products as $product)

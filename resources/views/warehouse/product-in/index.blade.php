@@ -33,7 +33,7 @@
             <table class="table" id="product-in-table" width="100%">
               <thead>
                 <tr class="text-nowrap">
-                  <th>No.</th>
+                  <th>Supplier</th>
                   <th>Nama Barang</th>
                   <th>Harga Beli</th>
                   <th>Jumlah</th>
@@ -60,6 +60,14 @@
         </div>
         <form id="addProductInForm" autocomplete="off">
           <div class="modal-body">
+            <div class="mb-3">
+              <label for="supplier_id" class="form-label">Supplier</label>
+              <select name="supplier_id" id="supplier_id" class="form-control">
+                @foreach ($suppliers as $supplier)
+                  <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="mb-3">
               <label for="product_id" class="form-label">Barang</label>
               <select name="product_id" id="product_id" class="form-control">
@@ -92,7 +100,6 @@
 
 @section('js')
 <script>
-  const URL = "{{ url('') }}"
   const URL_Role = "{{ url('/warehouse') }}"
 </script>
 {{-- Form Validate --}}
