@@ -1,6 +1,10 @@
 @extends('components.layout')
 @section('title', 'Kasir | Laporan Pembelian')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
 	<div class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0"
@@ -35,7 +39,7 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-hover">
+      <table class="table table-hover" id="purchaseReportTable">
         <thead>
           <tr>
             <th>Barang</th>
@@ -44,19 +48,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Barang 1</td>
-            <td>100</td>
-            <td>2020-01-01</td>
-          </tr>
-          <tr>
-            <td>Barang 2</td>
-            <td>200</td>
-            <td>2020-01-02</td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+  const URL_Role = "{{ url('/cashier') }}"
+</script>
+{{-- Data Table --}}
+<script src="{{ asset('js/jquery-datatables.js') }}"></script>
+<script src="{{ asset('js/datatable-bs4.js') }}"></script>
+<script src="{{ asset('js/cashier/report/purchase.js') }}"></script>
 @endsection

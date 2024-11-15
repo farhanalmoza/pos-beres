@@ -264,6 +264,7 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
 
         Route::prefix('purchase')->group(function() {
             Route::get('/', [CashierPurchaseReportController::class, 'index'])->name('cashier.report.purchase.index');
+            Route::get('/get-all', [CashierPurchaseReportController::class, 'getAll'])->name('cashier.report.purchase.get-all');
         });
     });
 });
