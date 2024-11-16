@@ -16,6 +16,7 @@ use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseReportController;
 use App\Http\Controllers\Cashier\SalesReportController;
 use App\Http\Controllers\Cashier\TransactionController;
+use App\Http\Controllers\Member\AuthController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
@@ -28,6 +29,12 @@ use App\Http\Controllers\Warehouse\PurchaseReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
+
+Route::get('/', [
+    function () {
+        return view('welcome');
+    }
+]);
 
 // Route Admin
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
@@ -271,6 +278,19 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
 });
 
 Auth::routes();
+// Auth Member Route
+Route::prefix('member')->group(function() {
+    Route::middleware(['guest'])->group(function() {
+        Route::get('/login', [AuthController::class, 'loginForm'])->name('member.loginForm');
+        Route::post('/login', [AuthController::class, 'login'])->name('member.login');
+    });
+
+    Route::get('/dashboard', [
+        function () {
+            return view('member.dashboard');
+        }
+    ])->name('member.dashboard');
+});
 
 // Profile Route
 Route::prefix('profile')->group(function() {

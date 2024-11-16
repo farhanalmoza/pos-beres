@@ -1,6 +1,5 @@
 
 <!DOCTYPE html>
-
 <html
   lang="en"
   class="light-style layout-wide customizer-hide"
@@ -60,25 +59,47 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bold">Selamat datang</span>
+                  <span class="app-brand-text demo text-body fw-bold">Masuk</span>
                 </a>
               </div>
               <!-- /Logo -->
 
-							<a href="/login">
-								<div class="card mb-3">
-									<div class="card-body pb-1">
-										<h4 class="text-center">Masuk sebagai pegawai</h4>
-									</div>
-								</div>
-							</a>
-							<a href="/member/login">
-								<div class="card">
-									<div class="card-body pb-1">
-										<h4 class="text-center">Masuk sebagai member</h4>
-									</div>
-								</div>
-							</a>
+              <form class="mb-3" action="{{ route('member.login') }}" method="POST">
+                @csrf
+                <input type="hidden" name="remember" value="true">
+                <div class="mb-3">
+                  <label for="email" class="form-label">No WhatsApp</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="phone-addon">+62</span>
+                    <input type="number" name="phone" id="phone" class="form-control" placeholder="81234567890" aria-describedby="phone-addon">
+                  </div>
+                  @error('phone')
+                    <div class="form-text text-danger">
+                      <strong>{{ $message }}</strong>
+                    </div>
+                  @enderror
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Password</label>
+                    <a href="#">
+                      <small>Lupa Password?</small>
+                    </a>
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                  @error('password')
+                    <div class="form-text text-danger">
+                      <strong>{{ $message }}</strong>
+                    </div>
+                  @enderror
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
+                </div>
+              </form>
             </div>
           </div>
           <!-- /Register -->
