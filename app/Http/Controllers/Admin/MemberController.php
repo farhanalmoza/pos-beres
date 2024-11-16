@@ -16,13 +16,16 @@ class MemberController extends Controller
         $results = Member::get();
         return datatables()
         ->of($results)
+        ->addColumn('whatsapp', function($rows) {
+            return '+62'.$rows->phone;
+        })
         ->addColumn('actions', function($rows) {
-            $btn = '<button type="button" class="btn btn-success btn-sm detail" data-id="'.$rows->id.'">detail</button>'; 
-            $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">ubah</button>';
-            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">hapus</button>';
+            // $btn = '<button type="button" class="btn btn-success btn-sm detail" data-id="'.$rows->id.'">detail</button>'; 
+            // $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">ubah</button>';
+            $btn = ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">hapus</button>';
             return $btn;
         })
-        ->rawColumns(['actions'])
+        ->rawColumns(['actions', 'whatsapp'])
         ->make(true);
     }
 
@@ -56,5 +59,12 @@ class MemberController extends Controller
             return response(['message' => 'Member berhasil dibuat'], 200);
         }
         return response(['message' => 'Gagal membuat member'], 400);
+    }
+
+    public function destroy($id) {
+        $result = Member::findOrFail($id);
+        if(!$result) return response(['message' => 'terjadi kesalahan'], 500);
+        $result->delete();
+        return response(['message' => 'Member berhasil dihapus'], 200);
     }
 }

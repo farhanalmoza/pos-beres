@@ -111,6 +111,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/', [AdminMemberController::class, 'index'])->name('admin.member.index');
         Route::get('/get-all', [AdminMemberController::class, 'getAll'])->name('admin.member.get-all');
         Route::post('/', [AdminMemberController::class, 'store'])->name('admin.member.store');
+        Route::delete('/delete/{id}', [AdminMemberController::class, 'destroy'])->name('admin.member.destroy');
         Route::get('/edit/{id}', [AdminMemberController::class, 'edit'])->name('admin.member.edit');
     });
 

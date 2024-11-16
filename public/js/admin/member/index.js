@@ -1,12 +1,13 @@
 $(document).ready(function() {
     getMembers();
     addMember();
+    deleteMember();
 });
 
 function getMembers() {  
     const urlListMembers = URL_Role + "/member/get-all"    
     const columns = [
-        {data : 'phone', name: 'phone'},
+        {data : 'whatsapp', name: 'whatsapp'},
         {data : 'nik', name: 'nik'},
         {data : 'name', name: 'name'},
         {data : 'address', name: 'address'},
@@ -116,5 +117,24 @@ function addMember() {
             }
             getMembers()
         }
+    })
+}
+
+function deleteMember() {
+    $('#memberTable').on('click', '.delete', function(e) {
+        e.preventDefault()
+        const id = $(this).data('id');
+        const urlDelete = URL_Role + '/member/delete/' + id;
+        
+        // Tangani klik tombol konfirmasi hapus di modal
+        $('#confirmDeleteBtn').on('click', function(e) {
+            e.preventDefault()
+            Functions.prototype.deleteData(urlDelete)
+            $('#deleteModal').modal('hide')
+            if ($.fn.DataTable.isDataTable('#memberTable')) {
+                $('#memberTable').DataTable().destroy();
+            }
+            getMembers()
+        })
     })
 }
