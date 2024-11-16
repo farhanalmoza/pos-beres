@@ -3,6 +3,7 @@
 use App\Exports\SalesReportExport;
 use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
@@ -15,7 +16,6 @@ use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseReportController;
 use App\Http\Controllers\Cashier\SalesReportController;
 use App\Http\Controllers\Cashier\TransactionController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
@@ -25,7 +25,6 @@ use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardCont
 use App\Http\Controllers\Warehouse\DeliveryReportController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
 use App\Http\Controllers\Warehouse\PurchaseReportController;
-use App\Http\Middleware\RolePermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -109,9 +108,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     // Member
     Route::prefix('member')->group(function() {
-        Route::get('/', [MemberController::class, 'index'])->name('admin.member.index');
-        Route::get('/create', [MemberController::class, 'create'])->name('admin.member.create');
-        Route::get('/edit/{id}', [MemberController::class, 'edit'])->name('admin.member.edit');
+        Route::get('/', [AdminMemberController::class, 'index'])->name('admin.member.index');
+        Route::get('/get-all', [AdminMemberController::class, 'getAll'])->name('admin.member.get-all');
+        Route::post('/', [AdminMemberController::class, 'store'])->name('admin.member.store');
+        Route::get('/edit/{id}', [AdminMemberController::class, 'edit'])->name('admin.member.edit');
     });
 
     // User
