@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\MemberPermission;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RolePermission;
 use Illuminate\Foundation\Application;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => RolePermission::class,
             'guest' => RedirectIfAuthenticated::class,
+            'member' => MemberPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

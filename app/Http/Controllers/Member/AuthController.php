@@ -33,4 +33,9 @@ class AuthController extends Controller
         Session::put('member', $member);
         return redirect()->route('member.dashboard');
     }
+
+    public function logout() {
+        Session::flush();
+        return redirect()->route('member.loginForm');
+    }
 }

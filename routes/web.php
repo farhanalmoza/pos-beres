@@ -285,11 +285,14 @@ Route::prefix('member')->group(function() {
         Route::post('/login', [AuthController::class, 'login'])->name('member.login');
     });
 
-    Route::get('/dashboard', [
-        function () {
-            return view('member.dashboard');
-        }
-    ])->name('member.dashboard');
+    Route::middleware(['member'])->group(function() {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('member.logout');
+        Route::get('/dashboard', [function () {
+                return view('member.dashboard');
+             }
+        ])->name('member.dashboard');
+
+    });
 });
 
 // Profile Route
