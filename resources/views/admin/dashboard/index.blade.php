@@ -48,24 +48,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Kode Barang 1</td>
-                <td>Rp. 100.000</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Kode Barang 2</td>
-                <td>Rp. 200.000</td>
-                <td>20</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Kode Barang 3</td>
-                <td>Rp. 300.000</td>
-                <td>30</td>
-              </tr>
+              @if (count($topProducts) == 0)
+                <tr>
+                  <td colspan="4" class="text-center">Belum ada penjualan di bulan ini</td>
+                </tr>
+              @else
+                @foreach ($topProducts as $product)
+                  <tr>
+                    <th>{{ $product->code }}</th>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->total_sold }}</td>
+                  </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
         </div>
