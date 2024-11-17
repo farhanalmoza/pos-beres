@@ -40,4 +40,9 @@ class SettingController extends Controller
 
         return redirect()->back()->with('status', 'Password berhasil diubah');
     }
+
+    public function editProfile() {
+        $member = Member::find(Session::get('member')->id);
+        return view('member.setting.edit-profile', compact('member'));
+    }
 }
