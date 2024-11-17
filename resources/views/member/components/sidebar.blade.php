@@ -28,7 +28,7 @@
       </li>
       
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan</span></li>
-      <li class="menu-item {{ Request::routeIs('profile.edit-password') ||
+      <li class="menu-item {{ Request::routeIs('member.setting.change-password') ||
                               Request::routeIs('profile.edit-profile') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
@@ -40,8 +40,8 @@
               <div data-i18n="Basic">Edit Profile</div>
             </a>
           </li>
-          <li class="menu-item {{ Request::routeIs('profile.edit-password') ? 'active' : '' }}">
-            <a href="{{ route('profile.edit-password') }}" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('member.setting.change-password') ? 'active' : '' }}">
+            <a href="{{ route('member.setting.change-password') }}" class="menu-link">
               <div data-i18n="Basic">Ganti Password</div>
             </a>
           </li>

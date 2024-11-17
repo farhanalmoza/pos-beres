@@ -17,6 +17,7 @@ use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseRepo
 use App\Http\Controllers\Cashier\SalesReportController;
 use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\Member\AuthController;
+use App\Http\Controllers\Member\SettingController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
@@ -292,6 +293,10 @@ Route::prefix('member')->group(function() {
              }
         ])->name('member.dashboard');
 
+        Route::prefix('setting')->group(function() {
+            Route::get('/change-password', [SettingController::class, 'changePassword'])->name('member.setting.change-password');
+            Route::post('/update-password', [SettingController::class, 'updatePassword'])->name('member.setting.update-password');
+        });
     });
 });
 
