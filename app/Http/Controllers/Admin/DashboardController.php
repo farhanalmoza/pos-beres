@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index() {
         $topProducts = $this->getTopProducts();
+        $inactiveProducts = $this->getInactiveProducts();
 
-        return view('admin.dashboard.index', compact('topProducts'));
+        return view('admin.dashboard.index', compact('topProducts', 'inactiveProducts'));
     }
 
     public function getTopProducts() {
@@ -33,5 +35,45 @@ class DashboardController extends Controller
             ->get();
 
         return $topProducts;
+    }
+
+    public function getInactiveProducts() {
+        // get date last 3 months
+        $threeMonthsAgo = Carbon::now()->subMonths(3);
+
+        $inactiveProducts = Product::select('products.id', 'products.name', 'products.code')
+            ->leftJoin('carts', 'carts.product_id', '=', 'products.id')
+            ->leftJoin('transactions', function($join) use ($threeMonthsAgo) {
+                $join->on('carts.no_invoice', '=', 'transactions.no_invoice')
+                    ->where('transactions.created_at', '>=', $threeMonthsAgo);
+            })
+            ->where(function($query) {
+                $query->whereNull('transactions.no_invoice')
+                    ->orWhereDoesntHave('carts.transaction', function($query) {
+                        $query->where('created_at', '>=', Carbon::now()->subMonths(3));
+                    });
+            })
+            ->withCount(['carts as last_sold' => function($query) {
+                $query->join('transactions', 'transactions.no_invoice', '=', 'carts.no_invoice')
+                    ->select(DB::raw('MAX(transactions.created_at)'));
+            }])
+            ->groupBy('products.id', 'products.name', 'products.code')
+            ->orderBy('last_sold', 'asc')
+            ->take(5)
+            ->get();
+        
+        $data = $inactiveProducts->map(function($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'code' => $product->code,
+                'last_sold_date' => $product->last_sold ? Carbon::parse($product->last_sold)->format('Y-m-d') : 'Tidak Terjual',
+                'days_inactive' => $product->last_sold
+                    ? Carbon::parse($product->last_sold)->diffInDays(Carbon::now())
+                    : "Tidak Terjual",
+            ];
+        });
+
+        return $data;
     }
 }

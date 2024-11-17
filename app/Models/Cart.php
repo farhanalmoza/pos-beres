@@ -33,4 +33,9 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'no_invoice', 'no_invoice');
+    }
 }
