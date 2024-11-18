@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Report;
 
+use App\Exports\Warehouse\DeliveryReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOut;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DeliveryController extends Controller
 {
@@ -40,5 +41,19 @@ class DeliveryController extends Controller
             })
             ->rawColumns(['product_code_name', 'created_at'])
             ->make(true);
+    }
+
+    public function export() {
+        $start_date = request()->input('start_date');
+        $end_date = request()->input('end_date');
+
+        $fileName = 'Laporan-Pengiriman.xlsx';
+        if ($start_date != null && $end_date != null) {
+            $fileName = 'Laporan-Pengiriman-'.$start_date.'-'.$end_date.'.xlsx';
+        }
+        
+        return Excel::download(new DeliveryReportExport($start_date, $end_date),
+            $fileName
+        );
     }
 }

@@ -69,3 +69,17 @@ function resetFilterDate() {
     }
     getDeliveryReport()
 }
+
+function exportExcel() {
+    const urlExport = URL_Role + "/warehouse/report/delivery/export"
+    
+    if (startDate != null && endDate != null) {
+        const data = {
+            start_date: startDate,
+            end_date: endDate
+        }
+        window.location.href = urlExport + "?" + $.param(data)
+    } else {
+        window.location.href = urlExport
+    }
+}

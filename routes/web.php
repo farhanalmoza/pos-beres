@@ -113,6 +113,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::prefix('delivery')->group(function() {
                 Route::get('/', [DeliveryController::class, 'index'])->name('admin.warehouse.report.delivery.index');
                 Route::get('/get-all', [DeliveryController::class, 'getAll'])->name('admin.warehouse.report.delivery.get-all');
+                Route::get('/export', [DeliveryController::class, 'export'])->name('admin.warehouse.report.delivery.export');
             });
         });
     });
