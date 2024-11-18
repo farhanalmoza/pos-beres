@@ -20,12 +20,17 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-3">
-          <label for="">Hari</label>
-          <input class="form-control" type="date" value="2024-10-30">
+          <label for="start_date">Tanggal Awal</label>
+          <input class="form-control" type="date" id="start_date" onchange="checkToggleDisabled()">
         </div>
         <div class="col-md-3">
-          <label for="">Bulan</label>
-          <input class="form-control" type="month" value="2024-06">
+          <label for="end_date">Tanggal Akhir</label>
+          <input class="form-control" type="date" id="end_date" onchange="checkToggleDisabled()">
+        </div>
+
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary" id="filterDateBtn" disabled onclick="submitFilterDate()">Cari</button>
+          <button type="button" class="btn btn-outline-danger" id="resetDateBtn" onclick="resetFilterDate()">Reset</button>
         </div>
       </div>
     </div>
