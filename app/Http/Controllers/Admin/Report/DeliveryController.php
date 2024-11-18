@@ -6,13 +6,18 @@ use App\Exports\Warehouse\DeliveryReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOut;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DeliveryController extends Controller
 {
     public function index()
     {
-        return view('admin.warehouse.report.delivery.index');
+        if (Auth::user()->role === 'admin') {
+            return view('admin.warehouse.report.delivery.index');
+        } else {
+            return view('warehouse.report.delivery.index');
+        }
     }
 
     public function getAll() {

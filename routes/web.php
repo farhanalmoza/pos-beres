@@ -27,7 +27,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\DeliveryReportController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
-use App\Http\Controllers\Warehouse\PurchaseReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -216,15 +215,15 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
     // Report
     Route::prefix('report')->group(function() {
         Route::prefix('purchase')->group(function() {
-            Route::get('/', [PurchaseReportController::class, 'index'])->name('warehouse.report.purchase.index');
-            // Route::get('/get-all', [PurchaseReportController::class, 'getAll'])->name('warehouse.report.purchase.get-all');
-            // Route::get('/export', function() {
-            //     return Excel::download(new PurchaseReportExport, 'Laporan-Pembelian.xlsx');
-            // })->name('warehouse.report.purchase.export');
+            Route::get('/', [PurchaseController::class, 'index'])->name('warehouse.report.purchase.index');
+            Route::get('/get-all', [PurchaseController::class, 'getAll'])->name('warehouse.report.purchase.get-all');
+            Route::get('/export', [PurchaseController::class, 'export'])->name('warehouse.report.purchase.export');
         });
 
         Route::prefix('delivery')->group(function() {
-            Route::get('/', [DeliveryReportController::class, 'index'])->name('warehouse.report.delivery.index');
+            Route::get('/', [DeliveryController::class, 'index'])->name('warehouse.report.delivery.index');
+            Route::get('/get-all', [DeliveryController::class, 'getAll'])->name('warehouse.report.delivery.get-all');
+            Route::get('/export', [DeliveryController::class, 'export'])->name('warehouse.report.delivery.export');
         });
     });
 });

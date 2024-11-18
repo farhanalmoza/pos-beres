@@ -6,13 +6,18 @@ use App\Exports\Warehouse\PurchaseReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductIn;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PurchaseController extends Controller
 {
     public function index()
     {
-        return view('admin.warehouse.report.purchase.index');
+        if (Auth::user()->role === 'admin') {
+            return view('admin.warehouse.report.purchase.index');
+        } else {
+            return view('warehouse.report.purchase.index');
+        }
     }
 
     public function getAll() {
