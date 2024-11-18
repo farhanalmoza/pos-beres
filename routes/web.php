@@ -104,7 +104,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/get-warehouse', [UserController::class, 'getWarehouse'])->name('admin.warehouse.get-warehouse');
 
         Route::prefix('report')->group(function() {
-            Route::get('/purchase', [PurchaseController::class, 'index'])->name('admin.warehouse.report.purchase.index');
+            Route::prefix('purchase')->group(function() {
+                Route::get('/', [PurchaseController::class, 'index'])->name('admin.warehouse.report.purchase.index');
+                Route::get('/get-all', [PurchaseController::class, 'getAll'])->name('admin.warehouse.report.purchase.get-all');
+            });
             Route::get('/delivery', [DeliveryController::class, 'index'])->name('admin.warehouse.report.delivery.index');
         });
     });
