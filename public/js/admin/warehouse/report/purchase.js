@@ -1,6 +1,9 @@
 $(document).ready(function() {
     getPurchaseReport();
-})
+});
+
+var startDate = null;
+var endDate = null;
 
 function getPurchaseReport(startDate = null, endDate = null) {
     var urlListPurchaseReport = URL_Role + "/warehouse/report/purchase/get-all"
@@ -52,6 +55,8 @@ function submitFilterDate() {
         }, 10000)
         return;
     } else {
+        startDate = start_date;
+        endDate = end_date;
         // Destroy table
         if ($.fn.DataTable.isDataTable('#purchaseReportTable')) {
             $('#purchaseReportTable').DataTable().destroy();
@@ -65,9 +70,26 @@ function resetFilterDate() {
     $("#end_date").val(null)
     checkToggleDisabled()
 
+    startDate = null;
+    endDate = null;
+
     // Destroy table
     if ($.fn.DataTable.isDataTable('#purchaseReportTable')) {
         $('#purchaseReportTable').DataTable().destroy();
     }
     getPurchaseReport()
+}
+
+function exportExcel() {
+    const urlExport = URL_Role + "/warehouse/report/purchase/export"
+    
+    if (startDate != null && endDate != null) {
+        const data = {
+            start_date: startDate,
+            end_date: endDate
+        }
+        window.location.href = urlExport + "?" + $.param(data)
+    } else {
+        window.location.href = urlExport
+    }
 }

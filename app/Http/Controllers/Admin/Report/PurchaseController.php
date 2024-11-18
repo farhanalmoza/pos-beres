@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Report;
 
+use App\Exports\Warehouse\PurchaseReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductIn;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PurchaseController extends Controller
 {
@@ -21,8 +22,8 @@ class PurchaseController extends Controller
         $results = ProductIn::with('product', 'supplier')->orderBy('created_at', 'desc');
 
         if ($start_date !== null && $end_date !== null) {
-            $start_date = Carbon::parse($start_date);
-            $end_date = Carbon::parse($end_date);
+            $start_date = Carbon::parse($start_date)->startOfDay();
+            $end_date = Carbon::parse($end_date)->endOfDay();
 
             $results = $results->whereBetween('created_at', [$start_date, $end_date]);
         }
@@ -42,5 +43,19 @@ class PurchaseController extends Controller
             })
             ->rawColumns(['product_code_name', 'total', 'created_at'])
             ->make(true);
+    }
+
+    public function export() {
+        $start_date = request()->input('start_date');
+        $end_date = request()->input('end_date');
+
+        $fileName = 'Laporan-Pembelian.xlsx';
+        if ($start_date != null && $end_date != null) {
+            $fileName = 'Laporan-Pembelian-'.$start_date.'-'.$end_date.'.xlsx';
+        }
+        
+        return Excel::download(new PurchaseReportExport($start_date, $end_date),
+            $fileName
+        );
     }
 }

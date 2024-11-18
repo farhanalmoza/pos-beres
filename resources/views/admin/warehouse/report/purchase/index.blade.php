@@ -40,7 +40,7 @@
     <div class="card-header d-flex flex-wrap justify-content-between">
       <h5 class="card-title">Laporan Pembelian</h5>
       <div class="btn-group">
-        <a href="#" class="btn btn-sm btn-success">Ekspor Excel</a>
+        <button type="button" class="btn btn-sm btn-success" onclick="exportExcel()">Ekspor Excel</button>
       </div>
     </div>
     <div class="card-body">
