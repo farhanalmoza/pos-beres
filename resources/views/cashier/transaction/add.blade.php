@@ -22,10 +22,11 @@
           <table class="table-responsive text-nowrap table">
             <thead>
               <tr>
-                <th class="text-center" style="width: 10%">No</th>
+                <th class="text-center">No</th>
                 <th>Barang</th>
-                <th class="text-center" style="width: 15%">Jumlah</th>
+                <th class="text-center" style="width: 10%">Jml</th>
                 <th class="text-center" style="width: 25%">Harga</th>
+                <th class="text-center" style="width: 15%">Disc. Member</th>
                 <th></th>
               </tr>
             </thead>
@@ -60,6 +61,17 @@
           <div class="d-flex justify-content-between align-items-center">
             <span class="font-weight-bold text-muted" style="font-size: 17px;">Total</span>
             <span class="font-weight-bold text-primary grand_total" style="font-size: 14px;">Rp. 0</span>
+          </div>
+          <hr class="my-2">
+
+          <div class="mb-3">
+            <label for="customer" class="mb-1">Member <small class="text-muted">* Jika ada</small> </label>
+            <select name="customer" id="customer" class="form-control" onchange="changeMember(this)">
+              <option value="">Pilih member</option>
+              @foreach ($members as $member)
+                <option value="{{ $member->id }}">{{ $member->name }}</option>
+              @endforeach
+            </select>
           </div>
           <div class="row gap-2 mt-2">
             <button class="btn btn-secondary" id="cancelOrder">Batal</button>

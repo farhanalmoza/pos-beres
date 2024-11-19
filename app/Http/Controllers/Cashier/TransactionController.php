@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cashier;
 use App\Helpers\GenerateCode;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Member;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreProduct;
@@ -18,6 +19,8 @@ class TransactionController extends Controller
 {
     public function addTransactionForm() {
         $data['no_invoice'] = GenerateCode::invoice();
+        $members = Member::all();
+        $data['members'] = $members;
         return view('cashier.transaction.add', $data);
     }
 
@@ -134,6 +137,7 @@ class TransactionController extends Controller
                     'no_invoice' => $request['no_invoice'],
                     'store_id' => $request['store_id'],
                     'created_by' => $request['created_by'],
+                    'member_id' => $request['member_id'] ?? 0,
                     'transaction_discount' => $request['transaction_discount'],
                     'total' => $request['total'],
                     'cash' => $request['cash'],

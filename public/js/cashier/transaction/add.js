@@ -13,6 +13,12 @@ $('#product_code').on('keydown', function(e) {
   }
 });
 
+var subTotal = 0;
+var totalDiscount = 0;
+var memberTotal = 0;
+var nonMemberTotal = 0;
+var memberId = '';
+
 $(function () {
   getCarts.loadData = noInvoice
   $('#processPaymentBtn').on('click', processPayment)
@@ -36,6 +42,10 @@ const addDataCart = {
     $('#product_code').val('')
 
     getCarts.loadData = noInvoice
+
+    setTimeout(function() {
+      $('.bs-toast').removeClass('show')
+    }, 5000);
   },
   set errorData(err) {
     $('.bs-toast').removeClass('bg-success')
@@ -43,6 +53,9 @@ const addDataCart = {
 		$('.toast-status').text('Gagal')
 		$('.toast-body').text(err.responseJSON.message)
     $('#product_code').val('')
+    setTimeout(function() {
+      $('.bs-toast').removeClass('show')
+    }, 5000);
   }
 }
 
@@ -52,25 +65,29 @@ const getCarts = {
     Functions.prototype.requestDetail(getCarts, url)
   },
   set successData(response) {
-    var subTotal = 0,
-        totalDiscount = 0
     $('#listCarts').empty()
+    subTotal = 0;
+    totalDiscount = 0;
+    memberTotal = 0;
+    nonMemberTotal = 0;
     if (response.length > 0) {
       var x = 1;
       response.map((result, i) => {
         totalDiscount = result.product_discount * result.quantity
         var price = result.price,
-            totalPrice = (result.price * result.quantity) - totalDiscount
+            totalPrice = (result.price * result.quantity)
         subTotal += totalPrice
-        const total = subTotal
+        memberTotal = subTotal - totalDiscount
+        nonMemberTotal = subTotal
         const title = result.product.name.length > 20 ? result.product.name.substring(0, 20) + '...' : result.product.name
 
         $('#listCarts').append(`
           <tr>
-            <td class="text-center" style="width: 10%">${x++}</td>
+            <td class="text-center">${x++}</td>
             <td>${title}</td>
             <td class="text-center" style="width: 15%">${result.quantity}</td>
             <td class="text-center" style="width: 25%">${Functions.prototype.formatRupiah(price)}</td>
+            <td class="text-center" style="width: 15%">${Functions.prototype.formatRupiah(result.product_discount)}</td>
             <td>
               <button class="btn btn-danger btn-xs delete" data-id="${result.id}" data-bs-toggle="modal" data-bs-target="#deleteCartModal"><i class='bx bx-x'></i></button>
             </td>
@@ -85,12 +102,7 @@ const getCarts = {
       `)
     }
 
-    $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
-    $('#subTotal').val(subTotal)
-    $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(totalDiscount.toString()))
-    $('#diskonValue').val(totalDiscount)
-    $('.grand_total').text(Functions.prototype.formatRupiah(subTotal.toString()))
-    $('#grandTotal').val(subTotal)
+    updateMemberTotal(memberId)
   },
   set errorData(err) {
     $('.bs-toast').removeClass('bg-success')
@@ -113,6 +125,30 @@ function deleteCart() {
       getCarts.loadData = noInvoice
     })
   })
+}
+
+function changeMember(sel) {
+  memberId = sel.value
+  
+  updateMemberTotal(memberId);
+}
+
+function updateMemberTotal(memberId) {  
+  if (memberId !== '') {
+    $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
+    $('#subTotal').val(subTotal)
+    $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(totalDiscount.toString()))
+    $('#diskonValue').val(totalDiscount)
+    $('.grand_total').text(Functions.prototype.formatRupiah(memberTotal.toString()))
+    $('#grandTotal').val(memberTotal)
+  } else {
+    $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
+    $('#subTotal').val(subTotal)
+    $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(0))
+    $('#diskonValue').val(0)
+    $('.grand_total').text(Functions.prototype.formatRupiah(nonMemberTotal.toString()))
+    $('#grandTotal').val(nonMemberTotal)
+  }
 }
 
 function processPayment(e) {
@@ -140,6 +176,7 @@ function processPayment(e) {
         no_invoice: noInvoice,
         store_id: storeId,
         created_by: idUser,
+        member_id: memberId,
         transaction_discount: discount != "" ? discount : 0,
         total: grandTotal,
         cash: $("#cashAmount").val(),

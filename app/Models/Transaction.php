@@ -13,6 +13,7 @@ class Transaction extends Model
         'no_invoice',
         'store_id',
         'created_by',
+        'member_id',
         'transaction_discount',
         'total',
         'cash',
@@ -33,5 +34,10 @@ class Transaction extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class, 'no_invoice', 'no_invoice');
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
     }
 }
