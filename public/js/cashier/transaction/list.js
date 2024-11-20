@@ -7,6 +7,7 @@ function getListTransaction() {
 	const columns = [
 		{data : 'no_invoice', name: 'no_invoice'},
 		{data : 'created_by.name', name: 'created_by'},
+		{data : 'memberName', name: 'memberName'},
 		{data : 'date', name: 'date',	},
 		{data : 'total', name: 'total',
 			render: function (data, type, row) {

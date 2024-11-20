@@ -29,6 +29,7 @@
                 <tr class="text-nowrap">
                   <th>No Invoice</th>
                   <th>Kasir</th>
+                  <th>Member</th>
                   <th style="width: 17%">Tanggal Transaksi</th>
                   <th style="width: 13%">Total</th>
                   <th style="width: 8%">Aksi</th>

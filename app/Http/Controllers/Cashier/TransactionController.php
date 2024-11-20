@@ -168,11 +168,17 @@ class TransactionController extends Controller
     }
 
     public function listTransactions() {
-        $results = Transaction::with('store', 'createdBy')
+        $results = Transaction::with('store', 'createdBy', 'member')
             ->where('store_id', Auth::user()->store_id)
             ->get();
+            
         return datatables()
         ->of($results)
+        ->addColumn('memberName', function($rows) {
+            return $rows->member !== null
+                ? '<span class="badge bg-success">'.substr($rows->member->name, 0, 10).'</span>'
+                : '<span class="badge bg-warning">non member</span>';
+        })
         ->addColumn('date', function($rows) {
             return $rows->created_at->format('d-m-Y');
         })
@@ -180,7 +186,7 @@ class TransactionController extends Controller
             $btn = '<a href="'.route('cashier.transaction.invoice', $rows->id).'" class="btn btn-primary btn-sm">Detail</a>';
             return $btn;
         })
-        ->rawColumns(['actions'])
+        ->rawColumns(['actions', 'memberName'])
         ->make(true);
     }
 
