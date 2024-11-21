@@ -50,12 +50,13 @@
 				<table class="table table-hover" id="salesReportTable">
 					<thead>
 						<tr class="text-nowrap">
-							<th>Barang</th>
-							<th>SKU</th>
-							<th>Kategori</th>
-							<th style="width: 8%">Terjual</th>
-							<th style="width: 17%">Pendapatan</th>
-							<th style="width: 8%">Sisa</th>
+							<th>Invoice</th>
+							<th>Produk</th>
+							<th style="width: 8%">Jml</th>
+							<th style="width: 15%">Harga</th>
+							<th style="width: 15%">Total</th>
+							<th style="width: 10px">Member</th>
+							<th style="width: 0%">Tanggal</th>
 						</tr>
 					</thead>
 					<tbody class="table-border-bottom-0">

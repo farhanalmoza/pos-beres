@@ -12,16 +12,21 @@ function getSalesReport(startDate = null, endDate = null) {
 	}
 
 	const columns = [
+		{data : 'no_invoice', name: 'no_invoice'},
 		{data : 'product_name', name: 'product_name'},
-		{data : 'product_code', name: 'product_code'},
-		{data : 'product_category', name: 'product_category'},
-		{data : 'sold_quantity', name: 'sold_quantity'},
-		{data : 'revenue', name: 'revenue',
+		{data : 'product_quantity', name: 'product_quantity'},
+		{data : 'product_price', name: 'product_price',
 			render: function (data, type, row) {
 				return Functions.prototype.formatRupiah(data);
 			}
 		},
-		{data : 'remaining_stock', name: 'remaining_stock'},
+		{data : 'total', name: 'total',
+			render: function (data, type, row) {
+				return Functions.prototype.formatRupiah(data);
+			}
+		},
+		{data : 'member', name: 'member'},
+		{data : 'date', name: 'date', orderable: false, searchable: false},
 	]
 	Functions.prototype.tableResult("#salesReportTable", urlListSalesReport, columns)
 }

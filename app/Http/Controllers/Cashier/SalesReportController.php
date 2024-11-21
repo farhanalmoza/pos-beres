@@ -22,39 +22,31 @@ class SalesReportController extends Controller
             $end_date = Carbon::parse($end_date)->endOfDay();
         }
 
-        $transactions = Transaction::with('carts.product')
+        $transactions = Transaction::with('carts.product', 'member')
             ->where('store_id', Auth::user()->store_id)
             ->when($start_date !== null && $end_date !== null, function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('created_at', [$start_date, $end_date]);
-            })
-            ->get()
-            ->flatMap(function ($transaction) {
-                return $transaction->carts->map(function ($cart) use ($transaction) {
-                    return [
-                        'product_id' => $cart->product->id,
-                        'product_name' => $cart->product->name,
-                        'product_code' => $cart->product->code,
-                        'product_category' => $cart->product->category->name,
-                        'sold_quantity' => $cart->quantity,
-                        'revenue' => $cart->quantity * ($cart->price - $cart->product_discount),
-                        'remaining_stock' => $cart->product->quantity,
-                    ];
-                });
-            });
+            })->get();
         
-        $groupSales = $transactions->groupBy('product_id')->map(function ($salesGroup) {
-            return [
-                'product_name' => $salesGroup->first()['product_name'],
-                'product_code' => $salesGroup->first()['product_code'],
-                'product_category' => $salesGroup->first()['product_category'],
-                'sold_quantity' => $salesGroup->sum('sold_quantity'),
-                'revenue' => $salesGroup->sum('revenue'),
-                'remaining_stock' => $salesGroup->first()['remaining_stock'],
-            ];
-        });
+        $results = [];
+        foreach ($transactions as $trans) {
+            foreach ($trans->carts as $cart) {
+                $results[] = [
+                    'no_invoice' => $trans->no_invoice,
+                    'product_name' => $cart->product->name,
+                    'product_quantity' => $cart->product->quantity,
+                    'product_price' => $cart->product->price,
+                    'total' => $cart->product->quantity * $cart->product->price,
+                    'member' => $trans->member !== null
+                        ? substr($trans->member->name, 0, 12)
+                        : 'non member',
+                    'date' => $trans->created_at->format('d-m-Y'),
+                ];
+            }
+        }
 
-        return datatables()->of($groupSales)->make(true);
+        return datatables()->of($results)->make(true);
 
-        // return response()->json($groupSales);
+        // return response()->json($results);
     }
 }
