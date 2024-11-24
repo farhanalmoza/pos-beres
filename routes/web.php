@@ -275,9 +275,7 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::prefix('sale')->group(function() {
             Route::get('/', [SalesReportController::class, 'index'])->name('cashier.report.sale.index');
             Route::get('/get-all', [SalesReportController::class, 'getAll'])->name('cashier.report.sale.get-all');
-            Route::get('/export', function() {
-                return Excel::download(new SalesReportExport, 'Laporan-Penjualan.xlsx');
-            })->name('cashier.report.sale.export');
+            Route::get('/export', [SalesReportController::class, 'export'])->name('cashier.report.sale.export');
         });
 
         Route::prefix('purchase')->group(function() {

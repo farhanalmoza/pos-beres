@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Cashier;
 
+use App\Exports\Store\SaleReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SalesReportController extends Controller
 {
@@ -48,5 +50,20 @@ class SalesReportController extends Controller
         return datatables()->of($results)->make(true);
 
         // return response()->json($results);
+    }
+
+    public function export() {
+        $start_date = request()->input('start_date');
+        $end_date = request()->input('end_date');
+        $storeName = Auth::user()->store->name;
+
+        $fileName = 'Laporan-Penjualan-'.$storeName.'.xlsx';
+        if ($start_date != null && $end_date != null) {
+            $fileName = 'Laporan-Penjualan-'.$storeName.'-'.$start_date.'-'.$end_date.'.xlsx';
+        }
+        
+        return Excel::download(new SaleReportExport($start_date, $end_date),
+            $fileName
+        );
     }
 }
