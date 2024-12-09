@@ -192,7 +192,7 @@ class TransactionController extends Controller
 
     public function invoice($id) {
         $store = Store::find(Auth::user()->store_id);
-        $invoice = Transaction::find($id);
+        $invoice = Transaction::with('createdBy')->find($id);
         $items = Cart::with('product')
             ->where('no_invoice', $invoice->no_invoice)
             ->where('store_id', Auth::user()->store_id)

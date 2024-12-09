@@ -20,11 +20,12 @@
         <td style="text-align: right;">{{ $transactions->no_invoice }}</td>
       </tr>
       <tr>
-        <td style="text-align: left;">{{ $store->address ?? "-" }}</td>
+        <td style="text-align: left;">Kasir: {{ $transactions->createdBy->name }}</td>
         <td style="text-align: right;">{{ $transactions->created_at->format('d/m/Y') }}</td>
       </tr>
       <tr>
-        <td style="text-align: right;" colspan="2">Rp. {{ number_format($transactions->total, 0, ',', '.') }}</td>
+        <td style="text-align: left;">{{ $store->address ?? "-" }}</td>
+        <td style="text-align: right;">Rp. {{ number_format($transactions->total, 0, ',', '.') }}</td>
       </tr>
     </tbody>
   </table>

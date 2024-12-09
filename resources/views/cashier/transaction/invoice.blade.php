@@ -41,8 +41,8 @@
 						<div class="col-md-6 d-flex justify-content-start align-items-start flex-column">
 							<span class="font-weight-bold text-uppercase text-primary">Toko</span>
 							<span class="text-muted">{{ $store->name }}</span>
-							{{-- <span class="text-muted">No Telp</span>
-							<span class="text-muted">NPWP : 123456789</span> --}}
+							<span class="text-muted">Kasir : {{ $invoice->createdBy->name }}</span> 
+							{{-- <span class="text-muted">No Telp</span> --}}
 							<span class="text-muted">{{ $store->address }}</span>
 						</div>
 						<div class="col-md-6 d-flex justify-content-end align-items-end flex-column" id="d-desktop">
