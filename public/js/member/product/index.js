@@ -9,7 +9,12 @@ function getProduct() {
         {data : 'name', name: 'name'},
         {data : 'price', name: 'price', 
             render: function(data, type, row, meta) {
-                return data.toFixed(2)
+                return Functions.prototype.formatRupiah(data)
+            }
+        },
+        {data: 'discount', name: 'discount',
+            render: function(data, type, row, meta) {
+                return Functions.prototype.formatRupiah(data)
             }
         },
     ]

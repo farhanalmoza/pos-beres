@@ -20,6 +20,7 @@
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
                   <th>Harga Normal</th>
+                  <th>Diskon Member</th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
