@@ -309,7 +309,6 @@ Route::prefix('member')->group(function() {
         Route::prefix('setting')->group(function() {
             Route::get('/change-password', [SettingController::class, 'changePassword'])->name('member.setting.change-password');
             Route::post('/update-password', [SettingController::class, 'updatePassword'])->name('member.setting.update-password');
-            Route::get('/edit-profile', [SettingController::class, 'editProfile'])->name('member.setting.edit-profile');
         });
     });
 });
