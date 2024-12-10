@@ -41,8 +41,13 @@ function getProducts() {
     const urlListProducts = URL_Role + "/product/get-all"    
     const columns = [
         {data : 'code', name: 'code'},
-        {data : 'name', name: 'name'},
+        {data : 'product_name', name: 'product_name'},
         {data : 'quantity', name: 'quantity'},
+        {data : 'warehouse_price', name: 'warehouse_price',
+            render: function (data, type, row) {
+                return Functions.prototype.formatRupiah(data);
+            }
+        },
         {data : 'price', name: 'price',
             render: function (data, type, row) {
                 return Functions.prototype.formatRupiah(data);
@@ -56,10 +61,10 @@ function getProducts() {
 function addProduct() {  
     $('#addProductForm').validate({
         rules: {
-            product_code: {
+            add_product_code: {
                 required: true
             },
-            product_name: {
+            add_product_name: {
                 required: true
             },
             product_category_id: {
@@ -68,16 +73,19 @@ function addProduct() {
             product_quantity: {
                 required: true
             },
-            product_price: {
+            warehouse_price: {
+                required: true
+            },
+            add_product_price: {
                 required: true
             }
         },
         // custom message
         messages: {
-            product_code: {
+            add_product_code: {
                 required: 'Kode barang wajib diisi'
             },
-            product_name: {
+            add_product_name: {
                 required: 'Nama barang wajib diisi'
             },
             product_category_id: {
@@ -86,8 +94,11 @@ function addProduct() {
             product_quantity: {
                 required: 'Stok barang wajib diisi'
             },
-            product_price: {
-                required: 'Harga barang wajib diisi'
+            warehouse_price: {
+                required: 'Harga gudang wajib diisi'
+            },
+            add_product_price: {
+                required: 'Harga toko wajib diisi'
             }
         },
         errorClass: "is-invalid",
@@ -96,11 +107,12 @@ function addProduct() {
         submitHandler: function(form, e) {
             e.preventDefault()
             const data = {
-                code : $('#product_code').val(),
-                name : $('#product_name').val(),
+                code : $('#add_product_code').val(),
+                name : $('#add_product_name').val(),
                 category_id : $('#product_category_id').val(),
                 quantity : $('#product_quantity').val(),
-                price : $('#product_price').val()
+                warehouse_price : $('#warehouse_price').val(),
+                price : $('#add_product_price').val()
             }
             Functions.prototype.httpRequest(URL_Role + '/product', data, 'post')
             // hide modal
@@ -128,6 +140,7 @@ function showDetailForPrint() {
             $('#product_code').val(response.data.code);
             $('#product_name').val(response.data.name);
             $('#product_category').val(response.data.category_id);
+            $('#display_warehouse_price').val(response.data.warehouse_price);
             $('#product_price').val(response.data.price);
             $('#product_stock').val(response.data.quantity);
             JsBarcode("#barcodeSvg", response.data.code, {
@@ -163,6 +176,7 @@ function showDetailForEdit() {
             $('#update_name').val(response.data.name);
             $('#update_category_id').val(response.data.category_id);
             $('#update_price').val(response.data.price);
+            $('#update_warehouse_price').val(response.data.warehouse_price);
         },
         set errorData(err) {
             $('.bs-toast').addClass('bg-danger show')
@@ -184,6 +198,9 @@ function updateProduct() {
             update_category_id: {
                 required: true
             },
+            update_warehouse_price: {
+                required: true
+            },
             update_price: {
                 required: true
             }
@@ -198,6 +215,9 @@ function updateProduct() {
             },
             update_category_id: {
                 required: 'Kategori barang wajib diisi'
+            },
+            update_warehouse_price: {
+                required: 'Harga gudang barang wajib diisi'
             },
             update_price: {
                 required: 'Harga barang wajib diisi'
@@ -214,7 +234,8 @@ function updateProduct() {
                 code : $('#update_code').val(),
                 name : $('#update_name').val(),
                 category_id : $('#update_category_id').val(),
-                price : $('#update_price').val()
+                price : $('#update_price').val(),
+                warehouse_price : $('#update_warehouse_price').val()
             }
             Functions.prototype.httpRequest(urlUpdate, data, 'put')
             // hide modal

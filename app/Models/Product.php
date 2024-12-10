@@ -16,6 +16,7 @@ class Product extends Model
         'category_id',
         'quantity',
         'price',
+        'warehouse_price',
         'discount',
     ];
 

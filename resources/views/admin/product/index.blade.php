@@ -38,7 +38,8 @@
                   <th>Kode</th>
                   <th>Barang</th>
                   <th>Stok</th>
-                  <th>Harga Jual</th>
+                  <th>Hrg Gudang</th>
+                  <th>Hrg Toko</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -71,7 +72,11 @@
             <input type="text" id="product_category" class="form-control" disabled>
           </div>
           <div class="mb-2">
-            <label for="product_price" class="form-label">Harga Barang</label>
+            <label for="display_warehouse_price" class="form-label">Harga Gudang</label>
+            <input type="text" id="display_warehouse_price" class="form-control" disabled>
+          </div>
+          <div class="mb-2">
+            <label for="product_price" class="form-label">Harga Toko</label>
             <input type="text" id="product_price" class="form-control" disabled>
           </div>
           <div class="mb-2">
@@ -97,12 +102,12 @@
         <form id="addProductForm" autocomplete="off">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="product_code" class="form-label">Kode Barang</label>
-              <input type="text" id="product_code" name="product_code" class="form-control">
+              <label for="add_product_code" class="form-label">Kode Barang</label>
+              <input type="text" id="add_product_code" name="add_product_code" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="product_name" class="form-label">Nama Barang</label>
-              <input type="text" id="product_name" name="product_name" class="form-control">
+              <label for="add_product_name" class="form-label">Nama Barang</label>
+              <input type="text" id="add_product_name" name="add_product_name" class="form-control">
             </div>
             <div class="mb-3">
               <label for="product_category_id" class="form-label">Kategori Barang</label>
@@ -114,8 +119,12 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="product_price" class="form-label">Harga Jual</label>
-              <input type="number" id="product_price" name="product_price" class="form-control">
+              <label for="warehouse_price" class="form-label">Harga Gudang</label>
+              <input type="number" id="warehouse_price" name="warehouse_price" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="add_product_price" class="form-label">Harga Toko</label>
+              <input type="number" id="add_product_price" name="add_product_price" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
@@ -157,6 +166,10 @@
                   <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
               </select>
+            </div>
+            <div class="mb-3">
+              <label for="update_warehouse_price" class="form-label">Harga Gudang</label>
+              <input type="number" id="update_warehouse_price" name="update_warehouse_price" class="form-control">
             </div>
             <div class="mb-3">
               <label for="update_price" class="form-label">Harga Jual</label>
@@ -205,7 +218,6 @@
 
 @section('js')
 <script>
-  const URL = "{{ url('') }}"
   const URL_Role = "{{ url('/admin') }}"
 </script>
 {{-- Form Validate --}}

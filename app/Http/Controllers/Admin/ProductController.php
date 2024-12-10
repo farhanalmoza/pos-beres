@@ -21,16 +21,29 @@ class ProductController extends Controller
     }
 
     public function getAll() {
-        $results = Product::select("id", "code", "name", "category_id", "quantity", "price")->with('category')->get();
+        $results = Product::with('category')->get();
         return datatables()
         ->of($results)
+        ->addColumn('product_name', function($rows) {
+            if (strlen($rows->name) > 15) {
+                return substr($rows->name, 0, 15).'...';
+            } else {
+                return $rows->name;
+            }
+        })
         ->addColumn('actions', function($rows) {
-            $btn = '<button type="button" class="btn btn-success btn-sm detail" data-id="'.$rows->id.'">detail</button>'; 
-            $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">ubah</button>';
-            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">hapus</button>';
+            $btn = '<button type="button" class="btn btn-success btn-sm detail" data-id="'.$rows->id.'">
+                        <i class="bx bxs-show" style="font-size: 15px;"></i>
+                    </button>'; 
+            $btn .= ' <button type="button" class="btn btn-primary btn-sm update" data-bs-toggle="modal" data-bs-target="#editModal" data-id="'.$rows->id.'">
+                        <i class="bx bx-edit-alt" style="font-size: 15px;"></i>
+                    </button>';
+            $btn .= ' <button type="button" class="btn btn-danger btn-sm delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="'.$rows->id.'">
+                        <i class="bx bx-trash" style="font-size: 15px;"></i>
+                    </button>';
             return $btn;
         })
-        ->rawColumns(['actions'])
+        ->rawColumns(['actions', 'product_name'])
         ->make(true);
     }
 
@@ -49,6 +62,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category_id' => 'required|integer',
             'price' => 'required|integer',
+            'warehouse_price' => 'required|integer',
         ]);
 
         $create = Product::create([
@@ -57,6 +71,7 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name),
             'category_id' => $request->category_id,
             'price' => $request->price,
+            'warehouse_price' => $request->warehouse_price,
         ]);
         
         if ($create) {
@@ -87,6 +102,7 @@ class ProductController extends Controller
                 'name' => 'required|string|max:255',
                 'category_id' => 'required|integer',
                 'price' => 'required|integer',
+                'warehouse_price' => 'required|integer',
             ]);
 
             $product->code = $request->code;
@@ -94,6 +110,7 @@ class ProductController extends Controller
             $product->slug = Str::slug($request->name);
             $product->category_id = $request->category_id;
             $product->price = $request->price;
+            $product->warehouse_price = $request->warehouse_price;
             $product->save();
 
             return response(['message' => 'Barang berhasil diubah'], 200);
