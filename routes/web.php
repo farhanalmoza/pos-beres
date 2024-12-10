@@ -70,6 +70,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('admin.product.show');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
         Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+        Route::get('/warehouse-price/{id}', [ProductController::class, 'getWarehouseProductPrice'])->name('admin.product.warehouse-price');
     });
     
     // Product In
@@ -180,6 +181,7 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
         Route::get('/show/{id}', [ProductController::class, 'show'])->name('warehouse.product.show');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('warehouse.product.update');
         Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('warehouse.product.destroy');
+        Route::get('/warehouse-price/{id}', [ProductController::class, 'getWarehouseProductPrice'])->name('warehouse.product.warehouse-price');
 
         Route::prefix('request')->group(function() {
             Route::get('/', [ProductRequestController::class, 'productRequestWarehouseView'])->name('warehouse.product.request.index');

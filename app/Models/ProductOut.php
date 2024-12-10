@@ -15,6 +15,8 @@ class ProductOut extends Model
         'store_id',
         'product_id',
         'quantity',
+        'total_price',
+        'ppn',
     ];
 
     public function store() {

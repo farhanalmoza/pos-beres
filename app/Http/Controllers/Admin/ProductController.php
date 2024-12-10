@@ -128,4 +128,17 @@ class ProductController extends Controller
         $result->delete();
         return response(['message' => 'Hapus barang berhasil'], 200);
     }
+
+    public function getWarehouseProductPrice($id) {
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json(['message' => 'Barang tidak ditemukan'], 404);
+        } else {
+            return response()->json([
+                'code' => 200,
+                'status' => 'success',
+                'data' => $product->warehouse_price,
+            ]);
+        }
+    }
 }

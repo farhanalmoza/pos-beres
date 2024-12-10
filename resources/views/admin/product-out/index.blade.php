@@ -37,6 +37,7 @@
                   <th>Nama Barang</th>
                   <th>Dikirim ke</th>
                   <th>Jumlah</th>
+                  <th>Total</th>
                   <th>Tanggal Kirim</th>
                 </tr>
               </thead>
@@ -79,6 +80,22 @@
               <label for="quantity" class="form-label">Jumlah</label>
               <input type="text" id="quantity" name="quantity" class="form-control">
             </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="ppnCheck">
+              <label class="form-check-label" for="ppnCheck">PPN</label>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="text-muted">Subtotal</div>
+              <div class="text-muted">Rp. <span id="subtotal">0</span></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="text-muted">PPN</div>
+              <div class="text-muted">Rp. <span id="ppn">0</span></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="text-muted"><strong>Total</strong></div>
+              <div class="text-muted"><strong>Rp. <span id="total">0</span></strong></div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -95,8 +112,8 @@
 
 @section('js')
 <script>
-  const URL = "{{ url('') }}"
   const URL_Role = "{{ url('/admin') }}"
+  const PPN = {{ $ppn }}
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>

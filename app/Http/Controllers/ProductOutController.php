@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductOut;
 use App\Models\Store;
 use App\Models\StoreProduct;
+use App\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,26 +17,27 @@ class ProductOutController extends Controller
     public function index() {
         $stores = Store::all();
         $products = Product::where('quantity', '>', 0)->get();
+        $ppn = Tax::first()->tax;
         if (Auth::user()->role == 'admin') {
-            return view('admin.product-out.index', compact('stores', 'products'));
+            return view('admin.product-out.index', compact('stores', 'products', 'ppn'));
         } else {
-            return view('warehouse.product-out.index', compact('stores', 'products'));
+            return view('warehouse.product-out.index', compact('stores', 'products', 'ppn'));
         }
     }
 
     public function getAll() {
-        $results = ProductOut::select("id", "store_id", "product_id", "quantity", "created_at")->with(['product', 'store']);
+        $results = ProductOut::with(['product', 'store']);
         $results = $results->orderBy('created_at', 'desc')->get();
         return datatables()
         ->of($results)
         ->addIndexColumn()
         ->addColumn('total', function($rows) {
-            return $rows->quantity * $rows->product->price;
+            return $rows->total_price + $rows->ppn;
         })
         ->addColumn('date_out', function($rows) {
             return $rows->created_at->format('d-m-Y');
         })
-        ->rawColumns(['actions'])
+        ->rawColumns(['total', 'date_out'])
         ->make(true);
     }
 
@@ -58,6 +60,8 @@ class ProductOutController extends Controller
                 'store_id' => $request->store_id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
+                'total_price' => $request->total_price,
+                'ppn' => $request->ppn,
             ]);
 
             $product = Product::find($request->product_id);
