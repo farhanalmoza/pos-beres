@@ -23,5 +23,6 @@ class Member extends Model
         'religion',
         'is_married',
         'profession',
+        'ktp',
     ];
 }

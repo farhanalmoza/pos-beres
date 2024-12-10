@@ -44,6 +44,45 @@ class Functions {
         });
     }
 
+    uploadFile(url = null, data = null, method = null, process) {
+        $.ajax({
+            type: method,
+            url: url,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Authorization' : "Bearer " + sessionStorage.getItem('token')
+            },
+            data: data,
+            beforeSend: function() {
+                $('.load-wrapper').removeClass('hide-loader')
+            },
+            success: function (response) {
+                $('.load-wrapper').addClass('hide-loader')
+                $('.bs-toast').removeClass('bg-danger')
+                $('.bs-toast').addClass('bg-success show')
+                $('.toast-status').text('Berhasil')
+                $('.toast-body').text(response.message)
+                process.successData = response
+            },
+            error: function(err) {
+                $('.load-wrapper').addClass('hide-loader')
+                if(err.status == 413) {
+                    $('.bs-toast').removeClass('bg-success')
+                    $('.bs-toast').addClass('bg-danger show')
+                    $('.toast-status').text('Gagal')
+                    $('.toast-body').text(err.responseText)
+                } else {
+                    $('.bs-toast').removeClass('bg-success')
+                    $('.bs-toast').addClass('bg-danger show')
+                    $('.toast-status').text('Gagal')
+                    $('.toast-body').text(err.responseJSON.message)
+                }
+            }
+        });
+    }
+
     requestDetail(process, url, data = null) {
         $.ajax({
             type: "get",

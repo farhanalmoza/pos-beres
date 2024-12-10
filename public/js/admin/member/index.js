@@ -1,6 +1,7 @@
 $(document).ready(function() {
     getMembers();
     addMember();
+    showKtpMember();
     deleteMember();
 });
 
@@ -52,14 +53,17 @@ function addMember() {
             },
             profession: {
                 required: true
+            },
+            ktp: {
+                required: true,
             }
         },
         // custom message
         messages: {
             phone: {
-                required: 'Nomor WhatsApp wajib diisi',
-                minlength: 'Nomor WhatsApp minimal 11 angka',
-                maxlength: 'Nomor WhatsApp maksimal 12 angka'
+                required: 'Nomor Telegram wajib diisi',
+                minlength: 'Nomor Telegram minimal 11 angka',
+                maxlength: 'Nomor Telegram maksimal 12 angka'
             },
             nik: {
                 required: 'NIK wajib diisi',
@@ -89,6 +93,9 @@ function addMember() {
             },
             profession: {
                 required: 'Pekerjaan wajib diisi'
+            },
+            ktp: {
+                required: 'Foto KTP wajib diisi',
             }
         },
         errorClass: "is-invalid",
@@ -96,6 +103,8 @@ function addMember() {
         errorElement: "small",
         submitHandler: function(form, e) {
             e.preventDefault()
+            const urlPostAddMember = URL_Role + "/member"
+            const formData = new FormData()
             const data = {
                 phone : $('#phone').val(),
                 nik : $('#nik').val(),
@@ -109,14 +118,56 @@ function addMember() {
                 is_married : $('#is_married').val(),
                 profession : $('#profession').val()
             }
-            Functions.prototype.httpRequest(URL_Role + '/member', data, 'post')
-            // hide modal
-            $('#addMemberModal').modal('hide')
-            if ($.fn.DataTable.isDataTable('#memberTable')) {
-                $('#memberTable').DataTable().destroy();
+
+            const files = $('#ktp')[0].files
+            formData.append('phone', data.phone)
+            formData.append('nik', data.nik)
+            formData.append('name', data.name)
+            formData.append('born_place', data.born_place)
+            formData.append('born_date', data.born_date)
+            formData.append('gender', data.gender)
+            formData.append('address', data.address)
+            formData.append('blood_type', data.blood_type)
+            formData.append('religion', data.religion)
+            formData.append('is_married', data.is_married)
+            formData.append('profession', data.profession)
+            for (let i = 0; i < files.length; i++) {
+                const element = files[i];
+                formData.append('files[]', element)
             }
-            getMembers()
+            Functions.prototype.uploadFile(urlPostAddMember, formData, 'post', postMember)
         }
+    })
+
+    const postMember = {
+        set successData(response) {
+            if(window.location.search != "") {
+                const urlParams = new URLSearchParams(window.location.search)
+                if(urlParams.get('redirect') != "") {
+                    setTimeout(() => {
+                        window.location.href = urlParams.get('redirect')
+                    }, 1500);
+                }
+            } else {
+                // hide modal
+                $('#addMemberForm').trigger('reset')
+                $('#addMemberModal').modal('hide')
+                if ($.fn.DataTable.isDataTable('#memberTable')) {
+                    $('#memberTable').DataTable().destroy();
+                }
+                getMembers()    
+            }
+        }
+    }
+}
+
+function showKtpMember() {
+    $('#memberTable').on('click', '.show-ktp', function(e) {
+        e.preventDefault()
+        const path = $(this).data('path');
+        const id = $(this).data('id');
+        $('#showKtpModalTitle').text('Detail KTP ' + id)
+        $('#KtpImage').attr('src', path)
     })
 }
 

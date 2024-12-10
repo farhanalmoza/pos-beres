@@ -33,7 +33,7 @@
             <table class="table" id="memberTable">
               <thead>
                 <tr class="text-nowrap">
-                  <th>WhatsApp</th>
+                  <th>Telegram</th>
                   <th>NIK</th>
                   <th>Nama</th>
                   <th>Alamat</th>
@@ -57,10 +57,10 @@
           <h5 class="modal-title">Tambah Member</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="addMemberForm" autocomplete="off">
+        <form id="addMemberForm" autocomplete="off" enctype="multipart/form-data">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="phone" class="form-label">No WhatsApp <span class="text-danger">*</span></label>
+              <label for="phone" class="form-label">No Telegram <span class="text-danger">*</span></label>
               <div class="input-group">
                 <span class="input-group-text" id="phone-addon">+62</span>
                 <input type="number" name="phone" id="phone" class="form-control" placeholder="81234567890" aria-label="Phone" aria-describedby="phone-addon">
@@ -133,6 +133,10 @@
               <label for="address" class="form-label">Alamat <span class="text-danger">*</span></label>
               <textarea name="address" id="address" rows="2" class="form-control"></textarea>
             </div>
+            <div class="mb-3">
+              <label for="ktp" class="form-label">Foto KTP <span class="text-danger">*</span></label>
+              <input type="file" id="ktp" name="ktp" class="form-control" accept="image/*">
+            </div>
             <div class="alert alert-info">
               <h5 class="alert-heading">Perhatian!</h5>
               <p>Untuk member baru, login menggunakan password: "<strong>password</strong>". Tolong ubah password setelah login.</p>
@@ -146,6 +150,28 @@
             <button type="submit" class="btn btn-primary">Tambah</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  {{-- Show Ktp Modal --}}
+  <div class="modal fade" id="showKtpModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="showKtpModalTitle">Detail KTP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div style="height: 250px; overflow: hidden;">
+            <img class="img-fluid d-flex mx-auto rounded" src="{{ asset('/img/elements/4.jpg') }}" alt="Card image cap" id="KtpImage">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Tutup
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -180,6 +206,7 @@
 </script>
 {{-- Form Validate --}}
 <script src="{{ asset('js/jquery-validate.js') }}" ></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script src="{{ asset('js/message_id.js') }}" integrity="sha512-Pb0klMWnom+fUBpq+8ncvrvozi/TDwdAbzbICN8EBoaVXZo00q6tgWk+6k6Pd+cezWRwyu2cB+XvVamRsbbtBA==" crossorigin="anonymous"></script>
 {{-- Data Table --}}
 <script src="{{ asset('js/jquery-datatables.js') }}"></script>
