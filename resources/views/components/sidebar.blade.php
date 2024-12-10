@@ -112,6 +112,13 @@
         </ul>
       </li>
 
+      <li class="menu-item {{ Request::routeIs('admin.tax.index') ? 'active' : '' }}">
+        <a href="{{ route('admin.tax.index') }}" class="menu-link">
+          <i class='menu-icon bx bx-pie-chart-alt'></i>
+          <div>Pajak</div>
+        </a>
+      </li>
+
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Laporan</span></li>
       <li class="menu-item {{ Request::routeIs('admin.warehouse.report.purchase.index') ? 'active' : '' }}">
         <a href="{{ route('admin.warehouse.report.purchase.index') }}" class="menu-link">

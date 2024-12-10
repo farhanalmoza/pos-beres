@@ -14,11 +14,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'gudang 1',
-            'email' => 'gudang1@example.com',
-            'password' => Hash::make('12345'),
-            'role' => 'werehouse',
-        ]);
+        // check if user with role admin is empty
+        if (User::where('role', 'admin')->count() == 0) {
+            User::create([
+                'name' => 'Admin',
+                'email' => 'admin1@example.com',
+                'password' => Hash::make('12345'),
+                'role' => 'admin',
+            ]);
+        }
     }
 }

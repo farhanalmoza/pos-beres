@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductInController;
 use App\Http\Controllers\Admin\Report\DeliveryController;
 use App\Http\Controllers\Admin\Report\PurchaseController;
 use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
@@ -138,6 +139,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('admin.user.show');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    });
+
+    // Tax
+    Route::prefix('tax')->group(function() {
+        Route::get('/', [TaxController::class, 'index'])->name('admin.tax.index');
+        Route::post('/', [TaxController::class, 'updateTax'])->name('admin.tax.update');
     });
 });
 
