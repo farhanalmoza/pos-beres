@@ -15,6 +15,7 @@ class Product extends Model
         'slug',
         'category_id',
         'quantity',
+        'low_stock',
         'price',
         'warehouse_price',
         'discount',

@@ -63,6 +63,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer',
             'price' => 'required|integer',
             'warehouse_price' => 'required|integer',
+            'low_stock' => 'required|integer',
         ]);
 
         $create = Product::create([
@@ -72,6 +73,7 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'warehouse_price' => $request->warehouse_price,
+            'low_stock' => $request->low_stock,
         ]);
         
         if ($create) {
@@ -103,6 +105,7 @@ class ProductController extends Controller
                 'category_id' => 'required|integer',
                 'price' => 'required|integer',
                 'warehouse_price' => 'required|integer',
+                'low_stock' => 'required|integer',
             ]);
 
             $product->code = $request->code;
@@ -111,6 +114,7 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->price = $request->price;
             $product->warehouse_price = $request->warehouse_price;
+            $product->low_stock = $request->low_stock;
             $product->save();
 
             return response(['message' => 'Barang berhasil diubah'], 200);

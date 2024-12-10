@@ -78,6 +78,9 @@ function addProduct() {
             },
             add_product_price: {
                 required: true
+            },
+            low_stock: {
+                required: true
             }
         },
         // custom message
@@ -99,6 +102,9 @@ function addProduct() {
             },
             add_product_price: {
                 required: 'Harga toko wajib diisi'
+            },
+            low_stock: {
+                required: 'Batas bawah stok wajib diisi'
             }
         },
         errorClass: "is-invalid",
@@ -112,7 +118,8 @@ function addProduct() {
                 category_id : $('#product_category_id').val(),
                 quantity : $('#product_quantity').val(),
                 warehouse_price : $('#warehouse_price').val(),
-                price : $('#add_product_price').val()
+                price : $('#add_product_price').val(),
+                low_stock : $('#low_stock').val()
             }
             Functions.prototype.httpRequest(URL_Role + '/product', data, 'post')
             // hide modal
@@ -143,6 +150,7 @@ function showDetailForPrint() {
             $('#display_warehouse_price').val(response.data.warehouse_price);
             $('#product_price').val(response.data.price);
             $('#product_stock').val(response.data.quantity);
+            $('#display_low_stock').val(response.data.low_stock)
             JsBarcode("#barcodeSvg", response.data.code, {
                 format: "CODE39", // Format barcode (sesuaikan dengan kebutuhan)
                 lineColor: "#000", // Warna garis
@@ -177,6 +185,7 @@ function showDetailForEdit() {
             $('#update_category_id').val(response.data.category_id);
             $('#update_price').val(response.data.price);
             $('#update_warehouse_price').val(response.data.warehouse_price);
+            $('#update_low_stock').val(response.data.low_stock)
         },
         set errorData(err) {
             $('.bs-toast').addClass('bg-danger show')
@@ -203,6 +212,9 @@ function updateProduct() {
             },
             update_price: {
                 required: true
+            },
+            update_low_stock: {
+                required: true
             }
         },
         // custom message
@@ -221,6 +233,9 @@ function updateProduct() {
             },
             update_price: {
                 required: 'Harga barang wajib diisi'
+            },
+            update_low_stock: {
+                required: 'Batas bawah stok barang wajib diisi'
             }
         },
         errorClass: "is-invalid",
@@ -235,7 +250,8 @@ function updateProduct() {
                 name : $('#update_name').val(),
                 category_id : $('#update_category_id').val(),
                 price : $('#update_price').val(),
-                warehouse_price : $('#update_warehouse_price').val()
+                warehouse_price : $('#update_warehouse_price').val(),
+                low_stock : $('#update_low_stock').val()
             }
             Functions.prototype.httpRequest(urlUpdate, data, 'put')
             // hide modal

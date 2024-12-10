@@ -83,6 +83,10 @@
             <label for="product_stock" class="form-label">Stok</label>
             <input type="text" id="product_stock" class="form-control" disabled>
           </div>
+          <div class="mb-2">
+            <label for="display_low_stock" class="form-label">Batas Bawah Stok</label>
+            <input type="text" id="display_low_stock" class="form-control" disabled>
+          </div>
           <div class="mb-2" id="barcode">
             <svg id="barcodeSvg"></svg>
           </div>
@@ -125,6 +129,10 @@
             <div class="mb-3">
               <label for="add_product_price" class="form-label">Harga Toko</label>
               <input type="number" id="add_product_price" name="add_product_price" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="low_stock" class="form-label">Batas bawah stok</label>
+              <input type="number" id="low_stock" name="low_stock" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
@@ -174,6 +182,10 @@
             <div class="mb-3">
               <label for="update_price" class="form-label">Harga Jual</label>
               <input type="number" id="update_price" name="update_price" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="update_low_stock" class="form-label">Batas Bawah Stok</label>
+              <input type="number" id="update_low_stock" name="update_low_stock" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
