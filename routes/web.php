@@ -20,6 +20,7 @@ use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\Member\AuthController;
 use App\Http\Controllers\Member\ProductController as MemberProductController;
 use App\Http\Controllers\Member\SettingController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductOutController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\ProfileController;
@@ -331,3 +332,23 @@ Route::prefix('profile')->group(function() {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/_t', function () {
+    // Response is an array of updates.
+    $updates = \NotificationChannels\Telegram\TelegramUpdates::create()
+        // (Optional). Get's the latest update. NOTE: All previous updates will be forgotten using this method.
+        // ->latest()
+
+        // (Optional). Limit to 2 updates (By default, updates starting with the earliest unconfirmed update are returned).
+        ->limit(2)
+
+        // (Optional). Add more params to the request.
+        ->options([
+            'timeout' => 0,
+        ])
+        ->get();
+
+    dd($updates);
+})->name('test');
+
+Route::get('/send-telegram', [NotificationController::class, 'sendMessage']);

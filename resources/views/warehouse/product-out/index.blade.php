@@ -37,6 +37,7 @@
                   <th>Nama Barang</th>
                   <th>Dikirim ke</th>
                   <th>Jumlah</th>
+                  <th>Total</th>
                   <th>Tanggal Kirim</th>
                 </tr>
               </thead>
@@ -95,7 +96,6 @@
 
 @section('js')
 <script>
-  const URL = "{{ url('') }}"
   const URL_Role = "{{ url('/warehouse') }}"
 </script>
 {{-- Form Validate --}}

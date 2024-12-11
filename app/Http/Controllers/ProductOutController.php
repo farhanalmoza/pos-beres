@@ -8,9 +8,11 @@ use App\Models\ProductOut;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\Tax;
+use App\Notifications\WarehouseLowStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class ProductOutController extends Controller
 {
@@ -79,11 +81,17 @@ class ProductOutController extends Controller
                     'quantity' => $request->quantity,
                 ]);
             }
+
+            // Send notification if stocks is low in warehouse using Telegram
+            if ($product->quantity <= $product->low_stock) {
+                Notification::route('telegram', env('TELEGRAM_GROUP_STAFF_ID'))
+                ->notify(new WarehouseLowStock($product));
+            }
             DB::commit();
             return response(['message' => 'Berhasil mengirim barang ke toko'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response(['message' => 'Gagal mengirim barang ke toko'], 400);
+            return response(['message' => 'Gagal mengirim barang ke toko \n' . $e->getMessage()], 400);
         }
         DB::commit();
     }
