@@ -24,7 +24,20 @@ class RedirectIfAuthenticated
 
         // Check if staff is authenticated
         if (Auth::check()) {
-            return redirect()->route('login');
+            $role = Auth::user()->role;
+
+            switch ($role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'warehouse':
+                    return redirect()->route('warehouse.dashboard');
+                case 'cashier':
+                    return redirect()->route('cashier.dashboard');
+                case 'member':
+                    return redirect()->route('member.dashboard');
+                default:
+                    return redirect()->route('home');
+            }
         }
         
         return $next($request);
