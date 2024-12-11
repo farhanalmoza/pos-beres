@@ -56,15 +56,19 @@
         <td colspan="6" style="padding: 10px;"></td>
       </tr>
       <tr>
-        <th colspan="5" style="text-align: right;">Sub Total</th>
-        <td style="text-align: right;">Rp. {{ number_format($transactions->total + $transactions->transaction_discount, 0, ',', '.') }}</td>
+        <th colspan="5" style="text-align: right;">Total Item</th>
+        <td style="text-align: right;">Rp. {{ number_format($transactions->total_item, 0, ',', '.') }}</td>
       </tr>
       <tr>
         <th colspan="5" style="text-align: right;">Diskon</th>
         <td style="text-align: right;">Rp. {{ number_format($transactions->transaction_discount, 0, ',', '.') }}</td>
       </tr>
       <tr>
-        <th colspan="5" style="text-align: right;">Total</th>
+        <th colspan="5" style="text-align: right;">PPN</th>
+        <td style="text-align: right;">Rp. {{ number_format($transactions->ppn, 0, ',', '.') }}</td>
+      </tr>
+      <tr>
+        <th colspan="5" style="text-align: right;">Total Belanja</th>
         <td style="text-align: right;">Rp. {{ number_format($transactions->total, 0, ',', '.') }}</td>
       </tr>
     </tbody>
