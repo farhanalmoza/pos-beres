@@ -18,6 +18,8 @@ var totalDiscount = 0;
 var memberTotal = 0;
 var nonMemberTotal = 0;
 var memberId = '';
+var isPPN = false;
+var plusPPN = 0;
 
 $(function () {
   getCarts.loadData = noInvoice
@@ -134,28 +136,50 @@ function changeMember(sel) {
 }
 
 function updateMemberTotal(memberId) {  
+  $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
+  $('#subTotal').val(subTotal)
   if (memberId !== '') {
-    $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
-    $('#subTotal').val(subTotal)
     $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(totalDiscount.toString()))
     $('#diskonValue').val(totalDiscount)
     $('.grand_total').text(Functions.prototype.formatRupiah(memberTotal.toString()))
     $('#grandTotal').val(memberTotal)
   } else {
-    $('.subTotalBadge').text(Functions.prototype.formatRupiah(subTotal.toString()))
-    $('#subTotal').val(subTotal)
     $('#diskonTrxLabel').text(Functions.prototype.formatRupiah(0))
     $('#diskonValue').val(0)
     $('.grand_total').text(Functions.prototype.formatRupiah(nonMemberTotal.toString()))
     $('#grandTotal').val(nonMemberTotal)
   }
+
+  if (isPPN) {
+    plusPPN = (subTotal - $('#diskonValue').val()) * PPN / 100;
+    var grandTotal = subTotal - $('#diskonValue').val() + plusPPN;
+  } else {
+    plusPPN = 0;
+    var grandTotal = subTotal - $('#diskonValue').val();
+  }
+
+  $('#ppnLabel').text(Functions.prototype.formatRupiah(plusPPN))
+  $('#ppnValue').val(plusPPN)
+  $('.grand_total').text(Functions.prototype.formatRupiah(grandTotal))
+  $('#grandTotal').val(grandTotal)
 }
+
+$('#ppnCheck').on('change', function() {
+  if ($(this).is(':checked')) {
+    isPPN = true;
+  } else {
+    isPPN = false;
+  }
+  updateMemberTotal(memberId);
+})
 
 function processPayment(e) {
   e.preventDefault()
   const idUser = idUserInput
   // const customer = $('#customer').val() === '' ? '0' : $('#customer').val()
+  const totalItem = $('#subTotal').val()
   const discount = $('#diskonValue').val()
+  const PPN = $('#ppnValue').val() ?? 0  
   const grandTotal = $('#grandTotal').val()
   if (grandTotal < 1) {
     $('.bs-toast').removeClass('bg-success')
@@ -177,7 +201,9 @@ function processPayment(e) {
         store_id: storeId,
         created_by: idUser,
         member_id: memberId,
+        total_item: totalItem,
         transaction_discount: discount != "" ? discount : 0,
+        ppn: PPN,
         total: grandTotal,
         cash: $("#cashAmount").val(),
         change: $("#cashAmount").val() - grandTotal,

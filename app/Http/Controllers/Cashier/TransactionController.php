@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreProduct;
+use App\Models\Tax;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class TransactionController extends Controller
         $data['no_invoice'] = GenerateCode::invoice();
         $members = Member::all();
         $data['members'] = $members;
+        $data['ppn'] = Tax::first()->tax;
         return view('cashier.transaction.add', $data);
     }
 
@@ -138,7 +140,9 @@ class TransactionController extends Controller
                     'store_id' => $request['store_id'],
                     'created_by' => $request['created_by'],
                     'member_id' => $request['member_id'] ?? 0,
+                    'total_item' => $request['total_item'],
                     'transaction_discount' => $request['transaction_discount'],
+                    'ppn' => $request['ppn'],
                     'total' => $request['total'],
                     'cash' => $request['cash'],
                     'change' => $request['change'],
@@ -170,6 +174,7 @@ class TransactionController extends Controller
     public function listTransactions() {
         $results = Transaction::with('store', 'createdBy', 'member')
             ->where('store_id', Auth::user()->store_id)
+            ->orderBy('created_at', 'DESC')
             ->get();
             
         return datatables()

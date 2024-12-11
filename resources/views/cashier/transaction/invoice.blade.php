@@ -49,7 +49,6 @@
 							<span class="font-weight-bold text-uppercase text-primary">Transaksi</span>
 							<span class="text-muted no_invoice">{{ $invoice->no_invoice }}</span>
 							<span class="text-muted" id="tgl_transaksi">{{ $invoice->created_at->format('d/m/Y') }}</span>
-							<span class="text-muted" id="total">RP. {{ number_format($invoice->total, 0, ',', '.') }}</span>
 							<span class="text-muted text-right" id="keterangan">{{ $invoice->notes ? $invoice->notes : '-' }}</span>
 						</div>
 					</div>
@@ -70,10 +69,10 @@
 									<tr>
 										<td>{{ $loop->iteration }}</td>
 										<td>{{ $item->product->name }}</td>
-										<td>{{ $item->quantity }}</td>
-										<td>Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
-										<td>RP. {{ number_format($item->product_discount, 0, ',', '.') }}</td>
-										<td>Rp. {{ number_format(($item->price - $item->product_discount) * $item->quantity, 0, ',', '.') }}</td>
+										<td style="direction: rtl">{{ $item->quantity }}</td>
+										<td style="direction: rtl">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+										<td style="direction: rtl">RP. {{ number_format($item->product_discount, 0, ',', '.') }}</td>
+										<td style="direction: rtl">Rp. {{ number_format(($item->price - $item->product_discount) * $item->quantity, 0, ',', '.') }}</td>
 									</tr>
 								@endforeach
 							</tbody>
@@ -83,17 +82,25 @@
 						<div class="col-md-5">
 							<table class="table table-clear table-borderless">
 								<tr>
-									<th>Sub Total</th>
-									<td id="subTotal">Rp. {{ number_format($invoice->total + $invoice->transaction_discount, 0, ',', '.') }}</td>
+									<th style="padding: 0 1.25rem">Total Item</th>
+									<td style="padding: 0 1.25rem; direction: rtl;" id="subTotal">Rp. {{ number_format($invoice->total_item, 0, ',', '.') }}</td>
 								</tr>
 								<tr>
-									<th>Diskon</th>
-									<td id="diskonTrx">Rp. {{ number_format($invoice->transaction_discount, 0, ',', '.') }}</td>
+									<th style="padding: 0 1.25rem">Diskon</th>
+									<td style="padding: 0 1.25rem; direction: rtl;" id="diskonTrx">Rp. {{ number_format($invoice->transaction_discount, 0, ',', '.') }}</td>
+								</tr>
+								<tr>
+									<th style="padding: 0 1.25rem">PPN</th>
+									<td style="padding: 0 1.25rem; direction: rtl;" id="ppnValue">Rp. {{ number_format($invoice->ppn, 0, ',', '.') }}</td>
+								</tr>
+								<tr>
+									<th style="padding: 0 1.25rem">Total Belanja</th>
+									<td style="padding: 0 1.25rem; direction: rtl;" id="ppnValue">Rp. {{ number_format($invoice->total, 0, ',', '.') }}</td>
 								</tr>
 							</table>
 						</div>
 					</div>
-					<div class="d-flex justify-content-end">
+					<div class="d-flex justify-content-end mt-2">
 						{{-- <a href="{{ route('printPdfInvoice') }}?id={{ $id }}" class="btn btn-primary btn-sm">Cetak pdf</a> --}}
 						<a href="{{ route('cashier.transaction.download-invoice', $invoice->id) }}" class="btn btn-primary btn-sm">Cetak pdf</a>
 					</div>

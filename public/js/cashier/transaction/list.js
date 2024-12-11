@@ -5,7 +5,7 @@ $(document).ready(function() {
 function getListTransaction() {
 	const urlListTransaction = URL_Role + "/transaction/get-all"
 	const columns = [
-		{data : 'no_invoice', name: 'no_invoice'},
+		{data : 'no_invoice', name: 'no_invoice', orderable : false, searchable : false },
 		{data : 'created_by.name', name: 'created_by'},
 		{data : 'memberName', name: 'memberName'},
 		{data : 'date', name: 'date',	},

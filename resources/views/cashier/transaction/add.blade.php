@@ -44,6 +44,7 @@
           <input type="hidden" id="grandTotal">
           <input type="hidden" id="subTotal">
           <input type="hidden" id="diskonValue">
+          <input type="hidden" id="ppnValue">
           <div class="d-flex flex-column justify-content-end align-items-end">
             <span class="text-muted font-weight-bold">{{ $no_invoice }}</span>
             <span class="font-weight-bold grand_total" style="font-size: 30px">Rp. 0</span>
@@ -56,6 +57,10 @@
           <div class="d-flex justify-content-between align-items-center">
             <span class="font-weight-bold text-muted" style="font-size: 17px;">Diskon</span>
             <span class="font-weight-bold text-success" style="font-size: 14px;" id="diskonTrxLabel">Rp. 0</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="font-weight-bold text-muted" style="font-size: 17px;">PPN</span>
+            <span class="font-weight-bold text-danger" style="font-size: 14px;" id="ppnLabel">Rp. 0</span>
           </div>
           <hr class="my-2">
           <div class="d-flex justify-content-between align-items-center">
@@ -72,6 +77,10 @@
                 <option value="{{ $member->id }}">{{ $member->name }}</option>
               @endforeach
             </select>
+          </div>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="ppnCheck">
+            <label class="form-check-label" for="ppnCheck">PPN</label>
           </div>
           <div class="row gap-2 mt-2">
             <button class="btn btn-secondary" id="cancelOrder">Batal</button>
@@ -182,6 +191,7 @@
   const noInvoice = '{{ $no_invoice }}'
   const storeId = "{{ auth()->user()->store_id }}"
   const idUserInput = "{{ auth()->user()->id }}"
+  const PPN = {{ $ppn }}  
 </script>
 <script src="{{ asset('js/cashier/transaction/add.js') }}"></script>
 @endsection
