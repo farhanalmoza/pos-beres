@@ -40,7 +40,6 @@
                   <th>Stok</th>
                   <th>Hrg Gudang</th>
                   <th>Hrg Toko</th>
-                  <th>Diskon</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
