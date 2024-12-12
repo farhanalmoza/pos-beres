@@ -11,10 +11,12 @@ use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\Tax;
 use App\Models\Transaction;
+use App\Notifications\StoreLowStock;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class TransactionController extends Controller
 {
@@ -117,6 +119,7 @@ class TransactionController extends Controller
         $returnQtyProduct = false;
         $carts = Cart::where('no_invoice', $request['no_invoice'])->with('product')->get();
         if (!$carts) return response()->json(['message' => 'Keranjang masih kosong'], 422);
+        $store = Store::find(Auth::user()->store_id);
 
         DB::beginTransaction();
         try {
@@ -131,6 +134,12 @@ class TransactionController extends Controller
                     // update product stock in store product
                     $product->quantity = $product->quantity - $cart->quantity;
                     $product->save();
+
+                    // Send notification if stocks is low in store using Telegram
+                    if ($product->quantity <= $product->product->low_stock) {
+                        Notification::route('telegram', env('TELEGRAM_GROUP_STAFF_ID'))
+                        ->notify(new StoreLowStock($product, $store));
+                    }
                 }
             }
 
