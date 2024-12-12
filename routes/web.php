@@ -340,7 +340,7 @@ Route::get('/_t', function () {
         // ->latest()
 
         // (Optional). Limit to 2 updates (By default, updates starting with the earliest unconfirmed update are returned).
-        ->limit(2)
+        // ->limit(2)
 
         // (Optional). Add more params to the request.
         ->options([

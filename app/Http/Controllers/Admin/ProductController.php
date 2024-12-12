@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Notifications\NewPromo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -115,7 +117,13 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->warehouse_price = $request->warehouse_price;
             $product->low_stock = $request->low_stock;
+            $product->discount = $request->discount;
             $product->save();
+
+            if ($product->quantity > 0 && $product->discount > 0) {
+                Notification::route('telegram', env('TELEGRAM_GROUP_MEMBER_ID'))
+                ->notify(new NewPromo($product));
+            }
 
             return response(['message' => 'Barang berhasil diubah'], 200);
         }

@@ -119,7 +119,8 @@ function addProduct() {
                 quantity : $('#product_quantity').val(),
                 warehouse_price : $('#warehouse_price').val(),
                 price : $('#add_product_price').val(),
-                low_stock : $('#low_stock').val()
+                low_stock : $('#low_stock').val(),
+                discount : $('#discount').val(),
             }
             Functions.prototype.httpRequest(URL_Role + '/product', data, 'post')
             // hide modal
@@ -151,6 +152,7 @@ function showDetailForPrint() {
             $('#product_price').val(response.data.price);
             $('#product_stock').val(response.data.quantity);
             $('#display_low_stock').val(response.data.low_stock)
+            $('#display_discount').val(response.data.discount);
             JsBarcode("#barcodeSvg", response.data.code, {
                 format: "CODE39", // Format barcode (sesuaikan dengan kebutuhan)
                 lineColor: "#000", // Warna garis
@@ -185,7 +187,8 @@ function showDetailForEdit() {
             $('#update_category_id').val(response.data.category_id);
             $('#update_price').val(response.data.price);
             $('#update_warehouse_price').val(response.data.warehouse_price);
-            $('#update_low_stock').val(response.data.low_stock)
+            $('#update_low_stock').val(response.data.low_stock);
+            $('#update_discount').val(response.data.discount);
         },
         set errorData(err) {
             $('.bs-toast').addClass('bg-danger show')
@@ -251,7 +254,8 @@ function updateProduct() {
                 category_id : $('#update_category_id').val(),
                 price : $('#update_price').val(),
                 warehouse_price : $('#update_warehouse_price').val(),
-                low_stock : $('#update_low_stock').val()
+                low_stock : $('#update_low_stock').val(),
+                discount : $('#update_discount').val(),
             }
             Functions.prototype.httpRequest(urlUpdate, data, 'put')
             // hide modal

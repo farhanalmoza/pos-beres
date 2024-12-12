@@ -40,6 +40,7 @@
                   <th>Stok</th>
                   <th>Hrg Gudang</th>
                   <th>Hrg Toko</th>
+                  <th>Diskon</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -134,6 +135,10 @@
               <label for="low_stock" class="form-label">Batas bawah stok</label>
               <input type="number" id="low_stock" name="low_stock" class="form-control">
             </div>
+            <div class="mb-3">
+              <label for="discount" class="form-label">Diskon</label>
+              <input type="number" id="discount" name="discount" class="form-control">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -186,6 +191,10 @@
             <div class="mb-3">
               <label for="update_low_stock" class="form-label">Batas Bawah Stok</label>
               <input type="number" id="update_low_stock" name="update_low_stock" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="update_discount" class="form-label">Diskon</label>
+              <input type="number" id="update_discount" name="update_discount" class="form-control">
             </div>
           </div>
           <div class="modal-footer">

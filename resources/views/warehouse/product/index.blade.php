@@ -87,6 +87,10 @@
             <label for="display_low_stock" class="form-label">Batas Bawah Stok</label>
             <input type="text" id="display_low_stock" class="form-control" disabled>
           </div>
+          <div class="mb-2">
+            <label for="display_discount" class="form-label">Diskon</label>
+            <input type="text" id="display_discount" class="form-control" disabled>
+          </div>
           <div class="mb-2" id="barcode">
             <svg id="barcodeSvg"></svg>
           </div>
@@ -133,6 +137,10 @@
             <div class="mb-3">
               <label for="low_stock" class="form-label">Batas bawah stok</label>
               <input type="number" id="low_stock" name="low_stock" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="discount" class="form-label">Diskon</label>
+              <input type="number" id="discount" name="discount" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
@@ -186,6 +194,10 @@
             <div class="mb-3">
               <label for="update_low_stock" class="form-label">Batas Bawah Stok</label>
               <input type="number" id="update_low_stock" name="update_low_stock" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="update_discount" class="form-label">Diskon</label>
+              <input type="number" id="update_discount" name="update_discount" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
