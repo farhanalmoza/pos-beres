@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Member;
 use App\Models\Product;
+use App\Models\ProductIn;
+use App\Models\ProductOut;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -12,10 +15,21 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index() {
-        $topProducts = $this->getTopProducts();
-        $inactiveProducts = $this->getInactiveProducts();
+        $thisMonth = Carbon::now()->month;
+        $thisYear = Carbon::now()->year;
 
-        return view('admin.dashboard.index', compact('topProducts', 'inactiveProducts'));
+        $data['expensesThisMonth'] = ProductIn::whereMonth('created_at', $thisMonth)
+            ->whereYear('created_at', $thisYear)
+            ->sum('purchase_price');
+        $salesThisMonth = ProductOut::whereMonth('created_at', $thisMonth)
+            ->whereYear('created_at', $thisYear)
+            ->sum('total_price');
+        $data['profitThisMonth'] = $salesThisMonth - $data['expensesThisMonth'];
+        $data['topProducts'] = $this->getTopProducts();
+        $data['inactiveProducts'] = $this->getInactiveProducts();
+        $data['memberCount'] = Member::count();
+
+        return view('admin.dashboard.index', compact('data'));
     }
 
     public function getTopProducts() {
