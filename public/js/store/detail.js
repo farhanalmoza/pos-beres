@@ -13,6 +13,11 @@ function getStoreProducts() {
                 return Functions.prototype.formatRupiah(data);
             }
         },
+        {data : 'product.discount', name: 'product.discount',
+            render: function (data, type, row) {
+                return Functions.prototype.formatRupiah(data);
+            }
+        },
     ]
     Functions.prototype.tableResult("#store-product-table", urlListStoreProducts, columns)
 }

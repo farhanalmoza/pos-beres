@@ -26,14 +26,14 @@
             </button>
           </li>
           <li class="nav-item" role="presentation">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile" aria-selected="false" tabindex="-1">
+            {{-- <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile" aria-selected="false" tabindex="-1">
               <i class="tf-icons bx bx-user me-1"></i><span class="d-none d-sm-block"> Penjualan</span>
-            </button>
+            </button> --}}
           </li>
           <li class="nav-item" role="presentation">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false" tabindex="-1">
+            {{-- <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false" tabindex="-1">
               <i class="tf-icons bx bx-message-square me-1"></i><span class="d-none d-sm-block"> Pemasukan</span>
-            </button>
+            </button> --}}
           </li>
         </ul>
         <div class="tab-content">
@@ -45,6 +45,7 @@
                   <th>Nama Barang</th>
                   <th>Jumlah</th>
                   <th>Harga</th>
+                  <th>Diskon</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,6 +56,7 @@
                   <th>Nama Barang</th>
                   <th>Jumlah</th>
                   <th>Harga</th>
+                  <th>Diskon</th>
                 </tr>
               </tfoot>
             </table>
@@ -90,7 +92,6 @@
 
 @section('js')
   <script>
-    const URL = "{{ url('') }}"
     const URL_Role = "{{ url('/admin') }}"
     const store_id = window.location.href.split('/').pop()
   </script>
