@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
 use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseReportController;
+use App\Http\Controllers\Cashier\ReceiptController;
 use App\Http\Controllers\Cashier\SalesReportController;
 use App\Http\Controllers\Cashier\TransactionController;
 use App\Http\Controllers\Member\AuthController;
@@ -265,6 +266,8 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
         Route::get('/get-all', [TransactionController::class, 'listTransactions'])->name('cashier.transaction.get-all');
         Route::get('/invoice/{id}', [TransactionController::class, 'invoice'])->name('cashier.transaction.invoice');
         Route::get('/download/invoice/{id}', [TransactionController::class, 'downloadInvoice'])->name('cashier.transaction.download-invoice');
+
+        Route::get('/print/receipt/{invoice}', [ReceiptController::class, 'printReceipt'])->name('cashier.transaction.print-receipt');
     });
 
     // Product
@@ -352,3 +355,5 @@ Route::get('/_t', function () {
 })->name('test');
 
 Route::get('/send-telegram', [NotificationController::class, 'sendMessage']);
+
+Route::get('/test-print', [ReceiptController::class, 'testPrintReceipt']);

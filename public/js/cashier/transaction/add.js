@@ -75,7 +75,8 @@ const getCarts = {
     if (response.length > 0) {
       var x = 1;
       response.map((result, i) => {
-        totalDiscount = result.product_discount * result.quantity
+        var itemsDiscount = result.product_discount * result.quantity
+        totalDiscount += itemsDiscount
         var price = result.price,
             totalPrice = (result.price * result.quantity)
         subTotal += totalPrice
@@ -218,11 +219,26 @@ function processPayment(e) {
       $('#printReceiptBtn').on('click', function(e) {
         e.preventDefault()
         const url = URL_Role + "/transaction/print/receipt/" + noInvoice
-        // Functions.prototype.postRequest(addDataCart, url)
-        $('#printReceiptModal').modal('hide')
-        setTimeout(() => {
-          window.location.reload()
-        }, 500);
+        $.ajax({
+          type: "get",
+          url: url,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Authorization' : "Bearer " + sessionStorage.getItem('token')
+          },
+          success: function (response) {
+            $('#printReceiptModal').modal('hide')
+            setTimeout(() => {
+              window.location.reload()
+            }, 500);
+          },
+          error: function(err) {
+            $('.bs-toast').removeClass('bg-success')
+            $('.bs-toast').addClass('bg-danger show')
+            $('.toast-status').text('Gagal')
+            $('.toast-body').text(err.responseJSON.message)
+          }
+        })
       })
       $('#noPrintReceiptBtn').on('click', function(e) {
         e.preventDefault()
