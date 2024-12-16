@@ -24,4 +24,8 @@ class StoreProduct extends Model
     public function product() {
         return $this->belongsTo(Product::class);
     }
+
+    public function carts() {
+        return $this->hasMany(Cart::class, 'product_id');
+    }
 }
