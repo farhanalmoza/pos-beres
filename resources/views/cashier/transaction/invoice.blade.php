@@ -48,7 +48,7 @@
 						<div class="col-md-6 d-flex justify-content-end align-items-end flex-column" id="d-desktop">
 							<span class="font-weight-bold text-uppercase text-primary">Transaksi</span>
 							<span class="text-muted no_invoice">{{ $invoice->no_invoice }}</span>
-							<span class="text-muted" id="tgl_transaksi">{{ $invoice->created_at->format('d/m/Y') }}</span>
+							<span class="text-muted" id="tgl_transaksi">{{ $invoice->created_at->format('d-m-Y H:i:s') }}</span>
 							<span class="text-muted text-right" id="keterangan">{{ $invoice->notes ? $invoice->notes : '-' }}</span>
 						</div>
 					</div>

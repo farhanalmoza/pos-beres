@@ -21,7 +21,7 @@
       </tr>
       <tr>
         <td style="text-align: left;">Kasir: {{ $transactions->createdBy->name }}</td>
-        <td style="text-align: right;">{{ $transactions->created_at->format('d/m/Y') }}</td>
+        <td style="text-align: right;">{{ $transactions->created_at->format('d-m-Y H:i:s') }}</td>
       </tr>
       <tr>
         <td style="text-align: left;">{{ $store->address ?? "-" }}</td>
