@@ -30,9 +30,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Warehouse\DashboardController as WarehouseDashboardController;
 use App\Http\Controllers\Warehouse\DeliveryReportController;
 use App\Http\Controllers\Warehouse\ProductController as WarehouseProductController;
+use App\Http\Controllers\Warehouse\ProductOutController as WarehouseProductOutController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Row;
 
 Route::get('/', [
     function () {
@@ -206,6 +208,13 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
         Route::get('/', [ProductOutController::class, 'index'])->name('warehouse.product-out.index');
         Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('warehouse.product-out.get-all');
         Route::post('/', [ProductOutController::class, 'store'])->name('warehouse.product-out.store');
+
+        Route::get('/send', [WarehouseProductOutController::class, 'sendProductForm'])->name('warehouse.product-out.send-form');
+        Route::post('/add-to-cart', [WarehouseProductOutController::class, 'addToCart'])->name('warehouse.product-out.add-to-cart');
+        Route::get('/get-carts/{no_invoice}', [WarehouseProductOutController::class, 'getCarts'])->name('warehouse.product-out.get-carts');
+        Route::delete('/delete-cart/{id}', [WarehouseProductOutController::class, 'deleteCart'])->name('warehouse.product-out.delete-cart');
+        Route::post('/send', [WarehouseProductOutController::class, 'processSendProduct'])->name('warehouse.product-out.send-post');
+        
     });
 
     // Store

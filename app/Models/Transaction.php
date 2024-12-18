@@ -11,6 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'no_invoice',
+        'is_warehouse',
         'store_id',
         'created_by',
         'member_id',

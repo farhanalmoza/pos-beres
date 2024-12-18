@@ -11,6 +11,7 @@ class Cart extends Model
 
     protected $fillable = [
         'no_invoice',
+        'is_warehouse',
         'product_id',
         'store_id',
         'user_id',
