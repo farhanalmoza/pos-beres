@@ -201,7 +201,7 @@
         </ul>
       </li>
 
-      <li class="menu-item {{ Request::routeIs('warehouse.product-out.index') ||
+      <li class="menu-item {{ Request::routeIs('warehouse.product-out.list') ||
                               Request::routeIs('warehouse.product-request.index') ||
                               Request::routeIs('warehouse.product-out.send-form') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -209,8 +209,8 @@
           <div>Barang Keluar</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{ Request::routeIs('warehouse.product-out.index') ? 'active' : '' }}">
-            <a href="{{ route('warehouse.product-out.index') }}" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('warehouse.product-out.list') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product-out.list') }}" class="menu-link">
               <div data-i18n="Basic">Daftar Barang Keluar</div>
             </a>
           </li>

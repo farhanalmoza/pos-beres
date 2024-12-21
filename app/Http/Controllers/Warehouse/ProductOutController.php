@@ -6,6 +6,7 @@ use App\Helpers\GenerateCode;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductOut;
 use App\Models\Store;
 use App\Models\Tax;
 use App\Models\Transaction;
@@ -120,6 +121,7 @@ class ProductOutController extends Controller
             if ($returnQtyProduct == false) {
                 $createTransaction = Transaction::create([
                     'no_invoice' => $request['no_invoice'],
+                    'is_warehouse' => true,
                     'store_id' => $request['store_id'],
                     'created_by' => Auth::user()->id,
                     'total_item' => $request['total_item'],
@@ -145,4 +147,26 @@ class ProductOutController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
     }
+
+    // LIST PRODUCT OUT
+    public function getProductOutList() {
+        $results = Transaction::with('store')->where('is_warehouse', 1)->get();
+        return datatables()
+        ->of($results)
+        ->addColumn('date', function ($item) {
+            return $item->created_at->format('d-m-Y');
+        })
+        ->addColumn('actions', function ($item) {
+            $btn = '<a href="'.route('warehouse.product-out.invoice', $item->no_invoice).'" class="btn btn-success btn-sm">Detail</a>';
+            return $btn;
+        })
+        ->rawColumns(['actions'])
+        ->make(true);
+    }
+
+    public function invoiceView($invoice) {
+        $productOut = Transaction::with('carts')->where('no_invoice', $invoice)->first();
+        return view('warehouse/product-out/invoice', compact('productOut'));
+    }
+    // END LIST PRODUCT OUT
 }

@@ -205,16 +205,20 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
 
     // Product Out
     Route::prefix('product-out')->group(function() {
-        Route::get('/', [ProductOutController::class, 'index'])->name('warehouse.product-out.index');
-        Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('warehouse.product-out.get-all');
-        Route::post('/', [ProductOutController::class, 'store'])->name('warehouse.product-out.store');
+        // Route::get('/', [ProductOutController::class, 'index'])->name('warehouse.product-out.index');
+        // Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('warehouse.product-out.get-all');
+        // Route::post('/', [ProductOutController::class, 'store'])->name('warehouse.product-out.store');
+
+        Route::get('/list', [WarehouseProductController::class, 'productOutList'])->name('warehouse.product-out.list');
+        Route::get('/get-all', [WarehouseProductOutController::class, 'getProductOutList'])->name('warehouse.product-out.get-all');
+        Route::get('/invoice/{invoice}', [WarehouseProductOutController::class, 'invoiceView'])->name('warehouse.product-out.invoice');
 
         Route::get('/send', [WarehouseProductOutController::class, 'sendProductForm'])->name('warehouse.product-out.send-form');
         Route::post('/add-to-cart', [WarehouseProductOutController::class, 'addToCart'])->name('warehouse.product-out.add-to-cart');
         Route::get('/get-carts/{no_invoice}', [WarehouseProductOutController::class, 'getCarts'])->name('warehouse.product-out.get-carts');
         Route::delete('/delete-cart/{id}', [WarehouseProductOutController::class, 'deleteCart'])->name('warehouse.product-out.delete-cart');
         Route::post('/send', [WarehouseProductOutController::class, 'processSendProduct'])->name('warehouse.product-out.send-post');
-        
+
     });
 
     // Store
