@@ -3,6 +3,7 @@
 namespace App\Exports\Store;
 
 use App\Models\ProductOut;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -19,7 +20,8 @@ class PurchaseReportExport implements FromView
 
     public function view(): View
     {
-        $purchases = ProductOut::with('product')
+        $purchases = Transaction::with('carts', 'carts.product')
+            ->where('is_warehouse', 1)
             ->where('store_id', Auth::user()->store_id)
             ->orderBy('created_at', 'desc');
             
