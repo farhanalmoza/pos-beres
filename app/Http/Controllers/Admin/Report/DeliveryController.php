@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Exports\Warehouse\DeliveryReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOut;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,26 +26,35 @@ class DeliveryController extends Controller
         $start_date = request()->input('start_date');
         $end_date = request()->input('end_date');
         
-        $results = ProductOut::with('product', 'store')->orderBy('created_at', 'desc');
+        $productOut = Transaction::with('carts', 'carts.product', 'store')
+            ->where('is_warehouse', 1)
+            ->orderBy('created_at', 'desc');
 
         if ($start_date !== null && $end_date !== null) {
             $start_date = Carbon::parse($start_date)->startOfDay();
             $end_date = Carbon::parse($end_date)->endOfDay();
 
-            $results = $results->whereBetween('created_at', [$start_date, $end_date]);
+            $productOut = $productOut->whereBetween('created_at', [$start_date, $end_date]);
         }
 
-        $results = $results->get();
+        $productOut = $productOut->get();
+        $results = [];
+        foreach ($productOut as $product) {
+            foreach ($product->carts as $cart) {
+                $cart['store'] = $product->store->name;
+                $results[] = $cart;
+            }
+        }
 
         return datatables()
             ->of($results)
-            ->addColumn('product_code_name', function($product) {
-                return $product->product->code . " - " . $product->product->name;
+            ->addIndexColumn()
+            ->addColumn('total', function($row) {
+                return $row->quantity * $row->price;
             })
             ->addColumn('created_at', function($product) {
                 return $product->created_at->format('Y-m-d');
             })
-            ->rawColumns(['product_code_name', 'created_at'])
             ->make(true);
     }
 

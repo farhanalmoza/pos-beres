@@ -3,6 +3,7 @@
 namespace App\Exports\Warehouse;
 
 use App\Models\ProductOut;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -17,13 +18,22 @@ class DeliveryReportExport implements FromView
     }
 
     public function view(): View {
-        $results = ProductOut::with('product', 'store')->orderBy('created_at', 'desc');
+        $productOut = Transaction::with('carts', 'carts.product', 'store')
+            ->where('is_warehouse', 1)
+            ->orderBy('created_at', 'desc');
 
         if ($this->startDate !== null && $this->endDate !== null) {
-            $results = $results->whereBetween('created_at', [$this->startDate, $this->endDate]);
+            $productOut = $productOut->whereBetween('created_at', [$this->startDate, $this->endDate]);
         }
 
-        $results = $results->get();
+        $productOut = $productOut->get();
+        $results = [];
+        foreach ($productOut as $product) {
+            foreach ($product->carts as $cart) {
+                $cart['store'] = $product->store->name;
+                $results[] = $cart;
+            }
+        }
 
         return view('exports.warehouse.delivery-report', ['deliveries' => $results]);
     }

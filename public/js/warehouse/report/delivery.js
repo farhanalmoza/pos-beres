@@ -8,9 +8,22 @@ function getDeliveryReport(startDate = null, endDate = null) {
         urlListDeliveryReport += "?start_date=" + startDate + "&end_date=" + endDate
     }
     const columns = [
-        {data : 'product_code_name', name: 'product'},
-        {data : 'store.name', name: 'store'},
-        {data: 'quantity', name: 'quantity'},
+        {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
+        {data : 'no_invoice', name: 'no_invoice'},
+        {data : 'product.code', name: 'product.code'},
+        {data : 'product.name', name: 'product.name'},
+        {data : 'store', name: 'store'},
+        {data : 'quantity', name: 'quantity', className: 'text-end'},
+        {data : 'price', name: 'price', className: 'text-end',
+            render: function (data, type, row) {
+                return Functions.prototype.formatNumber(data);
+            }
+        },
+        {data : 'total', name: 'total', className: 'text-end',
+            render: function (data, type, row) {
+                return Functions.prototype.formatNumber(data);
+            }
+        },
         {data : 'created_at', name: 'created_at', orderable: false, searchable: false},
     ]
     Functions.prototype.tableResult("#deliveryReportTable", urlListDeliveryReport, columns)
