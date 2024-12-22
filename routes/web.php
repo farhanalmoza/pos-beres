@@ -295,13 +295,18 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
     Route::prefix('product-request')->group(function() {
         Route::get('/', [CashierProductRequestController::class, 'addView'])->name('cashier.product-request.index');
         Route::post('/store', [CashierProductRequestController::class, 'storeProductRequest'])->name('cashier.product-request.store');
-        
+
         Route::prefix('cart')->group(function() {
             Route::get('/get-carts/{request_number}', [CashierProductRequestController::class, 'getCarts'])->name('cashier.product-request.get-carts');
             Route::post('/add', [CashierProductRequestController::class, 'addToCart'])->name('cashier.product-request.add-to-cart');
             Route::delete('/delete/{id}', [CashierProductRequestController::class, 'deleteCart'])->name('cashier.product-request.delete-cart');
         });
-        Route::get('/history', [CashierProductRequestController::class, 'historyView'])->name('cashier.product-request.history');
+
+        Route::prefix('history')->group(function() {
+            Route::get('/', [CashierProductRequestController::class, 'historyView'])->name('cashier.product-request.history');
+            Route::get('/get-all', [CashierProductRequestController::class, 'getAllHistory'])->name('cashier.product-request.get-history');
+            Route::get('/show/{id}', [CashierProductRequestController::class, 'show'])->name('cashier.product-request.show');
+        });
     });
 
     // Report

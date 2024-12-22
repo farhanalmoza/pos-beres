@@ -81,7 +81,47 @@ class ProductRequestController extends Controller
         return response()->json(['message' => 'Permintaan barang berhasil dibuat']);
     }
 
+    // HISTORY
     public function historyView() {
         return view('cashier/product-request/history');
     }
+
+    public function getAllHistory() {
+        $results = ProductRequest::with('createdBy')
+            ->where('store_id', Auth::user()->store_id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        return datatables()
+        ->of($results)
+        ->addIndexColumn()
+        ->addColumn('status', function($rows) {
+            if ($rows->status == 'requested') {
+                return '<span class="badge bg-success">Diajukan</span>';
+            } else if ($rows->status == 'done') {
+                return '<span class="badge bg-primary">Selesai</span>';
+            } else if ($rows->status == 'customized') {
+                return '<span class="badge bg-warning">Disesuaikan</span>';
+            }
+        })
+        ->addColumn('created', function($rows) {
+            return $rows->created_at->format('d-m-Y');
+        })
+        ->addColumn('changed', function($rows) {
+            return $rows->updated_at->format('d-m-Y');
+        })
+        ->addColumn('actions', function($rows) {
+            $btn = '<a href="'.route('cashier.product-request.show', $rows->id).'" class="btn btn-success btn-sm">Detail</a>';
+            return $btn;
+        })
+        ->rawColumns(['status', 'actions'])
+        ->make(true);
+    }
+
+    public function show($id) {
+        $productRequest = ProductRequest::with('createdBy')->find($id);
+        $items = ProductRequestCart::with('product')
+            ->where('request_number', $productRequest->request_number)->get();
+        return view('cashier/product-request/detail', compact('productRequest', 'items'));
+    }
+    // END HISTORY
 }

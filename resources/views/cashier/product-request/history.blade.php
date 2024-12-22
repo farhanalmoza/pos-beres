@@ -1,6 +1,10 @@
 @extends('components.layout')
 @section('title', 'Kasir | Riwayat Permintaan Barang')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">  
   <div class="bs-toast toast toast-placement-ex m-2 fade top-0 end-0"
@@ -26,14 +30,16 @@
         </div>
         <div class="card-body">
           <div class="table-responsive text-nowrap">
-            <table class="table" id="historyProductRequestTable">
+            <table class="table" id="productRequestHistoryTable">
               <thead>
                 <tr class="text-nowrap text-center">
                   <th style="width: 5%;">No</th>
+                  <th>No. Permintaan</th>
                   <th>Dibuat Oleh</th>
-                  <th>Status</th>
-                  <th>Tanggal</th>
-                  <th>Aksi</th>
+                  <th style="width: 5%">Status</th>
+                  <th style="width: 5%">Dibuat</th>
+                  <th style="width: 5%">Diubah</th>
+                  <th style="width: 5%">Aksi</th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
@@ -48,4 +54,15 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+  const URL_Role = "{{ url('/cashier') }}"
+</script>
+{{-- Data Table --}}
+<script src="{{ asset('js/jquery-datatables.js') }}"></script>
+<script src="{{ asset('js/datatable-bs4.js') }}"></script>
+
+<script src="{{ asset('js/cashier/product-request/history.js') }}"></script>
 @endsection
