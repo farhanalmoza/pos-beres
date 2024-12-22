@@ -1,5 +1,5 @@
 @extends('components.layout')
-@section('title', 'Admin | Detail Permintaan Barang')
+@section('title', 'Gudang | Detail Permintaan Barang')
 
 @section('css')
   <link rel="stylesheet" href="{{ asset('css/datatable-bs4.css') }}">
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="">
-            <a href="{{ route('admin.product-out.request') }}" class="btn btn-secondary">
+            <a href="{{ route('warehouse.product-out.request') }}" class="btn btn-secondary">
               Kembali
             </a>
           </div>
@@ -87,7 +87,7 @@
           <h5 class="modal-title">Update Status</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form autocomplete="off" method="POST" action="{{ route('admin.product-out.update-status') }}">
+        <form autocomplete="off" method="POST" action="{{ route('warehouse.product-out.update-status') }}">
           @csrf
           <input type="hidden" name="request_number" id="request_number" value="{{ $productRequest->request_number }}">
           <div class="modal-body">
@@ -114,7 +114,7 @@
 
 @section('js')
 <script>
-  const URL_Role = "{{ url('/admin') }}"
+  const URL_Role = "{{ url('/warehouse') }}"
 </script>
 {{-- Data Table --}}
 <script src="{{ asset('js/jquery-datatables.js') }}"></script>

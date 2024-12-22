@@ -222,7 +222,7 @@
       </li>
 
       <li class="menu-item {{ Request::routeIs('warehouse.product-out.list') ||
-                              Request::routeIs('warehouse.product-request.index') ||
+                              Request::routeIs('warehouse.product-out.request') ||
                               Request::routeIs('warehouse.product-out.send-form') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class='menu-icon bx bx-package'></i>
@@ -234,8 +234,8 @@
               <div data-i18n="Basic">Daftar Barang Keluar</div>
             </a>
           </li>
-          <li class="menu-item {{ Request::routeIs('warehouse.product-request.index') ? 'active' : '' }}">
-            <a href="{{ route('warehouse.product-request.index') }}" class="menu-link">
+          <li class="menu-item {{ Request::routeIs('warehouse.product-out.request') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product-out.request') }}" class="menu-link">
               <div data-i18n="Basic">Permintaan Barang</div>
             </a>
           </li>

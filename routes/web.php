@@ -221,13 +221,16 @@ Route::prefix('warehouse')->middleware(['auth', 'role:warehouse'])->group(functi
 
     // Product Out
     Route::prefix('product-out')->group(function() {
-        // Route::get('/', [ProductOutController::class, 'index'])->name('warehouse.product-out.index');
-        // Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('warehouse.product-out.get-all');
-        // Route::post('/', [ProductOutController::class, 'store'])->name('warehouse.product-out.store');
-
         Route::get('/list', [WarehouseProductController::class, 'productOutList'])->name('warehouse.product-out.list');
         Route::get('/get-all', [WarehouseProductOutController::class, 'getProductOutList'])->name('warehouse.product-out.get-all');
         Route::get('/invoice/{invoice}', [WarehouseProductOutController::class, 'invoiceView'])->name('warehouse.product-out.invoice');
+
+        Route::prefix('request')->group(function() {
+            Route::get('/', [WarehouseProductOutController::class, 'requestList'])->name('warehouse.product-out.request');
+            Route::get('/get-all', [WarehouseProductOutController::class, 'getAllRequest'])->name('warehouse.product-out.get-all');
+            Route::get('/detail-request/{request_number}', [WarehouseProductOutController::class, 'detailRequest'])->name('warehouse.product-out.detail-request');
+            Route::post('/update-status', [WarehouseProductOutController::class, 'updateStatusRequest'])->name('warehouse.product-out.update-status');
+        });
 
         Route::get('/send', [WarehouseProductOutController::class, 'sendProductForm'])->name('warehouse.product-out.send-form');
         Route::post('/add-to-cart', [WarehouseProductOutController::class, 'addToCart'])->name('warehouse.product-out.add-to-cart');
