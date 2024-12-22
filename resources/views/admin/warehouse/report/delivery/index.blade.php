@@ -43,12 +43,17 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-hover" id="deliveryReportTable">
+      <table class="table table-hover table-sm" id="deliveryReportTable">
         <thead>
           <tr>
-            <th>Barang</th>
+            <th>No</th>
+            <th>No Invoice</th>
+            <th>Kode Barang</th>
+            <th>Nama Barang</th>
             <th>Toko</th>
             <th>Jumlah</th>
+            <th>Harga</th>
+            <th>Total</th>
             <th>Tanggal</th>
           </tr>
         </thead>
