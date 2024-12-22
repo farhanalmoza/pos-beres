@@ -296,21 +296,27 @@
       </li>
 
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen</span></li>
-      <li class="menu-item {{ Request::routeIs('cashier.product.index') ||
-                              Request::routeIs('cashier.product.request.index') ? 'active open' : '' }}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <li class="menu-item {{ Request::routeIs('cashier.product.index') ? 'active' : '' }}">
+        <a href="{{ route('cashier.product.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
-          <div>Barang</div>
+          <div>Stok Barang</div>
+        </a>
+      </li>
+      <li class="menu-item {{ Request::routeIs('cashier.product-request.index') ||
+                              Request::routeIs('cashier.product-request.history') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-box"></i>
+          <div>Permintaan Barang</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{ Request::routeIs('cashier.product.index') ? 'active' : '' }}">
-            <a href="{{ route('cashier.product.index') }}" class="menu-link">
-              <div data-i18n="Basic">Stok Barang</div>
+          <li class="menu-item {{ Request::routeIs('cashier.product-request.history') ? 'active' : '' }}"> 
+            <a href="{{ route('cashier.product-request.history') }}" class="menu-link">
+              <div data-i18n="Basic">Riwayat Permintaan</div>
             </a>
           </li>
-          <li class="menu-item {{ Request::routeIs('cashier.product.request.index') ? 'active' : '' }}">
-            <a href="{{ route('cashier.product.request.index') }}" class="menu-link">
-              <div data-i18n="Basic">Permintaan Barang</div>
+          <li class="menu-item {{ Request::routeIs('cashier.product-request.index') ? 'active' : '' }}">
+            <a href="{{ route('cashier.product-request.index') }}" class="menu-link">
+              <div data-i18n="Basic">Buat Permintaan</div>
             </a>
           </li>
         </ul>

@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\ProductController as CashierProductController;
+use App\Http\Controllers\Cashier\ProductRequest;
+use App\Http\Controllers\Cashier\ProductRequestController as CashierProductRequestController;
 use App\Http\Controllers\Cashier\PurchaseReportController as CashierPurchaseReportController;
 use App\Http\Controllers\Cashier\ReceiptController;
 use App\Http\Controllers\Cashier\SalesReportController;
@@ -287,13 +289,19 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
     Route::prefix('product')->group(function() {
         Route::get('/', [CashierProductController::class, 'index'])->name('cashier.product.index');
         Route::get('/get-all', [CashierProductController::class, 'getAll'])->name('cashier.product.getAll');
-        Route::get('/request-stock', [CashierProductController::class, 'requestStock'])->name('cashier.product.request-stock');
+    });
 
-        Route::prefix('request')->group(function() {
-            Route::get('/', [ProductRequestController::class, 'productRequestView'])->name('cashier.product.request.index');
-            Route::get('/get-all', [ProductRequestController::class, 'getAll'])->name('cashier.product.request.get-all');
-            Route::post('/', [ProductRequestController::class, 'store'])->name('cashier.product.request.store');
+    // Product Request
+    Route::prefix('product-request')->group(function() {
+        Route::get('/', [CashierProductRequestController::class, 'addView'])->name('cashier.product-request.index');
+        Route::post('/store', [CashierProductRequestController::class, 'storeProductRequest'])->name('cashier.product-request.store');
+        
+        Route::prefix('cart')->group(function() {
+            Route::get('/get-carts/{request_number}', [CashierProductRequestController::class, 'getCarts'])->name('cashier.product-request.get-carts');
+            Route::post('/add', [CashierProductRequestController::class, 'addToCart'])->name('cashier.product-request.add-to-cart');
+            Route::delete('/delete/{id}', [CashierProductRequestController::class, 'deleteCart'])->name('cashier.product-request.delete-cart');
         });
+        Route::get('/history', [CashierProductRequestController::class, 'historyView'])->name('cashier.product-request.history');
     });
 
     // Report

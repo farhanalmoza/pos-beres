@@ -5,24 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductRequest extends Model
+class ProductRequestCart extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'request_number',
+        'product_id',
         'store_id',
-        'created_by',
-        'status',
+        'user_id',
+        'quantity',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     public function store()
     {
         return $this->belongsTo(Store::class);
     }
 
-    public function createdBy()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class);
     }
 }
