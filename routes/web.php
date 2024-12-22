@@ -89,12 +89,18 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     // Product Out
     Route::prefix('product-out')->group(function() {
-        Route::get('/send', [AdminProductOutController::class, 'sendProductForm'])->name('admin.product-out.send-form');
-
         Route::get('/list', [AdminProductOutController::class, 'productOutList'])->name('admin.product-out.list');
         Route::get('/get-all', [AdminProductOutController::class, 'getProductOutList'])->name('admin.product-out.get-all');
         Route::get('/invoice/{invoice}', [AdminProductOutController::class, 'invoiceView'])->name('admin.product-out.invoice');
 
+        Route::prefix('request')->group(function() {
+            Route::get('/', [AdminProductOutController::class, 'requestList'])->name('admin.product-out.request');
+            Route::get('/get-all', [AdminProductOutController::class, 'getAllRequest'])->name('admin.product-out.get-all');
+            Route::get('/detail-request/{request_number}', [AdminProductOutController::class, 'detailRequest'])->name('admin.product-out.detail-request');
+            Route::post('/update-status', [AdminProductOutController::class, 'updateStatusRequest'])->name('admin.product-out.update-status');
+        });
+        
+        Route::get('/send', [AdminProductOutController::class, 'sendProductForm'])->name('admin.product-out.send-form');
         Route::post('/add-to-cart', [AdminProductOutController::class, 'addToCart'])->name('admin.product-out.add-to-cart');
         Route::get('/get-carts/{no_invoice}', [AdminProductOutController::class, 'getCarts'])->name('admin.product-out.get-carts');
         Route::delete('/delete-cart/{id}', [AdminProductOutController::class, 'deleteCart'])->name('admin.product-out.delete-cart');

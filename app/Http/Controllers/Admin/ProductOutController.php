@@ -6,6 +6,8 @@ use App\Helpers\GenerateCode;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductRequest;
+use App\Models\ProductRequestCart;
 use App\Models\Store;
 use App\Models\Tax;
 use App\Models\Transaction;
@@ -172,4 +174,63 @@ class ProductOutController extends Controller
         return view('admin/product-out/invoice', compact('productOut'));
     }
     // END LIST PRODUCT OUT
+
+    // REQUEST
+    public function requestList() {
+        return view('admin.product-out.request');
+    }
+
+    public function getAllRequest() {
+        $results = ProductRequest::with('store', 'createdBy')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return datatables()
+        ->of($results)
+        ->addIndexColumn()
+        ->addColumn('status', function ($item) {
+            if ($item->status == 'requested') {
+                return '<span class="badge bg-success">Diajukan</span>';
+            } else if ($item->status == 'done') {
+                return '<span class="badge bg-primary">Selesai</span>';
+            } else if ($item->status == 'customized') {
+                return '<span class="badge bg-warning">Disesuaikan</span>';
+            }
+        })
+        ->addColumn('created', function ($item) {
+            return $item->created_at->format('d-m-Y');
+        })
+        ->addColumn('updated', function ($item) {
+            return $item->updated_at->format('d-m-Y');
+        })
+        ->addColumn('actions', function ($item) {
+            $btn = '<a href="'.route('admin.product-out.detail-request', $item->request_number).'" class="btn btn-success btn-sm">Detail</a>';
+            return $btn;
+        })
+        ->rawColumns(['actions', 'status'])
+        ->make(true);
+    }
+
+    public function detailRequest($request_number) {
+        $productRequest = ProductRequest::where('request_number', $request_number)->first();
+        $items = ProductRequestCart::with('product')
+            ->where('request_number', $productRequest->request_number)->get();
+        return view('admin.product-out.detail-request', compact('productRequest', 'items'));
+    }
+
+    public function updateStatusRequest(Request $request) {
+        $request->validate([
+            'request_number' => 'required',
+            'status' => 'required',
+        ]);
+
+        $productRequest = ProductRequest::where('request_number', $request->request_number)->first();
+        if (!$productRequest) return back()->with('error', 'Data permintaan tidak ditemukan');
+
+        // check status
+        $productRequest->status = $request->status;
+        $productRequest->save();
+        return back()->with('success', 'Status berhasil diubah');
+    }
+    // END REQUEST
 }
