@@ -19,24 +19,24 @@ class DashboardController extends Controller
         $thisMonth = Carbon::now()->month;
         $thisYear = Carbon::now()->year;
 
-        $data['expensesThisMonth'] = ProductOut::where('store_id', Auth::user()->store_id)
-            ->whereMonth('created_at', $thisMonth)
-            ->whereYear('created_at', $thisYear)
-            ->sum('total_price');
-        $salesThisMonth = Transaction::where('store_id', Auth::user()->store_id)
+        $data['expensesThisMonth'] = Transaction::where('is_warehouse', 1)
+            ->where('store_id', Auth::user()->store_id)
             ->whereMonth('created_at', $thisMonth)
             ->whereYear('created_at', $thisYear)
             ->sum('total');
-        $data['profitThisMonth'] = $salesThisMonth - $data['expensesThisMonth'];
-        $data['transactionsThisMonth'] = Transaction::where('store_id', Auth::user()->store_id)
+        $data['salesThisMonth'] = Transaction::where('is_warehouse', 0)
+            ->where('store_id', Auth::user()->store_id)
+            ->whereMonth('created_at', $thisMonth)
+            ->whereYear('created_at', $thisYear)
+            ->sum('total');
+        $data['transactionsThisMonth'] = Transaction::where('is_warehouse', 0)
+            ->where('store_id', Auth::user()->store_id)
             ->whereMonth('created_at', $thisMonth)
             ->whereYear('created_at', $thisYear)
             ->count();
 
         $data['topProducts'] = $this->getTopProducts();
         $data['inactiveProducts'] = $this->getInactiveProducts();
-
-        // dd($data['inactiveProducts']);
 
         return view('cashier.dashboard.index', compact('data'));
     }

@@ -8,17 +8,17 @@
       <div class="card card-border-shadow-primary">
         <div class="card-body text-end">
           <h5 class="card-title text-danger">Rp. {{ number_format($data['expensesThisMonth']) }}</h5>
-          <div class="card-subtitle text-muted mb-3">Pengeluaran Bulan Ini</div>
+          <div class="card-subtitle text-muted">Belanja Bulan Ini</div>
         </div>
       </div>
     </div>
     <div class="col-md-3 mb-4">
       <div class="card card-border-shadow-primary">
         <div class="card-body text-end">
-          <h5 class="card-title @if($data['profitThisMonth'] > 0) text-success @else text-danger @endif">
-            Rp. {{ number_format($data['profitThisMonth']) }}
+          <h5 class="card-title text-success">
+            Rp. {{ number_format($data['salesThisMonth']) }}
           </h5>
-          <div class="card-subtitle text-muted mb-3">Keuntungan Bulan Ini</div>
+          <div class="card-subtitle text-muted">Pendapatan Bulan Ini</div>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
       <div class="card card-border-shadow-primary">
         <div class="card-body text-end">
           <h5 class="card-title">{{ $data['transactionsThisMonth'] }}</h5>
-          <div class="card-subtitle text-muted mb-3">Transaksi Bulan Ini</div>
+          <div class="card-subtitle text-muted">Transaksi Bulan Ini</div>
         </div>
       </div>
     </div>
