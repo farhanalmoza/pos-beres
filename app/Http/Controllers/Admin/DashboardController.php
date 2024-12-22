@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Product;
 use App\Models\ProductIn;
 use App\Models\ProductOut;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -21,10 +22,10 @@ class DashboardController extends Controller
         $data['expensesThisMonth'] = ProductIn::whereMonth('created_at', $thisMonth)
             ->whereYear('created_at', $thisYear)
             ->sum('purchase_price');
-        $salesThisMonth = ProductOut::whereMonth('created_at', $thisMonth)
+        $data['salesThisMonth'] = Transaction::where('is_warehouse', 1)
+            ->whereMonth('created_at', $thisMonth)
             ->whereYear('created_at', $thisYear)
-            ->sum('total_price');
-        $data['profitThisMonth'] = $salesThisMonth - $data['expensesThisMonth'];
+            ->sum('total');
         $data['topProducts'] = $this->getTopProducts();
         $data['inactiveProducts'] = $this->getInactiveProducts();
         $data['memberCount'] = Member::count();
