@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cashier;
 use App\Exports\Store\PurchaseReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOut;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class PurchaseReportController extends Controller
         }
 
 
-        $purchases = ProductOut::with('product')
+        $purchases = Transaction::with('carts', 'carts.product')
+            ->where('is_warehouse', 1)
             ->where('store_id', Auth::user()->store_id)
             ->when($start_date !== null && $end_date !== null, function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('created_at', [$start_date, $end_date]);
@@ -36,14 +38,21 @@ class PurchaseReportController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return datatables()->of($purchases)
-            ->addColumn('product_code_name', function($product) {
-                return $product->product->code . " - " . $product->product->name;
+        $purchasedProducts = [];
+        foreach ($purchases as $purchase) {
+            foreach ($purchase->carts as $cart) {
+                $purchasedProducts[] = $cart;
+            }
+        }
+        
+        return datatables()->of($purchasedProducts)
+            ->addIndexColumn()
+            ->addColumn('total', function($rows) {
+                return $rows->quantity * $rows->price;
             })
             ->addColumn('date', function($rows) {
                 return $rows->created_at->format('d-m-Y');
             })
-            ->rawColumns(['product_code_name', 'date'])
             ->make(true);
     }
 

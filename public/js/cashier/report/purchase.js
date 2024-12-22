@@ -12,8 +12,20 @@ function getPurchaseReport() {
     }
     
     const columns = [
-        {data : 'product_code_name', name: 'product'},
-        {data : 'quantity', name: 'quantity'},
+        {data : 'DT_RowIndex', name : 'DT_RowIndex', orderable : false, searchable : false },
+        {data : 'product.code', name: 'product.code'},
+        {data : 'product.name', name: 'product.name'},
+        {data : 'quantity', name: 'quantity', className: 'text-end'},
+        {data : 'price', name: 'price', className: 'text-end',
+            render: function (data, type, row) {
+                return Functions.prototype.formatNumber(data);
+            }
+        },
+        {data : 'total', name: 'total', className: 'text-end',
+            render: function (data, type, row) {
+                return Functions.prototype.formatNumber(data);
+            }
+        },
         {data : 'date', name: 'date', orderable: false, searchable: false},
     ]
     Functions.prototype.tableResult("#purchaseReportTable", urlListPurchaseReport, columns)

@@ -47,9 +47,13 @@
       <table class="table table-hover" id="purchaseReportTable">
         <thead>
           <tr>
-            <th>Barang</th>
-            <th>Jumlah</th>
-            <th>Tanggal</th>
+            <th style="width: 5%;">No</th>
+            <th>Kode Barang</th>
+            <th>Nama Barang</th>
+            <th style="direction: rtl;">Jumlah</th>
+            <th style="direction: rtl;">Harga</th>
+            <th style="direction: rtl;">Total</th>
+            <th style="width: 15%;">Tanggal</th>
           </tr>
         </thead>
         <tbody>
