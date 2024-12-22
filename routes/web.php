@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductInController;
+use App\Http\Controllers\Admin\ProductOutController as AdminProductOutController;
 use App\Http\Controllers\Admin\Report\DeliveryController;
 use App\Http\Controllers\Admin\Report\PurchaseController;
 use App\Http\Controllers\Admin\StoreController;
@@ -88,9 +89,16 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     // Product Out
     Route::prefix('product-out')->group(function() {
-        Route::get('/', [ProductOutController::class, 'index'])->name('admin.product-out.index');
-        Route::get('/get-all', [ProductOutController::class, 'getAll'])->name('admin.product-out.get-all');
-        Route::post('/', [ProductOutController::class, 'store'])->name('admin.product-out.store');
+        Route::get('/send', [AdminProductOutController::class, 'sendProductForm'])->name('admin.product-out.send-form');
+
+        Route::get('/list', [AdminProductOutController::class, 'productOutList'])->name('admin.product-out.list');
+        Route::get('/get-all', [AdminProductOutController::class, 'getProductOutList'])->name('admin.product-out.get-all');
+        Route::get('/invoice/{invoice}', [AdminProductOutController::class, 'invoiceView'])->name('admin.product-out.invoice');
+
+        Route::post('/add-to-cart', [AdminProductOutController::class, 'addToCart'])->name('admin.product-out.add-to-cart');
+        Route::get('/get-carts/{no_invoice}', [AdminProductOutController::class, 'getCarts'])->name('admin.product-out.get-carts');
+        Route::delete('/delete-cart/{id}', [AdminProductOutController::class, 'deleteCart'])->name('admin.product-out.delete-cart');
+        Route::post('/send', [AdminProductOutController::class, 'processSendProduct'])->name('admin.product-out.send-post');
     });
 
     // Store

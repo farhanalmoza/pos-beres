@@ -32,8 +32,7 @@
                               Request::routeIs('admin.product.index') ||
                               Request::routeIs('admin.product.create') ||
                               Request::routeIs('admin.product.edit') ||
-                              Request::routeIs('admin.product-in.index') ||
-                              Request::routeIs('admin.product-out.index') ? 'active open' : '' }}">
+                              Request::routeIs('admin.product-in.index') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cabinet"></i>
           <div>Barang</div>
@@ -56,9 +55,30 @@
               <div data-i18n="Basic">Barang Masuk</div>
             </a>
           </li>
-          <li class="menu-item {{ Request::routeIs('admin.product-out.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.product-out.index') }}" class="menu-link">
-              <div data-i18n="Basic">Barang Keluar</div>
+        </ul>
+      </li>
+
+      <li class="menu-item {{ Request::routeIs('admin.product-out.list') ||
+                              Request::routeIs('warehouse.product-request.index') ||
+                              Request::routeIs('admin.product-out.send-form') ? 'active open' : '' }}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class='menu-icon bx bx-package'></i>
+          <div>Barang Keluar</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item {{ Request::routeIs('admin.product-out.list') ? 'active' : '' }}">
+            <a href="{{ route('admin.product-out.list') }}" class="menu-link">
+              <div data-i18n="Basic">Daftar Barang Keluar</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('warehouse.product-request.index') ? 'active' : '' }}">
+            <a href="{{ route('warehouse.product-request.index') }}" class="menu-link">
+              <div data-i18n="Basic">Permintaan Barang</div>
+            </a>
+          </li>
+          <li class="menu-item {{ Request::routeIs('admin.product-out.send-form') ? 'active' : '' }}">
+            <a href="{{ route('admin.product-out.send-form') }}" class="menu-link">
+              <div data-i18n="Basic">Kirim Barang</div>
             </a>
           </li>
         </ul>
