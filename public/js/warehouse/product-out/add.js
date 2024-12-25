@@ -112,6 +112,8 @@ $('#ppnCheck').on('change', function() {
 function updateTotal() {
     if (isPPN) {
         ppn = total * ppnPercentage / 100;
+    } else {
+        ppn = 0;
     }
     
     grandTotal = total + ppn;
