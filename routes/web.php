@@ -296,6 +296,9 @@ Route::prefix('cashier')->middleware(['auth', 'role:cashier'])->group(function()
     Route::prefix('product')->group(function() {
         Route::get('/', [CashierProductController::class, 'index'])->name('cashier.product.index');
         Route::get('/get-all', [CashierProductController::class, 'getAll'])->name('cashier.product.getAll');
+
+        Route::get('/warehouse-product', [CashierProductController::class, 'warehouseProduct'])->name('cashier.product.warehouse-product');
+        Route::get('/get-warehouse-products', [CashierProductController::class, 'getWarehouseProducts'])->name('cashier.product.get-warehouse-products');
     });
 
     // Product Request

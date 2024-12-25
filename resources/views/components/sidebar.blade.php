@@ -322,6 +322,12 @@
           <div>Stok Barang</div>
         </a>
       </li>
+      <li class="menu-item {{ Request::routeIs('cashier.product.warehouse-product') ? 'active' : '' }}">
+        <a href="{{ route('cashier.product.warehouse-product') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cabinet"></i>
+          <div>Barang di Gudang</div>
+        </a>
+      </li>
       <li class="menu-item {{ Request::routeIs('cashier.product-request.index') ||
                               Request::routeIs('cashier.product-request.history') ? 'active open' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
