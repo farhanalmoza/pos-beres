@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cashier;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Member;
 use App\Models\Store;
 use App\Models\Transaction;
 use App\Models\User;
@@ -43,7 +44,13 @@ class ReceiptController extends Controller
             ->where('no_invoice', $invoice)
             ->where('store_id', $store->id)
             ->get();
-            // return $transaction;
+            
+        $memberName = "-";
+        if ($transaction->member_id !== 0) {
+            $member = Member::find($transaction->member_id);
+            $memberName = $member->name;
+        }
+
         try {
             $profile = CapabilityProfile::load("simple");
             $connector = new WindowsPrintConnector('RP58-Printer');
@@ -61,6 +68,7 @@ class ReceiptController extends Controller
             $printer->text("================================\n");
             $printer->text($invoice);
             $printer->text(str_pad("Kasir: ". substr($cashier->name, 0, 8), 15, ' ', STR_PAD_LEFT) . "\n");
+            $printer->text("Member: ". substr($memberName, 0, 15) . "\n");
             $printer->text("================================\n");
 
             // Items
